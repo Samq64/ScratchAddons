@@ -1,7 +1,6 @@
 [
   "editor-searchable-dropdowns",
   "editor-devtools",
-  "forum-search",
   "msg-count-badge",
   "scratch-notifier",
   "discuss-button",
@@ -57,7 +56,6 @@
   "copy-message-link",
   "load-extensions",
   "variable-manager",
-  "scratchstats",
   "folders",
   "message-filters",
   "block-palette-icons",

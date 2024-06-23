@@ -85,7 +85,7 @@
       "default": "everywhere"
     },
     {
-      "name": "Show reaction buttons and \"View on ocular\" link",
+      "name": "Show reaction buttons",
       "id": "reactions",
       "type": "boolean",
       "default": true

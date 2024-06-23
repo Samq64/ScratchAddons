@@ -6,20 +6,6 @@ export default async function ({ addon, console, msg }) {
   for (const i of posts) {
     let postID = i.id.split("p")[1];
 
-    let viewOnOcularContainer = document.createElement("li");
-    addon.tab.displayNoneWhileDisabled(viewOnOcularContainer);
-    let viewOnOcular = document.createElement("a");
-    viewOnOcular.innerText = `🔍 ocular`;
-    viewOnOcular.title = msg("view-on-ocular");
-    viewOnOcular.href = `https://ocular.jeffalo.net/post/${postID}`;
-    viewOnOcularContainer.appendChild(viewOnOcular);
-    addon.tab.appendToSharedSpace({
-      space: "forumsBeforePostReport",
-      scope: i,
-      element: viewOnOcularContainer,
-      order: 2,
-    });
-
     if (isLoggedIn) {
       let reactionMenuContainer = document.createElement("li");
       addon.tab.displayNoneWhileDisabled(reactionMenuContainer);

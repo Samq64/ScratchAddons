@@ -1,6 +1,6 @@
 {
   "name": "Show exact count",
-  "description": "Shows the exact count for user and studio info. Uses ScratchDB for forums information.",
+  "description": "Shows the exact count for user and studio info.",
   "credits": [
     {
       "name": "TheColaber",
@@ -26,12 +26,6 @@
       "id": "studio",
       "type": "boolean",
       "default": true
-    },
-    {
-      "name": "Exact count for forum user",
-      "id": "forumuser",
-      "type": "boolean",
-      "default": false
     }
   ],
   "userscripts": [
@@ -48,19 +42,11 @@
       "if": {
         "settings": { "studio": true }
       }
-    },
-    {
-      "url": "forum.js",
-      "matches": ["https://scratch.mit.edu/discuss/topic/*"],
-      "if": {
-        "settings": { "forumuser": true }
-      },
-      "runAtComplete": false
     }
   ],
   "dynamicEnable": true,
   "dynamicDisable": true,
   "versionAdded": "1.2.0",
-  "tags": ["community", "recommended", "profiles", "forums", "studios"],
+  "tags": ["community", "recommended", "profiles", "studios"],
   "enabledByDefault": false
 }

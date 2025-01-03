@@ -41,10 +41,10 @@ export default async function ({ addon, console }) {
           //Iterate the links
           if (exsearch_links[i]) {
             exsearch_links[i].style.width = "0px";
-            let ahref = exsearch_links[i].querySelector("a");
-            ahref.style.setProperty("padding", "0px", "important");
-            let span = exsearch_links[i].querySelector("span");
-            span.style.display = "none";
+            //let ahref = exsearch_links[i].querySelector("a");
+            //ahref.style.setProperty("padding", "0px", "important");
+            //let span = exsearch_links[i].querySelector("span");
+            //span.style.display = "none";
           } //Hide them (make them invisible but maintain keyboard-focusablility)
         }
       }
@@ -80,19 +80,12 @@ export default async function ({ addon, console }) {
       exsearch_siteNav = document.getElementsByClassName("site-nav")[0]; //The header buttons
 
       //Functions
-      function exsearch_clickIn() {
-        //Clicking into the search bar
-        if (addon.self.disabled) return; //Don't expand if addon disabled
-        exsearch_siteNav.style.width = "0px"; //Hide the site navigation (make them invisible but maintain keyboard-focusablility)
-        exsearch_siteNav.style.overflow = "hidden";
-      }
       function exsearch_clickOut() {
         //Clicking out of  the search bar
         exsearch_siteNav.style.removeProperty("width"); //Show the site nav
         exsearch_siteNav.style.removeProperty("overflow");
       }
       //Events
-      exsearch_searchBarInput.addEventListener("focusin", exsearch_clickIn);
       exsearch_searchBar.addEventListener("focusout", (e) => {
         if (!exsearch_searchBar.contains(e.relatedTarget)) {
           exsearch_clickOut();

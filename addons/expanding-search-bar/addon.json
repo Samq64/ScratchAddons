@@ -15,9 +15,14 @@
       "runAtComplete": false
     }
   ],
+  "userstyles": [
+      {
+        "url": "userstyle.css",
+        "matches": ["https://scratch.mit.edu/*"]
+      }
+    ],
   "dynamicEnable": true,
   "dynamicDisable": true,
   "versionAdded": "1.16.0",
-  "tags": ["community", "featured"],
-  "enabledByDefault": false
+  "tags": ["community", "featured"]
 }

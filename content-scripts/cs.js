@@ -740,4 +740,3 @@ if (document.readyState !== "loading") {
 } else {
   window.addEventListener("DOMContentLoaded", handleBanner, { once: true });
 }
-

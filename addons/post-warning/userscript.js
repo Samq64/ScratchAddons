@@ -1,5 +1,5 @@
 export default async function ({ addon, console }) {
-  if (location.pathname === "discuss/3/topic/add/") forumWarning("forumWarning")
+  if (location.pathname === "discuss/3/topic/add/") forumWarning("forumWarning");
   else if (location.pathname.startsWith("discuss/topic/")) {
     if (document.querySelector('div.linkst > ul > li > a[href="/discuss/18/"]')) {
       forumWarning("forumWarningGeneral");
@@ -22,8 +22,8 @@ export default async function ({ addon, console }) {
       const localeSlash = uiLanguage.startsWith("en") ? "" : `${uiLanguage.split("-")[0]}/`;
       const utm = `utm_source=extension&utm_medium=forumwarning&utm_campaign=v${chrome.runtime.getManifest().version}`;
       reportLink.href = `https://scratchaddons.com/${localeSlash}feedback/?ext_version=${
-chrome.runtime.getManifest().version
-}&${utm}`;
+        chrome.runtime.getManifest().version
+      }&${utm}`;
       reportLink.target = "_blank";
       reportLink.innerText = chrome.i18n.getMessage("reportItHere");
       let text1 = document.createElement("span");
@@ -225,6 +225,4 @@ chrome.runtime.getManifest().version
       }
     });
   }
-
-
 }

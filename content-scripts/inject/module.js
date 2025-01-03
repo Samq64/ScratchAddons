@@ -1,6 +1,7 @@
 import runAddonUserscripts from "./run-userscript.js";
 import Localization from "./l10n.js";
 import "/libraries/thirdparty/cs/comlink.js";
+import Tab from "/addon-api/content-script/Tab.js";
 
 window.scratchAddons = {};
 scratchAddons.classNames = { loaded: false };
@@ -214,12 +215,12 @@ function onDataReady() {
 }
 
 function bodyIsEditorClassCheck() {
-  if (isScratchGui) return document.body.classList.add("sa-body-editor");
-  const pathname = location.pathname.toLowerCase();
-  const split = pathname.split("/").filter(Boolean);
-  if (!split[0] || split[0] !== "projects") return;
-  if (split.includes("editor") || split.includes("fullscreen")) document.body.classList.add("sa-body-editor");
-  else document.body.classList.remove("sa-body-editor");
+  console.log(Tab.editorMode());
+  if (editorMode === "editor" || editorMode === "fullscreen") {
+    document.body.classList.add("sa-body-editor");
+  } else {
+    document.body.classList.add("sa-body-editor");
+  }
 }
 if (!document.body) document.addEventListener("DOMContentLoaded", bodyIsEditorClassCheck);
 else bodyIsEditorClassCheck();

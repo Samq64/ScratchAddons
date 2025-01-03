@@ -1,12 +1,12 @@
 #frc-q-1088 {
-    transition: width 0.4s ease-in-out;
-    width: 50%;
+  transition: width 0.4s ease-in-out;
+  width: 50%;
 }
 
 .link {
-    transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
 }
 
 #frc-q-1088:focus {
-    width: 100%;
+  width: 100%;
 }

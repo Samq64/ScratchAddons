@@ -1,0 +1,13 @@
+{
+  "name": "Post warining",
+  "description": "Adds a warning when mentioning Scratch Addons in a comment or forum post or posting a bug report. Prevoiusly part of Scratch Addons itself.",
+  "userscripts": [
+    {
+      "url": "userscript.js",
+      "matches": ["topics", "projects", "profiles", "studios"]
+    }
+  ],
+  "tags": ["community", "forums", "comments"],
+  "versionAdded": "1.40.0",
+  "enabledByDefault": true
+}

@@ -157,7 +157,7 @@ body:not(.sa-body-editor) [class*="stage-header_stage-size-row_"] > *,
 body:not(.sa-body-editor) [class*="stage-header_stage-button_"],
 .studio-adder-section .studio-adder-row input,
 .avatar-item img,
-.join-flow-outer-content /* username change */,
+body:not(.sa-body-editor) .join-flow-outer-content /* username change */,
 .conf2019-panel-flag,
 .plan .faq .short,
 .conf2017-panel-flag,
@@ -438,7 +438,7 @@ body:not(.sa-body-editor) .gender-radio-row:hover,
 .welcome .box-content .welcome-options .welcome-option-button {
   border-color: var(--darkWww-blue-20);
 }
-.join-flow-footer-message {
+body:not(.sa-body-editor) .join-flow-footer-message {
   background-color: var(--darkWww-blue-25);
 }
 .extension-chip,
@@ -460,7 +460,7 @@ body:not(.sa-body-editor) .select select > option,
 .inplace-input,
 .inplace-textarea,
 .textarea,
-.input {
+body:not(.sa-body-editor) .input {
   background-color: var(--darkWww-input);
   color: var(--darkWww-input-text);
 }
@@ -514,7 +514,7 @@ body:not(.sa-body-editor) .select select:focus {
 .outer .categories li,
 .unsupported-browser .back-button,
 body:not(.sa-body-editor) .formik-input:focus,
-.input:focus,
+body:not(.sa-body-editor) .input:focus,
 .react-tel-input input[type="tel"]:focus {
   border-color: var(--darkWww-button);
 }
@@ -578,10 +578,10 @@ body:not(.sa-body-editor) [class*="stage-header_stage-button_"]:active {
 .download .download-header,
 .link .extension-header /* Scratch Link download */,
 .information-page .title-banner.masthead,
-.modal-flush-bottom-button {
+body:not(.sa-body-editor) .modal-flush-bottom-button {
   background-color: var(--darkWww-button-banner);
 }
-.modal-flush-bottom-button:hover {
+body:not(.sa-body-editor) .modal-flush-bottom-button:hover {
   background-color: var(--darkWww-button-bannerVariant);
 }
 
@@ -686,7 +686,7 @@ body:not(.sa-body-editor) .select select,
 .studio-tab-nav a.nav_link:hover > li,
 .studio-info-box,
 p.callout,
-.input,
+body:not(.sa-body-editor) .input,
 .row .col-sm-9 input[type="radio"]:not(:checked),
 .extension-landing .tip-box {
   border-color: var(--darkWww-border);

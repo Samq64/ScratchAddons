@@ -3,6 +3,7 @@ import { getVariableUsesById, getOrderedTopBlockColumns } from "../../libraries/
 
 export default async function ({ addon, console, msg, safeMsg: m }) {
   const blockly = await addon.tab.traps.getBlockly();
+  const vm = addon.tab.traps.vm;
   const getWorkspace = () => addon.tab.traps.getWorkspace();
 
   let originalMsg = blockly.Msg.CLEAN_UP;
@@ -66,12 +67,16 @@ export default async function ({ addon, console, msg, safeMsg: m }) {
       cursorX += gridSize - (cursorX + gridSize / 2) % gridSize;
     }
 
+    // TODO: New Blockly
     let topComments = workspace.getTopComments();
     for (const comment of topComments) {
       if (comment.setVisible) {
         comment.setVisible(false);
         comment.needsAutoPositioning_ = true;
         comment.setVisible(true);
+        const vmComment = vm.editingTarget.comments[comment.id];
+        vmComment.x = comment.x_;
+        vmComment.y = comment.y_;
       }
     }
 

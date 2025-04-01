@@ -1,7 +1,7 @@
 import UndoGroup from "../../libraries/common/cs/UndoGroup.js";
 import { getVariableUsesById, getOrderedTopBlockColumns } from "../../libraries/common/cs/devtools-utils.js";
 
-export default async function({ addon, console, msg, safeMsg: m }) {
+export default async function ({ addon, console, msg, safeMsg: m }) {
   const blockly = await addon.tab.traps.getBlockly();
   const vm = addon.tab.traps.vm;
 
@@ -11,7 +11,7 @@ export default async function({ addon, console, msg, safeMsg: m }) {
   blockly.Msg.CLEAN_UP = m("clean-plus");
 
   const oldCleanUpFunc = blockly.WorkspaceSvg.prototype.cleanUp;
-  blockly.WorkspaceSvg.prototype.cleanUp = function() {
+  blockly.WorkspaceSvg.prototype.cleanUp = function () {
     if (addon.self.disabled) return oldCleanUpFunc.call(this);
     doCleanUp();
   };

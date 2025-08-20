@@ -397,23 +397,22 @@ button.setting-input.color.open {
 
 #iframe-fullscreen-suggestion {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
   border-radius: 4px;
   background-color: var(--content-background);
   border: 1px solid var(--content-border);
   box-shadow: var(--content-shadow);
-  padding: 20px 0;
+  padding: 10px;
   margin: 10px;
 }
 #iframe-fullscreen-suggestion > span {
-  width: 100%;
   font-weight: bold;
   font-size: 14px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-grow: 1;
+  padding-left: 5px;
   user-select: none;
+}
+
+#iframe-fullscreen-suggestion > .large-button {
+  flex-shrink: 0;
 }

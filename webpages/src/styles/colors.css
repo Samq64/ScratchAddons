@@ -1,0 +1,16 @@
+:root {
+  --brand: #ff7b26;
+  --blue: #175ef8;
+  --white-text: #fff;
+
+  --page-background: #fcfcfc;
+  --text: #222;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --page-background: #222;
+    --text: #fff;
+  }
+}

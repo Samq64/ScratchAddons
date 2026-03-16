@@ -2,15 +2,25 @@
   --brand: #ff7b26;
   --blue: #175ef8;
   --white-text: #fff;
+  --large-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  --hover-darken: rgba(0, 0, 0, 0.1);
 
   --page-background: #fcfcfc;
+  --navigation-background: #ecebeb;
   --text: #222;
+  --control-border: #aaa;
+  --keyboard-focus: 2px solid #000;
+  --icon-filter: brightness(0);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
     --page-background: #222;
+    --navigation-background: #333;
     --text: #fff;
+    --control-border: #000;
+    --keyboard-focus: 2px solid #fff;
+    --icon-filter: brightness(100);
   }
 }

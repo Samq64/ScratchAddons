@@ -1,20 +1,62 @@
 @import "./colors.css";
+@import "./roboto.css";
+@import "./sora.css";
 
-body {
-  background-color: var(--page-background);
-  color: var(--text);
-  margin: 0;
+* {
+  box-sizing: border-box;
+}
+
+html {
   font-size: 14px;
 }
 
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--page-background);
+  color: var(--text);
+  font-size: 1rem;
+  margin: 0;
+}
+
 h1 {
-  font-size: 18px;
+  font-family: "Sora", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin: 0;
 }
 
 nav {
+  user-select: none;
   color: var(--white-text);
   background-color: var(--brand);
-  height: 60px;
+  height: 3.5rem;
   display: flex;
   align-items: center;
+}
+
+nav.shadow {
+  box-shadow: var(--large-shadow);
+}
+
+.header-button {
+  height: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+.header-button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.header-button > img {
+  height: 50%;
+}
+
+.logo {
+  height: 50%;
+  margin-inline: 1rem;
 }

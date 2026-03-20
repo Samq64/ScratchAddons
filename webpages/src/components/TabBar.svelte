@@ -1,20 +1,22 @@
 <script>
-  let { tabsData, selected = $bindable() } = $props();
+  const indicatorOffset = 10;
+
+  let { items, selected = $bindable() } = $props();
   let tabRefs = $state({});
 
   let indicatorPosition = $derived.by(() => {
     const el = tabRefs[selected];
     if (!el) return "";
-    return `left: ${el.offsetLeft + 10}px; width: ${el.offsetWidth - 20}px;`;
+    return `left: ${el.offsetLeft + indicatorOffset}px; width: ${el.offsetWidth - indicatorOffset * 2}px;`;
   });
 </script>
 
 <div class="tabs" role="radiogroup">
-  {#each tabsData as data}
-    <label class="tab" bind:this={tabRefs[data.id]}>
-      <input type="radio" name="tabBar" value={data.id} bind:group={selected} />
-      <img src={`/dist/icons/${data.icon}.svg`} draggable="false" />
-      {data.name}
+  {#each items as item}
+    <label class="tab" bind:this={tabRefs[item.id]}>
+      <input type="radio" name="tabBar" value={item.id} bind:group={selected} />
+      <img src={`/dist/icons/${item.icon}.svg`} draggable="false" />
+      {item.name}
     </label>
   {/each}
   <div class="indicator" style={indicatorPosition}></div>
@@ -22,16 +24,16 @@
 
 <style>
   .tabs {
+    position: relative;
     height: 3rem;
     display: flex;
     background-color: var(--navigation-background);
     border-bottom: 1px solid var(--control-border);
-    position: relative;
   }
 
   .tab {
-    display: flex;
     flex-grow: 1;
+    display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.5rem;

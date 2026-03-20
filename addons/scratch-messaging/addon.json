@@ -10,7 +10,7 @@
     }
   ],
   "popup": {
-    "icon": "envelope.svg",
+    "icon": "envelope",
     "name": "Messaging",
     "fullscreen": true
   },

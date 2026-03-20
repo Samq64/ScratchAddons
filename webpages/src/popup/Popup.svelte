@@ -2,83 +2,53 @@
   import { onMount } from "svelte";
   import { msg, openSettingsPage } from "/src/lib/extension-api.js";
   import { changelogLink, versionLabel } from "/src/lib/util.js";
-  import ListView from "/src/components/ListView.svelte";
   import logo from "/src/assets/logo-transparent.svg";
 
+  import ListView from "/src/components/ListView.svelte";
+  import TabBar from "/src/components/TabBar.svelte";
+
   const TAB_ORDER = ["__settings__", "scratch-messaging", "cloud-games"];
-  let manifests = [];
+  const loaders = import.meta.glob("./tabs/*/Popup.svelte");
+
   let popups = $state([]);
   let selectedPopupId = $state(null);
-  let selectedPopup = $derived(popups.find((p) => p._addonId === selectedPopupId));
+  let selectedPopup = $derived(popups.find((p) => p.id === selectedPopupId));
 
-  const loaders = Object.fromEntries(
-    Object.entries(import.meta.glob("./tabs/*/Popup.svelte")).map(([path, loader]) => [path.split("/")[2], loader])
-  );
-
-  async function selectPopup(id) {
-    if (selectedPopupId === id) return;
-    const popup = popups.find((p) => p._addonId === id);
-    selectedPopupId = id;
-    if (!popup.component) {
-      popup.component = (await popup.loader()).default;
+  let selectedComponent = $derived.by(async () => {
+    if (!selectedPopup) return null;
+    if (!selectedPopup.component) {
+      selectedPopup.component = (await selectedPopup.loader()).default;
     }
-    localStorage.setItem("lastSelectedPopup", id);
-  }
+    return selectedPopup.component;
+  });
+
+  $effect(() => {
+    if (selectedPopupId) {
+      localStorage.setItem("lastSelectedPopup", selectedPopupId);
+    }
+  });
 
   onMount(() => {
     chrome.runtime.sendMessage("getSettingsInfo", (res) => {
-      manifests = res.manifests;
-
-      const popupObjects = manifests
+      const popupObjects = res.manifests
         .filter((m) => res.addonsEnabled[m.addonId])
         .filter((m) => m.manifest?.popup)
         .map((m) => {
-          const loader = loaders[m.addonId];
-          return loader ? { ...m.manifest.popup, _addonId: m.addonId, loader } : null;
-        })
-        .filter(Boolean);
+          const key = `./tabs/${m.addonId}/Popup.svelte`;
+          return { ...m.manifest.popup, id: m.addonId, loader: loaders[key] };
+        });
 
       popupObjects.push({
-        _addonId: "__settings__",
+        id: "__settings__",
         name: msg("quickSettings"),
-        icon: "wrench.svg",
+        icon: "wrench",
         loader: async () => ({ default: ListView }),
       });
 
-      popupObjects.sort((a, b) => TAB_ORDER.indexOf(a._addonId) - TAB_ORDER.indexOf(b._addonId));
-
+      popupObjects.sort((a, b) => TAB_ORDER.indexOf(a.id) - TAB_ORDER.indexOf(b.id));
       popups = popupObjects;
-
-      selectPopup(localStorage.getItem("lastSelectedPopup") ?? "__settings__");
+      selectedPopupId = localStorage.getItem("lastSelectedPopup") ?? "__settings__";
     });
-  });
-
-  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    const change = request.changeEnabledState;
-    if (!change) return;
-
-    const { addonId, newState } = change;
-    const entry = manifests.find((m) => m.addonId === addonId);
-    const loader = loaders[addonId];
-    if (!entry?.manifest?.popup || !loader) return;
-
-    if (newState) {
-      if (!popups.some((p) => p._addonId === addonId)) {
-        const popup = {
-          ...entry.manifest.popup,
-          _addonId: addonId,
-          loader,
-        };
-        popups = [...popups, popup].sort((a, b) => TAB_ORDER.indexOf(a._addonId) - TAB_ORDER.indexOf(b._addonId));
-      }
-    } else {
-      const wasSelected = selectedPopupId === addonId;
-      popups = popups.filter((p) => p._addonId !== addonId);
-      if (wasSelected) {
-        selectPopup("__settings__");
-      }
-    }
-    sendResponse({ ok: true });
   });
 </script>
 
@@ -93,27 +63,9 @@
   </a>
 </nav>
 
-<tab-group role="radiogroup">
-  {#each popups as popup (popup._addonId)}
-    <label>
-      <input
-        type="radio"
-        name="popupTab"
-        checked={selectedPopupId === popup._addonId}
-        onchange={() => selectPopup(popup._addonId)}
-      />
-      <img src={`/dist/icons/${popup.icon}`} draggable="false" />
-      {popup.name}
-    </label>
-  {/each}
-</tab-group>
-
+<TabBar tabsData={popups} bind:selected={selectedPopupId} />
 <div class="tab-content">
-  {#if selectedPopup?.component}
-    <selectedPopup.component />
-  {/if}
+  {#await selectedComponent then Component}
+    <Component />
+  {/await}
 </div>
-
-<style>
-  @import "/src/styles/tabGroup.css";
-</style>

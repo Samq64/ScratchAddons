@@ -26,6 +26,7 @@
   .tabs {
     position: relative;
     height: 3rem;
+    flex-shrink: 0;
     display: flex;
     background-color: var(--navigation-background);
     border-bottom: 1px solid var(--control-border);

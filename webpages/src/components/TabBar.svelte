@@ -56,6 +56,10 @@
     outline: var(--keyboard-focus);
   }
 
+  .tab:not(:has(input:checked)):hover {
+    cursor: pointer;
+  }
+
   .indicator {
     position: absolute;
     height: 4px;

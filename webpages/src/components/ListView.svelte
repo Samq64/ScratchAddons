@@ -22,10 +22,19 @@
   });
 </script>
 
-<ol>
+<div>
   {#each addons.manifests as { manifest, addonId } (addonId)}
-    <div>
+    <div class="addon-body">
       <input type="checkbox" checked={addons.enabled[addonId]} onclick={() => toggleRequest(addonId)} />{manifest.name}
     </div>
   {/each}
-</ol>
+</div>
+
+<style>
+.addon-body {
+  background-color: var(--content-background);
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 4px;
+}
+</style>

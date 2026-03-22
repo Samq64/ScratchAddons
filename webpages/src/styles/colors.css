@@ -6,6 +6,7 @@
   --hover-darken: rgba(0, 0, 0, 0.1);
 
   --page-background: #fcfcfc;
+  --content-background: #f7f7f7;
   --navigation-background: #ecebeb;
   --text: #222;
   --control-border: #aaa;
@@ -17,6 +18,7 @@
   :root {
     color-scheme: dark;
     --page-background: #222;
+    --content-background: #2a2a2a;
     --navigation-background: #333;
     --text: #fff;
     --control-border: #000;

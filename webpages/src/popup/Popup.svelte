@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
   import { msg, openSettingsPage } from "/src/lib/extension-api.js";
   import { changelogLink, versionLabel } from "/src/lib/util.js";
   import logo from "/src/assets/logo-transparent.svg";
@@ -57,9 +58,13 @@
 <TabBar items={popups} bind:selected={selectedPopupId} />
 
 <div class="tab-content">
-  {#await selectedComponent then Component}
-    <Component />
-  {:catch error}
-    <p>{error}</p>
-  {/await}
+  {#key selectedPopupId}
+    {#await selectedComponent then Component}
+      <div in:fade={{ duration: 200 }} out:fade={{ duration: 200 }}>
+        <Component />
+      </div>
+    {:catch error}
+      <p>{error}</p>
+    {/await}
+  {/key}
 </div>

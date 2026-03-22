@@ -68,3 +68,19 @@
     {/await}
   {/key}
 </div>
+
+<style>
+.version {
+  color: var(--white-text);
+  opacity: 0.75;
+  margin-inline: 0.5rem;
+  flex-grow: 1;
+  text-decoration: none;
+  user-select: text;
+}
+
+.tab-content {
+  flex-grow: 1;
+  overflow: auto;
+}
+</style>

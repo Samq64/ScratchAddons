@@ -38,6 +38,11 @@ nav.shadow {
   box-shadow: var(--large-shadow);
 }
 
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
 .header-button {
   height: 100%;
   aspect-ratio: 1;

@@ -27,7 +27,7 @@ h1 {
 
 nav {
   user-select: none;
-  color: var(--white-text);
+  color: white;
   background-color: var(--brand);
   height: 3.5rem;
   display: flex;

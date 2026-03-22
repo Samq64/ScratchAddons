@@ -71,7 +71,7 @@
 
 <style>
 .version {
-  color: var(--white-text);
+  color: white;
   opacity: 0.75;
   margin-inline: 0.5rem;
   flex-grow: 1;

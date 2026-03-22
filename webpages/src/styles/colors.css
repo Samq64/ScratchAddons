@@ -1,16 +1,20 @@
 :root {
   --brand: #ff7b26;
   --blue: #175ef8;
-  --white-text: #fff;
   --large-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   --hover-darken: rgba(0, 0, 0, 0.1);
+  --switch-border: #808080;
 
   --page-background: #fcfcfc;
   --content-background: #f7f7f7;
   --navigation-background: #ecebeb;
+  --button-background: #ecebeb;
+  --switch-inner-background: var(--text);
   --text: #222;
+  --content-border: #cfcfcf;
   --control-border: #aaa;
   --keyboard-focus: 2px solid #000;
+  --content-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   --icon-filter: brightness(0);
 }
 
@@ -20,9 +24,13 @@
     --page-background: #222;
     --content-background: #2a2a2a;
     --navigation-background: #333;
+    --button-background: #222;
+    --switch-inner-background: #eee;
     --text: #fff;
+    --content-border: #333;
     --control-border: #000;
     --keyboard-focus: 2px solid #fff;
+    --content-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     --icon-filter: brightness(100);
   }
 }

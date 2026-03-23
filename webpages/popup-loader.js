@@ -45,22 +45,13 @@ async function getActualCookieStore() {
   return current?.cookieStoreId || undefined;
 }
 
-async function refetchCookies(needsRequest = false) {
-  if (needsRequest) {
-    try {
-      await fetch("https://scratch.mit.edu/csrf_token/");
-    } catch (e) {
-      console.error(e);
-      scratchAddons.cookieFetchingFailed = true;
-      return;
-    }
-  }
+async function refreshCookies() {
   const tabCookieStoreId = await getActualCookieStore();
   const scratchLang = (await getCookieValue("scratchlanguage", false, tabCookieStoreId)) || navigator.language;
   const csrfTokenCookie = await getCookieValue("scratchcsrftoken", true, tabCookieStoreId);
-  scratchAddons.cookieStoreId = tabCookieStoreId || csrfTokenCookie.storeId;
+  scratchAddons.cookieStoreId = tabCookieStoreId || csrfTokenCookie?.storeId;
   scratchAddons.cookies.set("scratchlanguage", scratchLang);
-  scratchAddons.cookies.set("scratchcsrftoken", csrfTokenCookie.value);
+  scratchAddons.cookies.set("scratchcsrftoken", csrfTokenCookie?.value);
 }
 
 async function refetchSession(addon) {
@@ -124,7 +115,7 @@ async function refetchSession(addon) {
       },
     });
 
-  await refetchCookies();
+  await refreshCookies();
 
   const addon = new Addon({
     id: addonId,
@@ -142,7 +133,7 @@ async function refetchSession(addon) {
       return;
     }
     if (request.refetchSession) {
-      refetchCookies(false).then(() => refetchSession(addon));
+      refreshCookies().then(() => refetchSession(addon));
       return;
     }
   });

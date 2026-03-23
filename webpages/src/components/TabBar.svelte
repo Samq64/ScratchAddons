@@ -53,7 +53,7 @@
   }
 
   .tab:has(input:focus-visible) {
-    outline: var(--keyboard-focus);
+    outline: 2px solid var(--foreground);
   }
 
   .tab:not(:has(input:checked)):hover {
@@ -64,7 +64,7 @@
     position: absolute;
     height: 4px;
     bottom: 0;
-    background-color: var(--brand);
+    background-color: var(--orange);
     border-radius: 4px 4px 0 0;
     transition:
       left 0.2s ease,

@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
 
     <!-- Preload styles -->
-    <link rel="preload" href="../styles/colors-light.css" as="style" />
     <link rel="preload" href="style.css" as="style" />
 
     <!-- Preload font -->
@@ -175,7 +174,7 @@
     <script src="../../libraries/thirdparty/sortable.min.js" type="module"></script>
     <script src="index.js" type="module"></script>
   </head>
-  <body v-cloak :class="{light: theme}">
+  <body v-cloak>
     <div class="navbar">
       <button
         id="sidebar-toggle"
@@ -191,9 +190,9 @@
       <img src="../../images/icon-transparent.svg" class="logo" alt="Logo" draggable="false" />
       <h1 v-cloak>{{ msg("settings") }}</h1>
       <button
-        @click="setTheme(!theme)"
+        @click="theme = (theme === 'dark' ? 'light' : 'dark')"
         class="header-button header-end"
-        :title="msg(theme ? 'switchDark' : 'switchLight')"
+        :title="msg(theme === 'light' ? 'switchDark' : 'switchLight')"
       >
         <img v-cloak class="theme-switch" :src="themePath" draggable="false" />
       </button>
@@ -335,8 +334,8 @@
                       type="radio"
                       name="theme-selector"
                       id="theme-select-light"
-                      :checked="theme === true"
-                      @change="setTheme(true)"
+                      value="light"
+                      v-model="theme"
                     />
                     <label for="theme-select-light" class="filter-option">{{ msg("light") }}</label>
                   </div>
@@ -345,8 +344,8 @@
                       type="radio"
                       name="theme-selector"
                       id="theme-select-dark"
-                      :checked="theme === false"
-                      @change="setTheme(false)"
+                      value="dark"
+                      v-model="theme"
                     />
                     <label for="theme-select-dark" class="filter-option">{{ msg("dark") }}</label>
                   </div>

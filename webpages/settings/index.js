@@ -132,7 +132,7 @@ let fuse;
     },
     computed: {
       themePath() {
-        return this.theme ? "../../images/icons/moon.svg" : "../../images/icons/theme.svg";
+        return this.theme === "light" ? "../../images/icons/moon.svg" : "../../images/icons/theme.svg";
       },
       addonList() {
         if (!this.searchInput) {
@@ -244,10 +244,6 @@ let fuse;
       clearAndFocusSearch() {
         this.clearSearch();
         document.querySelector("#searchBox").focus();
-      },
-      setTheme(mode) {
-        setGlobalTheme(mode);
-        this.theme = mode;
       },
       stopPropagation(e) {
         e.stopPropagation();
@@ -383,6 +379,14 @@ let fuse;
       forceEnglishSetting(newValue, oldValue) {
         if (oldValue !== null) chrome.storage.local.set({ forceEnglish: this.forceEnglishSetting });
       },
+      theme(newValue) {
+        console.log(newValue);
+        if (newValue === "dark") {
+          document.documentElement.setAttribute("data-theme", newValue);
+        } else {
+          document.documentElement.removeAttribute("data-theme");
+        }
+      }
     },
     ready() {
       // Autofocus search bar in iframe mode for both browsers

@@ -1,19 +1,37 @@
 :root {
-  color-scheme: dark;
-
   --brand-orange: #ff7b26;
-  --brand-orange-min-font-weight: normal;
   --orange: #ff7b26;
   --orange-opacity35: rgba(255, 123, 38, 0.35);
   --green: #008000;
-  --green-text: #53b31c;
   --blue: #175ef8;
   --blue-variant: #0e44b8;
-  --blue-text: #1aa0d8;
   --red: #fd2b2b;
   --red-opacity75: rgba(253, 43, 43, 0.75);
   --dark-red-text: #d84a12;
   --white-text: #fff;
+
+  --switch-border: #808080;
+  --notice-border: rgba(253, 221, 43, 0.5);
+  --warning-text: #fff;
+  --warning-icon-filter: brightness(0) invert(1);
+
+  --modal-overlay: rgba(0, 0, 0, 0.65);
+  --header-hover-darken: rgba(0, 0, 0, 0.1);
+
+  --large-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  --large-shadow-filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+  --input-focus-shadow: 0 0 0 3px var(--orange-opacity35);
+  --fullscreen-popup-shadow: 0 -1px 7px rgba(0, 0, 0, 0.2);
+
+  --placeholder-text: #777;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --brand-orange-min-font-weight: normal;
+  --green-text: #53b31c;
+  --blue-text: #1aa0d8;
 
   --page-background: #222;
   --content-background: #2a2a2a;
@@ -23,38 +41,28 @@
   --button-hover-background: #1a1a1a;
   --input-background: #222;
   --search-input-background: #111;
-  --switch-border: #808080;
   --switch-inner-background: #eee;
   --tooltip-background: #000;
   --comment-background: #222;
   --unread-comment-background: #000;
   --notice-background: var(--navigation-background);
-  --notice-border: rgba(253, 221, 43, 0.5);
   --notice-text: #fff;
   --notice-icon-filter: brightness(0) invert(1);
   --warning-background: var(--red-opacity75);
   --warning-border: var(--red);
-  --warning-text: #fff;
-  --warning-icon-filter: brightness(0) invert(1);
   --info-border: var(--content-separator);
   --update-background: var(--navigation-background);
   --update-border: rgba(177, 23, 248, 0.75);
   --update-text: #fff;
 
-  --modal-overlay: rgba(0, 0, 0, 0.65);
   --hover-highlight: rgba(255, 255, 255, 0.05);
   --hover-highlight-reduced: rgba(255, 255, 255, 0.02);
   --hover-darken: rgba(0, 0, 0, 0.1);
-  --header-hover-darken: rgba(0, 0, 0, 0.1);
 
-  --large-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  --large-shadow-filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
   --content-border: #333;
   --content-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
   --content-separator: #808080;
   --control-border: #000;
-  --input-focus-shadow: 0 0 0 3px var(--orange-opacity35);
-  --fullscreen-popup-shadow: 0 -1px 7px rgba(0, 0, 0, 0.2);
 
   --content-text: #fff;
   --content-icon-filter: brightness(0) invert(1);
@@ -62,5 +70,4 @@
   --description-icon-filter: brightness(0) invert(0.87);
   --label-text: #aaa;
   --gray-text: #808080;
-  --placeholder-text: #777;
 }

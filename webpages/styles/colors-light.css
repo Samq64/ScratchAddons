@@ -21,7 +21,7 @@
   --notice-text: #222;
   --notice-icon-filter: none;
   --warning-background: var(--red);
-  --warning-border: var(--red-variant);
+  --warning-border: #d81212;
   --info-border: var(--content-border);
   --update-background: rgba(177, 23, 248, 0.1);
   --update-border: rgba(177, 23, 248, 0.2);
@@ -30,7 +30,6 @@
   --hover-highlight: rgba(0, 0, 0, 0.05);
   --hover-highlight-reduced: rgba(0, 0, 0, 0.02);
   --hover-darken: var(--hover-highlight);
-  --header-hover-darken: rgba(0, 0, 0, 0.1);
 
   --content-border: #cfcfcf;
   --content-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);

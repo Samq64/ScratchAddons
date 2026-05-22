@@ -1,2 +1,2708 @@
-var Zt=Array.isArray,Wn=Array.prototype.indexOf,Ne=Array.prototype.includes,it=Array.from,Kn=Object.defineProperty,xe=Object.getOwnPropertyDescriptor,Jt=Object.getOwnPropertyDescriptors,Xn=Object.prototype,Zn=Array.prototype,Ct=Object.getPrototypeOf,Ut=Object.isExtensible;const Jn=()=>{};function Qn(e){for(var t=0;t<e.length;t++)e[t]()}function Qt(){var e,t,n=new Promise((r,i)=>{e=r,t=i});return{promise:n,resolve:e,reject:t}}const C=2,Oe=4,st=8,en=1<<24,Y=16,K=32,ce=64,pt=128,j=512,k=1024,M=2048,J=4096,R=8192,B=16384,Ae=32768,gt=1<<25,be=65536,Qe=1<<17,er=1<<18,De=1<<19,tr=1<<20,X=1<<25,ye=65536,et=1<<21,Re=1<<22,ue=1<<23,re=Symbol("$state"),nr=Symbol("legacy props"),rr=Symbol(""),tn=Symbol("attributes"),mt=Symbol("class"),wt=Symbol("style"),bt=Symbol("text"),Xe=Symbol("form reset"),ft=new class extends Error{name="StaleReactionError";message="The reaction that called `getAbortSignal()` was re-run or destroyed"};function ir(e){throw new Error("https://svelte.dev/e/lifecycle_outside_component")}function sr(){throw new Error("https://svelte.dev/e/async_derived_orphan")}function fr(e,t,n){throw new Error("https://svelte.dev/e/each_key_duplicate")}function lr(e){throw new Error("https://svelte.dev/e/effect_in_teardown")}function ar(){throw new Error("https://svelte.dev/e/effect_in_unowned_derived")}function or(e){throw new Error("https://svelte.dev/e/effect_orphan")}function ur(){throw new Error("https://svelte.dev/e/effect_update_depth_exceeded")}function cr(e){throw new Error("https://svelte.dev/e/props_invalid_value")}function hr(){throw new Error("https://svelte.dev/e/state_descriptors_fixed")}function dr(){throw new Error("https://svelte.dev/e/state_prototype_fixed")}function vr(){throw new Error("https://svelte.dev/e/state_unsafe_mutation")}function _r(){throw new Error("https://svelte.dev/e/svelte_boundary_reset_onerror")}const pr=1,gr=2,nn=4,mr=8,wr=16,br=1,yr=4,Er=8,Sr=16,Ar=1,Tr=2,T=Symbol("uninitialized"),rn="http://www.w3.org/1999/xhtml",kr="http://www.w3.org/2000/svg",Mr="http://www.w3.org/1998/Math/MathML";function Cr(){console.warn("https://svelte.dev/e/derived_inert")}function xr(){console.warn("https://svelte.dev/e/svelte_boundary_reset_noop")}function sn(e){return e===this.v}function fn(e,t){return e!=e?t==t:e!==t||e!==null&&typeof e=="object"||typeof e=="function"}function ln(e){return!fn(e,this.v)}let P=null;function Ie(e){P=e}function Rr(e,t=!1,n){P={p:P,i:!1,c:null,e:null,s:e,x:null,r:g,l:null}}function Nr(e){var t=P,n=t.e;if(n!==null){t.e=null;for(var r of n)Mn(r)}return t.i=!0,P=t.p,{}}function an(){return!0}let ve=[];function on(){var e=ve;ve=[],Qn(e)}function W(e){if(ve.length===0&&!je){var t=ve;queueMicrotask(()=>{t===ve&&on()})}ve.push(e)}function Or(){for(;ve.length>0;)on()}function un(e){var t=g;if(t===null)return b.f|=ue,e;if((t.f&Ae)===0&&(t.f&Oe)===0)throw e;oe(e,t)}function oe(e,t){for(;t!==null;){if((t.f&pt)!==0){if((t.f&Ae)===0)throw e;try{t.b.error(e);return}catch(n){e=n}}t=t.parent}throw e}const Ir=-7169;function S(e,t){e.f=e.f&Ir|t}function xt(e){(e.f&j)!==0||e.deps===null?S(e,k):S(e,J)}function cn(e){if(e!==null)for(const t of e)(t.f&C)===0||(t.f&ye)===0||(t.f^=ye,cn(t.deps))}function hn(e,t,n){(e.f&M)!==0?t.add(e):(e.f&J)!==0&&n.add(e),cn(e.deps),S(e,k)}let $e=!1;function Lr(e){var t=$e;try{return $e=!1,[e(),$e]}finally{$e=t}}let ot=null,Me=null,p=null,yt=null,G=null,Et=null,je=!1,ut=!1,Ce=null,Ze=null;var Vt=0;let Pr=1;class he{id=Pr++;#t=!1;linked=!0;#l=null;#e=null;async_deriveds=new Map;current=new Map;previous=new Map;unblocked=new Set;#a=new Set;#n=new Set;#i=new Set;#r=0;#s=new Map;#h=null;#f=[];#v=[];#d=new Set;#o=new Set;#u=new Map;#c=new Set;is_fork=!1;#p=!1;#E(){if(this.is_fork)return!0;for(const r of this.#s.keys()){for(var t=r,n=!1;t.parent!==null;){if(this.#u.has(t)){n=!0;break}t=t.parent}if(!n)return!0}return!1}skip_effect(t){this.#u.has(t)||this.#u.set(t,{d:[],m:[]}),this.#c.delete(t)}unskip_effect(t,n=r=>this.schedule(r)){var r=this.#u.get(t);if(r){this.#u.delete(t);for(var i of r.d)S(i,M),n(i);for(i of r.m)S(i,J),n(i)}this.#c.add(t)}#g(){if(this.#t=!0,Vt++>1e3&&(this.#b(),Fr()),!this.#E()){for(const f of this.#d)this.#o.delete(f),S(f,M),this.schedule(f);for(const f of this.#o)S(f,J),this.schedule(f)}const t=this.#f;this.#f=[],this.apply();var n=Ce=[],r=[],i=Ze=[];for(const f of t)try{this.#S(f,n,r)}catch(o){throw _n(f),o}if(p=null,i.length>0){var s=he.ensure();for(const f of i)s.schedule(f)}if(Ce=null,Ze=null,this.#E()){this.#_(r),this.#_(n);for(const[f,o]of this.#u)vn(f,o);i.length>0&&p.#g();return}const l=this.#y();if(l){l.#m(this);return}this.#d.clear(),this.#o.clear();for(const f of this.#a)f(this);this.#a.clear(),yt=this,jt(r),jt(n),yt=null,this.#h?.resolve();var a=p;if(this.linked&&this.#r===0&&this.#b(),this.#f.length>0){a===null&&(a=this,this.#w());const f=a;f.#f.push(...this.#f.filter(o=>!f.#f.includes(o)))}a!==null&&a.#g()}#S(t,n,r){t.f^=k;for(var i=t.first;i!==null;){var s=i.f,l=(s&(K|ce))!==0,a=l&&(s&k)!==0,f=a||(s&R)!==0||this.#u.has(i);if(!f&&i.fn!==null){l?i.f^=k:(s&Oe)!==0?n.push(i):Ge(i)&&((s&Y)!==0&&this.#o.add(i),Pe(i));var o=i.first;if(o!==null){i=o;continue}}for(;i!==null;){var u=i.next;if(u!==null){i=u;break}i=i.parent}}}#y(){for(var t=this.#l;t!==null;){if(!t.is_fork){for(const[n,[,r]]of this.current)if(t.current.has(n)&&!r)return t}t=t.#l}return null}#m(t){for(const[r,i]of t.current)!this.previous.has(r)&&t.previous.has(r)&&this.previous.set(r,t.previous.get(r)),this.current.set(r,i);for(const[r,i]of t.async_deriveds){const s=this.async_deriveds.get(r);s&&i.promise.then(s.resolve)}const n=r=>{var i=r.reactions;if(i!==null)for(const a of i){var s=a.f;if((s&C)!==0)n(a);else{var l=a;s&(Re|Y)&&!this.async_deriveds.has(l)&&(this.#o.delete(l),S(l,M),this.schedule(l))}}};for(const r of this.current.keys())n(r);this.oncommit(()=>t.discard()),t.#b(),p=this,this.#g()}#_(t){for(var n=0;n<t.length;n+=1)hn(t[n],this.#d,this.#o)}capture(t,n,r=!1){t.v!==T&&!this.previous.has(t)&&this.previous.set(t,t.v),(t.f&ue)===0&&(this.current.set(t,[n,r]),G?.set(t,n)),this.is_fork||(t.v=n)}activate(){p=this}deactivate(){p=null,G=null}flush(){try{ut=!0,p=this,this.#g()}finally{Vt=0,Et=null,Ce=null,Ze=null,ut=!1,p=null,G=null,ge.clear()}}discard(){for(const t of this.#n)t(this);this.#n.clear(),this.#i.clear(),this.#b()}register_created_effect(t){this.#v.push(t)}#A(){this.#b();for(let u=ot;u!==null;u=u.#e){var t=u.id<this.id,n=[];for(const[h,[c,v]]of this.current){if(u.current.has(h)){var r=u.current.get(h)[0];if(t&&c!==r)u.current.set(h,[c,v]);else continue}n.push(h)}if(t)for(const[h,c]of this.async_deriveds){const v=u.async_deriveds.get(h);v&&c.promise.then(v.resolve)}if(u.#t){var i=[...u.current.keys()].filter(h=>!this.current.has(h));if(i.length===0)t&&u.discard();else if(n.length>0){if(t)for(const h of this.#c)u.unskip_effect(h,c=>{(c.f&(Y|Re))!==0?u.schedule(c):u.#_([c])});u.activate();var s=new Set,l=new Map;for(var a of n)dn(a,i,s,l);l=new Map;var f=[...u.current.keys()].filter(h=>this.current.has(h)?this.current.get(h)[0]!==h.v:!0);if(f.length>0)for(const h of this.#v)(h.f&(B|R|Qe))===0&&Rt(h,f,l)&&((h.f&(Re|Y))!==0?(S(h,M),u.schedule(h)):u.#d.add(h));if(u.#f.length>0){u.apply();for(var o of u.#f)u.#S(o,[],[]);u.#f=[]}u.deactivate()}}}}increment(t,n){if(this.#r+=1,t){let r=this.#s.get(n)??0;this.#s.set(n,r+1)}}decrement(t,n){if(this.#r-=1,t){let r=this.#s.get(n)??0;r===1?this.#s.delete(n):this.#s.set(n,r-1)}this.#p||(this.#p=!0,W(()=>{this.#p=!1,this.linked&&this.flush()}))}transfer_effects(t,n){for(const r of t)this.#d.add(r);for(const r of n)this.#o.add(r);t.clear(),n.clear()}oncommit(t){this.#a.add(t)}ondiscard(t){this.#n.add(t)}on_fork_commit(t){this.#i.add(t)}run_fork_commit_callbacks(){for(const t of this.#i)t(this);this.#i.clear()}settled(){return(this.#h??=Qt()).promise}static ensure(){if(p===null){const t=p=new he;t.#w(),!ut&&!je&&W(()=>{t.#t||t.flush()})}return p}apply(){{G=null;return}}schedule(t){if(Et=t,t.b?.is_pending&&(t.f&(Oe|st|en))!==0&&(t.f&Ae)===0){t.b.defer_effect(t);return}for(var n=t;n.parent!==null;){n=n.parent;var r=n.f;if(Ce!==null&&n===g&&(b===null||(b.f&C)===0))return;if((r&(ce|K))!==0){if((r&k)===0)return;n.f^=k}}this.#f.push(n)}#w(){Me===null?ot=Me=this:(Me.#e=this,this.#l=Me),Me=this}#b(){var t=this.#l,n=this.#e;t===null?ot=n:t.#e=n,n===null?Me=t:n.#l=t,this.linked=!1}}function Dr(e){var t=je;je=!0;try{for(var n;;){if(Or(),p===null)return n;p.flush()}}finally{je=t}}function Fr(){try{ur()}catch(e){oe(e,Et)}}let ee=null;function jt(e){var t=e.length;if(t!==0){for(var n=0;n<t;){var r=e[n++];if((r.f&(B|R))===0&&Ge(r)&&(ee=new Set,Pe(r),r.deps===null&&r.first===null&&r.nodes===null&&r.teardown===null&&r.ac===null&&Nn(r),ee?.size>0)){ge.clear();for(const i of ee){if((i.f&(B|R))!==0)continue;const s=[i];let l=i.parent;for(;l!==null;)ee.has(l)&&(ee.delete(l),s.push(l)),l=l.parent;for(let a=s.length-1;a>=0;a--){const f=s[a];(f.f&(B|R))===0&&Pe(f)}}ee.clear()}}ee=null}}function dn(e,t,n,r){if(!n.has(e)&&(n.add(e),e.reactions!==null))for(const i of e.reactions){const s=i.f;(s&C)!==0?dn(i,t,n,r):(s&(Re|Y))!==0&&(s&M)===0&&Rt(i,t,r)&&(S(i,M),Nt(i))}}function Rt(e,t,n){const r=n.get(e);if(r!==void 0)return r;if(e.deps!==null)for(const i of e.deps){if(Ne.call(t,i))return!0;if((i.f&C)!==0&&Rt(i,t,n))return n.set(i,!0),!0}return n.set(e,!1),!1}function Nt(e){p.schedule(e)}function vn(e,t){if(!((e.f&K)!==0&&(e.f&k)!==0)){(e.f&M)!==0?t.d.push(e):(e.f&J)!==0&&t.m.push(e),S(e,k);for(var n=e.first;n!==null;)vn(n,t),n=n.next}}function _n(e){S(e,k);for(var t=e.first;t!==null;)_n(t),t=t.next}function Hr(e){let t=0,n=Ee(0),r;return()=>{Lt()&&(I(n),Fe(()=>(t===0&&(r=Te(()=>e(()=>Be(n)))),t+=1,()=>{W(()=>{t-=1,t===0&&(r?.(),r=void 0,Be(n))})})))}}var Ur=be|De;function Vr(e,t,n,r){new jr(e,t,n,r)}class jr{parent;is_pending=!1;transform_error;#t;#l=null;#e;#a;#n;#i=null;#r=null;#s=null;#h=null;#f=0;#v=0;#d=!1;#o=new Set;#u=new Set;#c=null;#p=Hr(()=>(this.#c=Ee(this.#f),()=>{this.#c=null}));constructor(t,n,r,i){this.#t=t,this.#e=n,this.#a=s=>{var l=g;l.b=this,l.f|=pt,r(s)},this.parent=g.b,this.transform_error=i??this.parent?.transform_error??(s=>s),this.#n=at(()=>{this.#y()},Ur)}#E(){try{this.#i=V(()=>this.#a(this.#t))}catch(t){this.error(t)}}#g(t){const n=this.#e.failed;n&&(this.#s=V(()=>{n(this.#t,()=>t,()=>()=>{})}))}#S(){const t=this.#e.pending;t&&(this.is_pending=!0,this.#r=V(()=>t(this.#t)),W(()=>{var n=this.#h=document.createDocumentFragment(),r=ie();n.append(r),this.#i=this.#_(()=>V(()=>this.#a(r))),this.#v===0&&(this.#t.before(n),this.#h=null,me(this.#r,()=>{this.#r=null}),this.#m(p))}))}#y(){try{if(this.is_pending=this.has_pending_snippet(),this.#v=0,this.#f=0,this.#i=V(()=>{this.#a(this.#t)}),this.#v>0){var t=this.#h=document.createDocumentFragment();Ht(this.#i,t);const n=this.#e.pending;this.#r=V(()=>n(this.#t))}else this.#m(p)}catch(n){this.error(n)}}#m(t){this.is_pending=!1,t.transfer_effects(this.#o,this.#u)}defer_effect(t){hn(t,this.#o,this.#u)}is_rendered(){return!this.is_pending&&(!this.parent||this.parent.is_rendered())}has_pending_snippet(){return!!this.#e.pending}#_(t){var n=g,r=b,i=P;q(this.#n),D(this.#n),Ie(this.#n.ctx);try{return he.ensure(),t()}catch(s){return un(s),null}finally{q(n),D(r),Ie(i)}}#A(t,n){if(!this.has_pending_snippet()){this.parent&&this.parent.#A(t,n);return}this.#v+=t,this.#v===0&&(this.#m(n),this.#r&&me(this.#r,()=>{this.#r=null}),this.#h&&(this.#t.before(this.#h),this.#h=null))}update_pending_count(t,n){this.#A(t,n),this.#f+=t,!(!this.#c||this.#d)&&(this.#d=!0,W(()=>{this.#d=!1,this.#c&&Le(this.#c,this.#f)}))}get_effect_pending(){return this.#p(),I(this.#c)}error(t){if(!this.#e.onerror&&!this.#e.failed)throw t;p?.is_fork?(this.#i&&p.skip_effect(this.#i),this.#r&&p.skip_effect(this.#r),this.#s&&p.skip_effect(this.#s),p.on_fork_commit(()=>{this.#w(t)})):this.#w(t)}#w(t){this.#i&&(L(this.#i),this.#i=null),this.#r&&(L(this.#r),this.#r=null),this.#s&&(L(this.#s),this.#s=null);var n=this.#e.onerror;let r=this.#e.failed;var i=!1,s=!1;const l=()=>{if(i){xr();return}i=!0,s&&_r(),this.#s!==null&&me(this.#s,()=>{this.#s=null}),this.#_(()=>{this.#y()})},a=f=>{try{s=!0,n?.(f,l),s=!1}catch(o){oe(o,this.#n&&this.#n.parent)}r&&(this.#s=this.#_(()=>{try{return V(()=>{var o=g;o.b=this,o.f|=pt,r(this.#t,()=>f,()=>l)})}catch(o){return oe(o,this.#n.parent),null}}))};W(()=>{var f;try{f=this.transform_error(t)}catch(o){oe(o,this.#n&&this.#n.parent);return}f!==null&&typeof f=="object"&&typeof f.then=="function"?f.then(a,o=>oe(o,this.#n&&this.#n.parent)):a(f)})}}function Br(e,t,n,r){const i=ze;var s=e.filter(c=>!c.settled);if(n.length===0&&s.length===0){r(t.map(i));return}var l=g,a=zr(),f=s.length===1?s[0].promise:s.length>1?Promise.all(s.map(c=>c.promise)):null;function o(c){if((l.f&B)===0){a();try{r(c)}catch(v){oe(v,l)}tt()}}var u=pn();if(n.length===0){f.then(()=>o(t.map(i))).finally(u);return}function h(){Promise.all(n.map(c=>qr(c))).then(c=>o([...t.map(i),...c])).catch(c=>oe(c,l)).finally(u)}f?f.then(()=>{a(),h(),tt()}):h()}function zr(){var e=g,t=b,n=P,r=p;return function(s=!0){q(e),D(t),Ie(n),s&&(e.f&B)===0&&(r?.activate(),r?.apply())}}function tt(e=!0){q(null),D(null),Ie(null),e&&p?.deactivate()}function pn(){var e=g,t=e.b,n=p,r=t.is_rendered();return t.update_pending_count(1,n),n.increment(r,e),()=>{t.update_pending_count(-1,n),n.decrement(r,e)}}function ze(e){var t=C|M;return g!==null&&(g.f|=De),{ctx:P,deps:null,effects:null,equals:sn,f:t,fn:e,reactions:null,rv:0,v:T,wv:0,parent:g,ac:null}}const We=Symbol("obsolete");function qr(e,t,n){let r=g;r===null&&sr();var i=void 0,s=Ee(T),l=!b,a=new Set;return ri(()=>{var f=g,o=Qt();i=o.promise;try{Promise.resolve(e()).then(o.resolve,v=>{v!==ft&&o.reject(v)}).finally(tt)}catch(v){o.reject(v),tt()}var u=p;if(l){if((f.f&Ae)!==0)var h=pn();if(r.b.is_rendered())u.async_deriveds.get(f)?.reject(We);else for(const v of a.values())v.reject(We);a.add(o),u.async_deriveds.set(f,o)}const c=(v,_=void 0)=>{h?.(),a.delete(o),_!==We&&(u.activate(),_?(s.f|=ue,Le(s,_)):((s.f&ue)!==0&&(s.f^=ue),Le(s,v)),u.deactivate())};o.promise.then(c,v=>c(null,v||"unknown"))}),Pt(()=>{for(const f of a)f.reject(We)}),new Promise(f=>{function o(u){function h(){u===i?f(s):o(i)}u.then(h,h)}o(i)})}function Ni(e){const t=ze(e);return Ln(t),t}function gn(e){const t=ze(e);return t.equals=ln,t}function Yr(e){var t=e.effects;if(t!==null){e.effects=null;for(var n=0;n<t.length;n+=1)L(t[n])}}function Ot(e){var t,n=g,r=e.parent;if(!se&&r!==null&&e.v!==T&&(r.f&(B|R))!==0)return Cr(),e.v;q(r);try{e.f&=~ye,Yr(e),t=Hn(e)}finally{q(n)}return t}function mn(e){var t=Ot(e);if(!e.equals(t)&&(e.wv=Dn(),(!p?.is_fork||e.deps===null)&&(p!==null?(p.capture(e,t,!0),yt?.capture(e,t,!0)):e.v=t,e.deps===null))){S(e,k);return}se||(G!==null?(Lt()||p?.is_fork)&&G.set(e,t):xt(e))}function Gr(e){if(e.effects!==null)for(const t of e.effects)(t.teardown||t.ac)&&(t.teardown?.(),t.ac?.abort(ft),t.fn!==null&&(t.teardown=Jn),t.ac=null,qe(t,0),Dt(t))}function wn(e){if(e.effects!==null)for(const t of e.effects)t.teardown&&t.fn!==null&&Pe(t)}let nt=new Set;const ge=new Map;let bn=!1;function Ee(e,t){var n={f:0,v:e,reactions:null,equals:sn,rv:0,wv:0};return n}function le(e,t){const n=Ee(e);return Ln(n),n}function $r(e,t=!1,n=!0){const r=Ee(e);return t||(r.equals=ln),r}function ne(e,t,n=!1){b!==null&&(!$||(b.f&Qe)!==0)&&an()&&(b.f&(C|Y|Re|Qe))!==0&&(z===null||!Ne.call(z,e))&&vr();let r=n?_e(t):t;return Le(e,r,Ze)}function Le(e,t,n=null){if(!e.equals(t)){ge.set(e,se?t:e.v);var r=he.ensure();if(r.capture(e,t),(e.f&C)!==0){const i=e;(e.f&M)!==0&&Ot(i),G===null&&xt(i)}e.wv=Dn(),yn(e,M,n),g!==null&&(g.f&k)!==0&&(g.f&(K|ce))===0&&(U===null?fi([e]):U.push(e)),!r.is_fork&&nt.size>0&&!bn&&Wr()}return t}function Wr(){bn=!1;for(const e of nt){(e.f&k)!==0&&S(e,J);let t;try{t=Ge(e)}catch{t=!0}t&&Pe(e)}nt.clear()}function Oi(e,t=1){var n=I(e),r=t===1?n++:n--;return ne(e,n),r}function Be(e){ne(e,e.v+1)}function yn(e,t,n){var r=e.reactions;if(r!==null)for(var i=r.length,s=0;s<i;s++){var l=r[s],a=l.f,f=(a&M)===0;if(f&&S(l,t),(a&Qe)!==0)nt.add(l);else if((a&C)!==0){var o=l;G?.delete(o),(a&ye)===0&&(a&j&&(g===null||(g.f&et)===0)&&(l.f|=ye),yn(o,J,n))}else if(f){var u=l;(a&Y)!==0&&ee!==null&&ee.add(u),n!==null?n.push(u):Nt(u)}}}function _e(e){if(typeof e!="object"||e===null||re in e)return e;const t=Ct(e);if(t!==Xn&&t!==Zn)return e;var n=new Map,r=Zt(e),i=le(0),s=we,l=a=>{if(we===s)return a();var f=b,o=we;D(null),Gt(s);var u=a();return D(f),Gt(o),u};return r&&n.set("length",le(e.length)),new Proxy(e,{defineProperty(a,f,o){(!("value"in o)||o.configurable===!1||o.enumerable===!1||o.writable===!1)&&hr();var u=n.get(f);return u===void 0?l(()=>{var h=le(o.value);return n.set(f,h),h}):ne(u,o.value,!0),!0},deleteProperty(a,f){var o=n.get(f);if(o===void 0){if(f in a){const u=l(()=>le(T));n.set(f,u),Be(i)}}else ne(o,T),Be(i);return!0},get(a,f,o){if(f===re)return e;var u=n.get(f),h=f in a;if(u===void 0&&(!h||xe(a,f)?.writable)&&(u=l(()=>{var v=_e(h?a[f]:T),_=le(v);return _}),n.set(f,u)),u!==void 0){var c=I(u);return c===T?void 0:c}return Reflect.get(a,f,o)},getOwnPropertyDescriptor(a,f){var o=Reflect.getOwnPropertyDescriptor(a,f);if(o&&"value"in o){var u=n.get(f);u&&(o.value=I(u))}else if(o===void 0){var h=n.get(f),c=h?.v;if(h!==void 0&&c!==T)return{enumerable:!0,configurable:!0,value:c,writable:!0}}return o},has(a,f){if(f===re)return!0;var o=n.get(f),u=o!==void 0&&o.v!==T||Reflect.has(a,f);if(o!==void 0||g!==null&&(!u||xe(a,f)?.writable)){o===void 0&&(o=l(()=>{var c=u?_e(a[f]):T,v=le(c);return v}),n.set(f,o));var h=I(o);if(h===T)return!1}return u},set(a,f,o,u){var h=n.get(f),c=f in a;if(r&&f==="length")for(var v=o;v<h.v;v+=1){var _=n.get(v+"");_!==void 0?ne(_,T):v in a&&(_=l(()=>le(T)),n.set(v+"",_))}if(h===void 0)(!c||xe(a,f)?.writable)&&(h=l(()=>le(void 0)),ne(h,_e(o)),n.set(f,h));else{c=h.v!==T;var m=l(()=>_e(o));ne(h,m)}var d=Reflect.getOwnPropertyDescriptor(a,f);if(d?.set&&d.set.call(u,o),!c){if(r&&typeof f=="string"){var w=n.get("length"),A=Number(f);Number.isInteger(A)&&A>=w.v&&ne(w,A+1)}Be(i)}return!0},ownKeys(a){I(i);var f=Reflect.ownKeys(a).filter(h=>{var c=n.get(h);return c===void 0||c.v!==T});for(var[o,u]of n)u.v!==T&&!(o in a)&&f.push(o);return f},setPrototypeOf(){dr()}})}function Bt(e){try{if(e!==null&&typeof e=="object"&&re in e)return e[re]}catch{}return e}function Kr(e,t){return Object.is(Bt(e),Bt(t))}var zt,En,Sn,An;function Xr(){if(zt===void 0){zt=window,En=/Firefox/.test(navigator.userAgent);var e=Element.prototype,t=Node.prototype,n=Text.prototype;Sn=xe(t,"firstChild").get,An=xe(t,"nextSibling").get,Ut(e)&&(e[mt]=void 0,e[tn]=null,e[wt]=void 0,e.__e=void 0),Ut(n)&&(n[bt]=void 0)}}function ie(e=""){return document.createTextNode(e)}function Z(e){return Sn.call(e)}function Ye(e){return An.call(e)}function Ii(e,t){return Z(e)}function Li(e,t=!1){{var n=Z(e);return n instanceof Comment&&n.data===""?Ye(n):n}}function Pi(e,t=1,n=!1){let r=e;for(;t--;)r=Ye(r);return r}function Zr(e){e.textContent=""}function Tn(){return!1}function kn(e,t,n){return document.createElementNS(t??rn,e,void 0)}function Di(e,t){{const n=document.body;e.autofocus=!0,W(()=>{document.activeElement===n&&e.focus()})}}let qt=!1;function Jr(){qt||(qt=!0,document.addEventListener("reset",e=>{Promise.resolve().then(()=>{if(!e.defaultPrevented)for(const t of e.target.elements)t[Xe]?.()})},{capture:!0}))}function lt(e){var t=b,n=g;D(null),q(null);try{return e()}finally{D(t),q(n)}}function It(e,t,n,r=n){e.addEventListener(t,()=>lt(n));const i=e[Xe];i?e[Xe]=()=>{i(),r(!0)}:e[Xe]=()=>r(!0),Jr()}function Qr(e){g===null&&(b===null&&or(),ar()),se&&lr()}function ei(e,t){var n=t.last;n===null?t.last=t.first=e:(n.next=e,e.prev=n,t.last=e)}function fe(e,t){var n=g;n!==null&&(n.f&R)!==0&&(e|=R);var r={ctx:P,deps:null,nodes:null,f:e|M|j,first:null,fn:t,last:null,next:null,parent:n,b:n&&n.b,prev:null,teardown:null,wv:0,ac:null};p?.register_created_effect(r);var i=r;if((e&Oe)!==0)Ce!==null?Ce.push(r):he.ensure().schedule(r);else if(t!==null){try{Pe(r)}catch(l){throw L(r),l}i.deps===null&&i.teardown===null&&i.nodes===null&&i.first===i.last&&(i.f&De)===0&&(i=i.first,(e&Y)!==0&&(e&be)!==0&&i!==null&&(i.f|=be))}if(i!==null&&(i.parent=n,n!==null&&ei(i,n),b!==null&&(b.f&C)!==0&&(e&ce)===0)){var s=b;(s.effects??=[]).push(i)}return r}function Lt(){return b!==null&&!$}function Pt(e){const t=fe(st,null);return S(t,k),t.teardown=e,t}function ti(e){Qr();var t=g.f,n=!b&&(t&K)!==0&&(t&Ae)===0;if(n){var r=P;(r.e??=[]).push(e)}else return Mn(e)}function Mn(e){return fe(Oe|tr,e)}function ni(e){he.ensure();const t=fe(ce|De,e);return(n={})=>new Promise(r=>{n.outro?me(t,()=>{L(t),r(void 0)}):(L(t),r(void 0))})}function Cn(e){return fe(Oe,e)}function ri(e){return fe(Re|De,e)}function Fe(e,t=0){return fe(st|t,e)}function ii(e,t=[],n=[],r=[]){Br(r,t,n,i=>{fe(st,()=>e(...i.map(I)))})}function at(e,t=0){var n=fe(Y|t,e);return n}function V(e){return fe(K|De,e)}function xn(e){var t=e.teardown;if(t!==null){const n=se,r=b;Yt(!0),D(null);try{t.call(null)}finally{Yt(n),D(r)}}}function Dt(e,t=!1){var n=e.first;for(e.first=e.last=null;n!==null;){const i=n.ac;i!==null&&lt(()=>{i.abort(ft)});var r=n.next;(n.f&ce)!==0?n.parent=null:L(n,t),n=r}}function si(e){for(var t=e.first;t!==null;){var n=t.next;(t.f&K)===0&&L(t),t=n}}function L(e,t=!0){var n=!1;(t||(e.f&er)!==0)&&e.nodes!==null&&e.nodes.end!==null&&(Rn(e.nodes.start,e.nodes.end),n=!0),S(e,gt),Dt(e,t&&!n),qe(e,0);var r=e.nodes&&e.nodes.t;if(r!==null)for(const s of r)s.stop();xn(e),e.f^=gt,e.f|=B;var i=e.parent;i!==null&&i.first!==null&&Nn(e),e.next=e.prev=e.teardown=e.ctx=e.deps=e.fn=e.nodes=e.ac=e.b=null}function Rn(e,t){for(;e!==null;){var n=e===t?null:Ye(e);e.remove(),e=n}}function Nn(e){var t=e.parent,n=e.prev,r=e.next;n!==null&&(n.next=r),r!==null&&(r.prev=n),t!==null&&(t.first===e&&(t.first=r),t.last===e&&(t.last=n))}function me(e,t,n=!0){var r=[];On(e,r,!0);var i=()=>{n&&L(e),t&&t()},s=r.length;if(s>0){var l=()=>--s||i();for(var a of r)a.out(l)}else i()}function On(e,t,n){if((e.f&R)===0){e.f^=R;var r=e.nodes&&e.nodes.t;if(r!==null)for(const a of r)(a.is_global||n)&&t.push(a);for(var i=e.first;i!==null;){var s=i.next;if((i.f&ce)===0){var l=(i.f&be)!==0||(i.f&K)!==0&&(e.f&Y)!==0;On(i,t,l?n:!1)}i=s}}}function Ft(e){In(e,!0)}function In(e,t){if((e.f&R)!==0){e.f^=R,(e.f&k)===0&&(S(e,M),he.ensure().schedule(e));for(var n=e.first;n!==null;){var r=n.next,i=(n.f&be)!==0||(n.f&K)!==0;In(n,i?t:!1),n=r}var s=e.nodes&&e.nodes.t;if(s!==null)for(const l of s)(l.is_global||t)&&l.in()}}function Ht(e,t){if(e.nodes)for(var n=e.nodes.start,r=e.nodes.end;n!==null;){var i=n===r?null:Ye(n);t.append(n),n=i}}let Je=!1,se=!1;function Yt(e){se=e}let b=null,$=!1;function D(e){b=e}let g=null;function q(e){g=e}let z=null;function Ln(e){b!==null&&(z===null?z=[e]:z.push(e))}let O=null,H=0,U=null;function fi(e){U=e}let Pn=1,pe=0,we=pe;function Gt(e){we=e}function Dn(){return++Pn}function Ge(e){var t=e.f;if((t&M)!==0)return!0;if(t&C&&(e.f&=~ye),(t&J)!==0){for(var n=e.deps,r=n.length,i=0;i<r;i++){var s=n[i];if(Ge(s)&&mn(s),s.wv>e.wv)return!0}(t&j)!==0&&G===null&&S(e,k)}return!1}function Fn(e,t,n=!0){var r=e.reactions;if(r!==null&&!(z!==null&&Ne.call(z,e)))for(var i=0;i<r.length;i++){var s=r[i];(s.f&C)!==0?Fn(s,t,!1):t===s&&(n?S(s,M):(s.f&k)!==0&&S(s,J),Nt(s))}}function Hn(e){var t=O,n=H,r=U,i=b,s=z,l=P,a=$,f=we,o=e.f;O=null,H=0,U=null,b=(o&(K|ce))===0?e:null,z=null,Ie(e.ctx),$=!1,we=++pe,e.ac!==null&&(lt(()=>{e.ac.abort(ft)}),e.ac=null);try{e.f|=et;var u=e.fn,h=u();e.f|=Ae;var c=e.deps,v=p?.is_fork;if(O!==null){var _;if(v||qe(e,H),c!==null&&H>0)for(c.length=H+O.length,_=0;_<O.length;_++)c[H+_]=O[_];else e.deps=c=O;if(Lt()&&(e.f&j)!==0)for(_=H;_<c.length;_++)(c[_].reactions??=[]).push(e)}else!v&&c!==null&&H<c.length&&(qe(e,H),c.length=H);if(an()&&U!==null&&!$&&c!==null&&(e.f&(C|J|M))===0)for(_=0;_<U.length;_++)Fn(U[_],e);if(i!==null&&i!==e){if(pe++,i.deps!==null)for(let m=0;m<n;m+=1)i.deps[m].rv=pe;if(t!==null)for(const m of t)m.rv=pe;U!==null&&(r===null?r=U:r.push(...U))}return(e.f&ue)!==0&&(e.f^=ue),h}catch(m){return un(m)}finally{e.f^=et,O=t,H=n,U=r,b=i,z=s,Ie(l),$=a,we=f}}function li(e,t){let n=t.reactions;if(n!==null){var r=Wn.call(n,e);if(r!==-1){var i=n.length-1;i===0?n=t.reactions=null:(n[r]=n[i],n.pop())}}if(n===null&&(t.f&C)!==0&&(O===null||!Ne.call(O,t))){var s=t;(s.f&j)!==0&&(s.f^=j,s.f&=~ye),s.v!==T&&xt(s),Gr(s),qe(s,0)}}function qe(e,t){var n=e.deps;if(n!==null)for(var r=t;r<n.length;r++)li(e,n[r])}function Pe(e){var t=e.f;if((t&B)===0){S(e,k);var n=g,r=Je;g=e,Je=!0;try{(t&(Y|en))!==0?si(e):Dt(e),xn(e);var i=Hn(e);e.teardown=typeof i=="function"?i:null,e.wv=Pn;var s}finally{Je=r,g=n}}}async function ai(){await Promise.resolve(),Dr()}function I(e){var t=e.f,n=(t&C)!==0;if(b!==null&&!$){var r=g!==null&&(g.f&B)!==0;if(!r&&(z===null||!Ne.call(z,e))){var i=b.deps;if((b.f&et)!==0)e.rv<pe&&(e.rv=pe,O===null&&i!==null&&i[H]===e?H++:O===null?O=[e]:O.push(e));else{(b.deps??=[]).push(e);var s=e.reactions;s===null?e.reactions=[b]:Ne.call(s,b)||s.push(b)}}}if(se&&ge.has(e))return ge.get(e);if(n){var l=e;if(se){var a=l.v;return((l.f&k)===0&&l.reactions!==null||Vn(l))&&(a=Ot(l)),ge.set(l,a),a}var f=(l.f&j)===0&&!$&&b!==null&&(Je||(b.f&j)!==0),o=(l.f&Ae)===0;Ge(l)&&(f&&(l.f|=j),mn(l)),f&&!o&&(wn(l),Un(l))}if(G?.has(e))return G.get(e);if((e.f&ue)!==0)throw e.v;return e.v}function Un(e){if(e.f|=j,e.deps!==null)for(const t of e.deps)(t.reactions??=[]).push(e),(t.f&C)!==0&&(t.f&j)===0&&(wn(t),Un(t))}function Vn(e){if(e.v===T)return!0;if(e.deps===null)return!1;for(const t of e.deps)if(ge.has(t)||(t.f&C)!==0&&Vn(t))return!0;return!1}function Te(e){var t=$;try{return $=!0,e()}finally{$=t}}function oi(e){if(!(typeof e!="object"||!e||e instanceof EventTarget)){if(re in e)St(e);else if(!Array.isArray(e))for(let t in e){const n=e[t];typeof n=="object"&&n&&re in n&&St(n)}}}function St(e,t=new Set){if(typeof e=="object"&&e!==null&&!(e instanceof EventTarget)&&!t.has(e)){t.add(e),e instanceof Date&&e.getTime();for(let r in e)try{St(e[r],t)}catch{}const n=Ct(e);if(n!==Object.prototype&&n!==Array.prototype&&n!==Map.prototype&&n!==Set.prototype&&n!==Date.prototype){const r=Jt(n);for(let i in r){const s=r[i].get;if(s)try{s.call(e)}catch{}}}}}const ui=["touchstart","touchmove"];function ci(e){return ui.includes(e)}const Ue=Symbol("events"),jn=new Set,At=new Set;function hi(e,t,n,r={}){function i(s){if(r.capture||Tt.call(t,s),!s.cancelBubble)return lt(()=>n?.call(this,s))}return e.startsWith("pointer")||e.startsWith("touch")||e==="wheel"?W(()=>{t.addEventListener(e,i,r)}):t.addEventListener(e,i,r),i}function Fi(e,t,n,r,i){var s={capture:r,passive:i},l=hi(e,t,n,s);(t===document.body||t===window||t===document||t instanceof HTMLMediaElement)&&Pt(()=>{t.removeEventListener(e,l,s)})}function Hi(e,t,n){(t[Ue]??={})[e]=n}function Ui(e){for(var t=0;t<e.length;t++)jn.add(e[t]);for(var n of At)n(e)}let $t=null;function Tt(e){var t=this,n=t.ownerDocument,r=e.type,i=e.composedPath?.()||[],s=i[0]||e.target;$t=e;var l=0,a=$t===e&&e[Ue];if(a){var f=i.indexOf(a);if(f!==-1&&(t===document||t===window)){e[Ue]=t;return}var o=i.indexOf(t);if(o===-1)return;f<=o&&(l=f)}if(s=i[l]||e.target,s!==t){Kn(e,"currentTarget",{configurable:!0,get(){return s||n}});var u=b,h=g;D(null),q(null);try{for(var c,v=[];s!==null;){var _=s.assignedSlot||s.parentNode||s.host||null;try{var m=s[Ue]?.[r];m!=null&&(!s.disabled||e.target===s)&&m.call(s,e)}catch(d){c?v.push(d):c=d}if(e.cancelBubble||_===t||_===null)break;s=_}if(c){for(let d of v)queueMicrotask(()=>{throw d});throw c}}finally{e[Ue]=t,delete e.currentTarget,D(u),q(h)}}}const di=globalThis?.window?.trustedTypes&&globalThis.window.trustedTypes.createPolicy("svelte-trusted-html",{createHTML:e=>e});function vi(e){return di?.createHTML(e)??e}function Bn(e){var t=kn("template");return t.innerHTML=vi(e.replaceAll("<!>","<!---->")),t.content}function Se(e,t){var n=g;n.nodes===null&&(n.nodes={start:e,end:t,a:null,t:null})}function Vi(e,t){var n=(t&Ar)!==0,r=(t&Tr)!==0,i,s=!e.startsWith("<!>");return()=>{i===void 0&&(i=Bn(s?e:"<!>"+e),n||(i=Z(i)));var l=r||En?document.importNode(i,!0):i.cloneNode(!0);if(n){var a=Z(l),f=l.lastChild;Se(a,f)}else Se(l,l);return l}}function _i(e,t,n="svg"){var r=!e.startsWith("<!>"),i=`<${n}>${r?e:"<!>"+e}</${n}>`,s;return()=>{if(!s){var l=Bn(i),a=Z(l);s=Z(a)}var f=s.cloneNode(!0);return Se(f,f),f}}function ji(e,t){return _i(e,t,"svg")}function Bi(e=""){{var t=ie(e+"");return Se(t,t),t}}function zi(){var e=document.createDocumentFragment(),t=document.createComment(""),n=ie();return e.append(t,n),Se(t,n),e}function qi(e,t){e!==null&&e.before(t)}function Yi(e,t){var n=t==null?"":typeof t=="object"?`${t}`:t;n!==(e[bt]??=e.nodeValue)&&(e[bt]=n,e.nodeValue=`${n}`)}function Gi(e,t){return pi(e,t)}const Ke=new Map;function pi(e,{target:t,anchor:n,props:r={},events:i,context:s,intro:l=!0,transformError:a}){Xr();var f=void 0,o=ni(()=>{var u=n??t.appendChild(ie());Vr(u,{pending:()=>{}},v=>{Rr({});var _=P;s&&(_.c=s),i&&(r.$$events=i),f=e(v,r)||{},Nr()},a);var h=new Set,c=v=>{for(var _=0;_<v.length;_++){var m=v[_];if(!h.has(m)){h.add(m);var d=ci(m);for(const E of[t,document]){var w=Ke.get(E);w===void 0&&(w=new Map,Ke.set(E,w));var A=w.get(m);A===void 0?(E.addEventListener(m,Tt,{passive:d}),w.set(m,1)):w.set(m,A+1)}}}};return c(it(jn)),At.add(c),()=>{for(var v of h)for(const d of[t,document]){var _=Ke.get(d),m=_.get(v);--m==0?(d.removeEventListener(v,Tt),_.delete(v),_.size===0&&Ke.delete(d)):_.set(v,m)}At.delete(c),u!==n&&u.parentNode?.removeChild(u)}});return gi.set(f,o),f}let gi=new WeakMap;class zn{anchor;#t=new Map;#l=new Map;#e=new Map;#a=new Set;#n=!0;constructor(t,n=!0){this.anchor=t,this.#n=n}#i=t=>{if(this.#t.has(t)){var n=this.#t.get(t),r=this.#l.get(n);if(r)Ft(r),this.#a.delete(n);else{var i=this.#e.get(n);i&&(this.#l.set(n,i.effect),this.#e.delete(n),i.fragment.lastChild.remove(),this.anchor.before(i.fragment),r=i.effect)}for(const[s,l]of this.#t){if(this.#t.delete(s),s===t)break;const a=this.#e.get(l);a&&(L(a.effect),this.#e.delete(l))}for(const[s,l]of this.#l){if(s===n||this.#a.has(s))continue;const a=()=>{if(Array.from(this.#t.values()).includes(s)){var o=document.createDocumentFragment();Ht(l,o),o.append(ie()),this.#e.set(s,{effect:l,fragment:o})}else L(l);this.#a.delete(s),this.#l.delete(s)};this.#n||!r?(this.#a.add(s),me(l,a,!1)):a()}}};#r=t=>{this.#t.delete(t);const n=Array.from(this.#t.values());for(const[r,i]of this.#e)n.includes(r)||(L(i.effect),this.#e.delete(r))};ensure(t,n){var r=p,i=Tn();if(n&&!this.#l.has(t)&&!this.#e.has(t))if(i){var s=document.createDocumentFragment(),l=ie();s.append(l),this.#e.set(t,{effect:V(()=>n(l)),fragment:s})}else this.#l.set(t,V(()=>n(this.anchor)));if(this.#t.set(r,t),i){for(const[a,f]of this.#l)a===t?r.unskip_effect(f):r.skip_effect(f);for(const[a,f]of this.#e)a===t?r.unskip_effect(f.effect):r.skip_effect(f.effect);r.oncommit(this.#i),r.ondiscard(this.#r)}else this.#i(r)}}function $i(e,t,n=!1){var r=new zn(e),i=n?be:0;function s(l,a){r.ensure(l,a)}at(()=>{var l=!1;t((a,f=0)=>{l=!0,s(f,a)}),l||s(-1,null)},i)}function Wi(e,t){return t}function mi(e,t,n){for(var r=[],i=t.length,s,l=t.length,a=0;a<i;a++){let h=t[a];me(h,()=>{if(s){if(s.pending.delete(h),s.done.add(h),s.pending.size===0){var c=e.outrogroups;kt(e,it(s.done)),c.delete(s),c.size===0&&(e.outrogroups=null)}}else l-=1},!1)}if(l===0){var f=r.length===0&&n!==null;if(f){var o=n,u=o.parentNode;Zr(u),u.append(o),e.items.clear()}kt(e,t,!f)}else s={pending:new Set(t),done:new Set},(e.outrogroups??=new Set).add(s)}function kt(e,t,n=!0){var r;if(e.pending.size>0){r=new Set;for(const l of e.pending.values())for(const a of l)r.add(e.items.get(a).e)}for(var i=0;i<t.length;i++){var s=t[i];if(r?.has(s)){s.f|=X;const l=document.createDocumentFragment();Ht(s,l)}else L(t[i],n)}}var Wt;function Ki(e,t,n,r,i,s=null){var l=e,a=new Map,f=(t&nn)!==0;if(f){var o=e;l=o.appendChild(ie())}var u=null,h=gn(()=>{var E=n();return Zt(E)?E:E==null?[]:it(E)}),c,v=new Map,_=!0;function m(E){(A.effect.f&B)===0&&(A.pending.delete(E),A.fallback=u,wi(A,c,l,t,r),u!==null&&(c.length===0?(u.f&X)===0?Ft(u):(u.f^=X,Ve(u,null,l)):me(u,()=>{u=null})))}function d(E){A.pending.delete(E)}var w=at(()=>{c=I(h);for(var E=c.length,y=new Set,N=p,Q=Tn(),F=0;F<E;F+=1){var de=c[F],ke=r(de,F),x=_?null:a.get(ke);x?(x.v&&Le(x.v,de),x.i&&Le(x.i,F),Q&&N.unskip_effect(x.e)):(x=bi(a,_?l:Wt??=ie(),de,ke,F,i,t,n),_||(x.e.f|=X),a.set(ke,x)),y.add(ke)}if(E===0&&s&&!u&&(_?u=V(()=>s(l)):(u=V(()=>s(Wt??=ie())),u.f|=X)),E>y.size&&fr(),!_)if(v.set(N,y),Q){for(const[Gn,$n]of a)y.has(Gn)||N.skip_effect($n.e);N.oncommit(m),N.ondiscard(d)}else m(N);I(h)}),A={effect:w,items:a,pending:v,outrogroups:null,fallback:u};_=!1}function He(e){for(;e!==null&&(e.f&K)===0;)e=e.next;return e}function wi(e,t,n,r,i){var s=(r&mr)!==0,l=t.length,a=e.items,f=He(e.effect.first),o,u=null,h,c=[],v=[],_,m,d,w;if(s)for(w=0;w<l;w+=1)_=t[w],m=i(_,w),d=a.get(m).e,(d.f&X)===0&&(d.nodes?.a?.measure(),(h??=new Set).add(d));for(w=0;w<l;w+=1){if(_=t[w],m=i(_,w),d=a.get(m).e,e.outrogroups!==null)for(const x of e.outrogroups)x.pending.delete(d),x.done.delete(d);if((d.f&R)!==0&&(Ft(d),s&&(d.nodes?.a?.unfix(),(h??=new Set).delete(d))),(d.f&X)!==0)if(d.f^=X,d===f)Ve(d,null,n);else{var A=u?u.next:f;d===e.effect.last&&(e.effect.last=d.prev),d.prev&&(d.prev.next=d.next),d.next&&(d.next.prev=d.prev),ae(e,u,d),ae(e,d,A),Ve(d,A,n),u=d,c=[],v=[],f=He(u.next);continue}if(d!==f){if(o!==void 0&&o.has(d)){if(c.length<v.length){var E=v[0],y;u=E.prev;var N=c[0],Q=c[c.length-1];for(y=0;y<c.length;y+=1)Ve(c[y],E,n);for(y=0;y<v.length;y+=1)o.delete(v[y]);ae(e,N.prev,Q.next),ae(e,u,N),ae(e,Q,E),f=E,u=Q,w-=1,c=[],v=[]}else o.delete(d),Ve(d,f,n),ae(e,d.prev,d.next),ae(e,d,u===null?e.effect.first:u.next),ae(e,u,d),u=d;continue}for(c=[],v=[];f!==null&&f!==d;)(o??=new Set).add(f),v.push(f),f=He(f.next);if(f===null)continue}(d.f&X)===0&&c.push(d),u=d,f=He(d.next)}if(e.outrogroups!==null){for(const x of e.outrogroups)x.pending.size===0&&(kt(e,it(x.done)),e.outrogroups?.delete(x));e.outrogroups.size===0&&(e.outrogroups=null)}if(f!==null||o!==void 0){var F=[];if(o!==void 0)for(d of o)(d.f&R)===0&&F.push(d);for(;f!==null;)(f.f&R)===0&&f!==e.fallback&&F.push(f),f=He(f.next);var de=F.length;if(de>0){var ke=(r&nn)!==0&&l===0?n:null;if(s){for(w=0;w<de;w+=1)F[w].nodes?.a?.measure();for(w=0;w<de;w+=1)F[w].nodes?.a?.fix()}mi(e,F,ke)}}s&&W(()=>{if(h!==void 0)for(d of h)d.nodes?.a?.apply()})}function bi(e,t,n,r,i,s,l,a){var f=(l&pr)!==0?(l&wr)===0?$r(n,!1,!1):Ee(n):null,o=(l&gr)!==0?Ee(i):null;return{v:f,i:o,e:V(()=>(s(t,f??n,o??i,a),()=>{e.delete(r)}))}}function Ve(e,t,n){if(e.nodes)for(var r=e.nodes.start,i=e.nodes.end,s=t&&(t.f&X)===0?t.nodes.start:n;r!==null;){var l=Ye(r);if(s.before(r),r===i)return;r=l}}function ae(e,t,n){t===null?e.effect.first=n:t.next=n,n===null?e.effect.last=t:n.prev=t}function Xi(e,t,n=!1,r=!1,i=!1,s=!1){var l=e,a="";if(n)var f=e;ii(()=>{var o=g;if(a!==(a=t()??"")){if(n){o.nodes=null,f.innerHTML=a,a!==""&&Se(Z(f),f.lastChild);return}if(o.nodes!==null&&(Rn(o.nodes.start,o.nodes.end),o.nodes=null),a!==""){var u=r?kr:i?Mr:void 0,h=kn(r?"svg":i?"math":"template",u);h.innerHTML=a;var c=r||i?h:h.content;if(Se(Z(c),c.lastChild),r||i)for(;Z(c);)l.before(Z(c));else l.before(c)}}})}function Zi(e,t,n){var r=new zn(e);at(()=>{var i=t()??null;r.ensure(i,i&&(s=>n(s,i)))},be)}function Ji(e,t,n){Cn(()=>{var r=Te(()=>t(e,n?.())||{});if(n&&r?.update){var i=!1,s={};Fe(()=>{var l=n();oi(l),i&&fn(s,l)&&(s=l,r.update(l))}),i=!0}if(r?.destroy)return()=>r.destroy()})}const Kt=[...` 	
-\r\f \v\uFEFF`];function yi(e,t,n){var r=e==null?"":""+e;if(t&&(r=r?r+" "+t:t),n){for(var i of Object.keys(n))if(n[i])r=r?r+" "+i:i;else if(r.length)for(var s=i.length,l=0;(l=r.indexOf(i,l))>=0;){var a=l+s;(l===0||Kt.includes(r[l-1]))&&(a===r.length||Kt.includes(r[a]))?r=(l===0?"":r.substring(0,l))+r.substring(a+1):l=a}}return r===""?null:r}function Xt(e,t=!1){var n=t?" !important;":";",r="";for(var i of Object.keys(e)){var s=e[i];s!=null&&s!==""&&(r+=" "+i+": "+s+n)}return r}function Ei(e,t){if(t){var n="",r,i;return Array.isArray(t)?(r=t[0],i=t[1]):r=t,r&&(n+=Xt(r)),i&&(n+=Xt(i,!0)),n=n.trim(),n===""?null:n}return String(e)}function Qi(e,t,n,r,i,s){var l=e[mt];if(l!==n||l===void 0){var a=yi(n,r,s);a==null?e.removeAttribute("class"):e.className=a,e[mt]=n}else if(s&&i!==s)for(var f in s){var o=!!s[f];(i==null||o!==!!i[f])&&e.classList.toggle(f,o)}return s}function ct(e,t={},n,r){for(var i in n){var s=n[i];t[i]!==s&&(n[i]==null?e.style.removeProperty(i):e.style.setProperty(i,s,r))}}function es(e,t,n,r){var i=e[wt];if(i!==t){var s=Ei(t,r);s==null?e.removeAttribute("style"):e.style.cssText=s,e[wt]=t}else r&&(Array.isArray(r)?(ct(e,n?.[0],r[0]),ct(e,n?.[1],r[1],"important")):ct(e,n,r));return r}const Si=Symbol("is custom element"),Ai=Symbol("is html");function ts(e,t){var n=qn(e);n.checked!==(n.checked=t??void 0)&&(e.checked=t)}function Ti(e,t,n,r){var i=qn(e);i[t]!==(i[t]=n)&&(t==="loading"&&(e[rr]=n),n==null?e.removeAttribute(t):typeof n!="string"&&Yn(e).includes(t)?e[t]=n:e.setAttribute(t,n))}function ns(e,t,n){var r=b,i=g;D(null),q(null);try{t!=="style"&&(Mt.has(e.getAttribute("is")||e.nodeName)||!customElements||customElements.get(e.getAttribute("is")||e.nodeName.toLowerCase())?Yn(e).includes(t):n&&typeof n=="object")?e[t]=n:Ti(e,t,n==null?n:String(n))}finally{D(r),q(i)}}function qn(e){return e[tn]??={[Si]:e.nodeName.includes("-"),[Ai]:e.namespaceURI===rn}}var Mt=new Map;function Yn(e){var t=e.getAttribute("is")||e.nodeName,n=Mt.get(t);if(n)return n;Mt.set(t,n=[]);for(var r,i=e,s=Element.prototype;s!==i;){r=Jt(i);for(var l in r)r[l].set&&l!=="innerHTML"&&l!=="textContent"&&l!=="innerText"&&n.push(l);i=Ct(i)}return n}function rs(e,t,n=t){var r=new WeakSet;It(e,"input",async i=>{var s=i?e.defaultValue:e.value;if(s=dt(e)?vt(s):s,n(s),p!==null&&r.add(p),await ai(),s!==(s=t())){var l=e.selectionStart,a=e.selectionEnd,f=e.value.length;if(e.value=s??"",a!==null){var o=e.value.length;l===a&&a===f&&o>f?(e.selectionStart=o,e.selectionEnd=o):(e.selectionStart=l,e.selectionEnd=Math.min(a,o))}}}),Te(t)==null&&e.value&&(n(dt(e)?vt(e.value):e.value),p!==null&&r.add(p)),Fe(()=>{var i=t();if(e===document.activeElement){var s=p;if(r.has(s))return}dt(e)&&i===vt(e.value)||e.type==="date"&&!i&&!e.value||i!==e.value&&(e.value=i??"")})}const ht=new Set;function is(e,t,n,r,i=r){var s=n.getAttribute("type")==="checkbox",l=e;if(t!==null)for(var a of t)l=l[a]??=[];l.push(n),It(n,"change",()=>{var f=n.__value;s&&(f=ki(l,f,n.checked)),i(f)},()=>i(s?[]:null)),Fe(()=>{var f=r();s?(f=f||[],n.checked=f.includes(n.__value)):n.checked=Kr(n.__value,f)}),Pt(()=>{var f=l.indexOf(n);f!==-1&&l.splice(f,1)}),ht.has(l)||(ht.add(l),W(()=>{l.sort((f,o)=>f.compareDocumentPosition(o)===4?-1:1),ht.delete(l)})),W(()=>{})}function ss(e,t,n=t){It(e,"change",r=>{var i=r?e.defaultChecked:e.checked;n(i)}),Te(t)==null&&n(e.checked),Fe(()=>{var r=t();e.checked=!!r})}function ki(e,t,n){for(var r=new Set,i=0;i<e.length;i+=1)e[i].checked&&r.add(e[i].__value);return n||r.delete(t),Array.from(r)}function dt(e){var t=e.type;return t==="number"||t==="range"}function vt(e){return e===""?null:+e}function _t(e,t){return e===t||e?.[re]===t}function fs(e={},t,n,r){var i=P.r,s=g;return Cn(()=>{var l,a;return Fe(()=>{l=a,a=[],Te(()=>{_t(n(...a),e)||(t(e,...a),l&&_t(n(...l),e)&&t(null,...l))})}),()=>{let f=s;for(;f!==i&&f.parent!==null&&f.parent.f&gt;)f=f.parent;const o=()=>{a&&_t(n(...a),e)&&t(null,...a)},u=f.teardown;f.teardown=()=>{o(),u?.()}}}),e}function ls(e,t,n,r){var i=!0,s=(n&Er)!==0,l=(n&Sr)!==0,a=r,f=!0,o=void 0,u=()=>l&&i?(o??=ze(r),I(o)):(f&&(f=!1,a=l?Te(r):r),a);let h;if(s){var c=re in e||nr in e;h=xe(e,t)?.set??(c&&t in e?y=>e[t]=y:void 0)}var v,_=!1;s?[v,_]=Lr(()=>e[t]):v=e[t],v===void 0&&r!==void 0&&(v=u(),h&&(cr(),h(v)));var m;if(m=()=>{var y=e[t];return y===void 0?u():(f=!0,y)},(n&yr)===0)return m;if(h){var d=e.$$legacy;return(function(y,N){return arguments.length>0?((!N||d||_)&&h(N?m():y),y):m()})}var w=!1,A=((n&br)!==0?ze:gn)(()=>(w=!1,m()));s&&I(A);var E=g;return(function(y,N){if(arguments.length>0){const Q=N?I(A):s?_e(y):y;return ne(A,Q),w=!0,a!==void 0&&(a=Q),y}return se&&w||(E.f&B)!==0?A.v:I(A)})}function as(e){P===null&&ir(),ti(()=>{const t=Te(e);if(typeof t=="function")return t})}const Mi="5";typeof window<"u"&&((window.__svelte??={}).v??=new Set).add(Mi);const rt=_e({light:!1});let te=null;async function os(){if(chrome.runtime.getManifest().version_name.includes("-prerelease")){const t=getComputedStyle(document.documentElement).getPropertyValue("--blue");document.documentElement.style.setProperty("--brand-orange",t);const n=document.getElementById("favicon");n&&(n.href=chrome.runtime.getURL("/images/icon-blue.png"))}return te=document.createElement("link"),te.setAttribute("rel","stylesheet"),te.setAttribute("href",chrome.runtime.getURL("/webpages/styles/colors-light.css")),te.setAttribute("data-below-vue-components",""),te.media="not all",document.head.appendChild(te),new Promise(t=>{chrome.storage.sync.get(["globalTheme"],({globalTheme:n=!1})=>{rt.light=n===!0,rt.light&&te.removeAttribute("media"),t()})})}function us(e){rt.light!==e&&(chrome.storage.sync.set({globalTheme:e},()=>{e?te.removeAttribute("media"):te.media="not all"}),rt.light=e)}function cs(){return typeof new Error().fileName<"u"}const Ci=["ar","az","ckb","fa","he","ug","ur","yi"];function xi(e){if(!e)return"ltr";const t=e.split("-")[0];return Ci.includes(t)?"rtl":"ltr"}function hs(){document.documentElement.lang=chrome.i18n.getUILanguage(),document.body.dir=xi(chrome.i18n.getUILanguage())}function ds(){const e=()=>{const l=/(Firefox|Chrome)\/([0-9.]+)/.exec(navigator.userAgent);return l?{browser:l[1],version:l[2].split(".")[0]}:{browser:null,version:null}},{browser:t,version:n}=e();if(t==="Chrome"&&n<96||t==="Firefox"&&n<109){const l=new URL(location.href).pathname.startsWith("/webpages/popup/"),a=chrome.runtime.getURL("webpages/error/unsupported-browser.html");l?chrome.tabs.create({url:a,active:!0}):location.href=a}}export{Ni as $,os as A,zn as B,cs as C,Gi as D,be as E,Jn as F,as as G,er as H,Nr as I,ls as J,_e as K,Rr as L,ne as M,us as N,Ti as O,ts as P,Qi as Q,ns as R,es as S,Yi as T,Pi as U,le as V,ii as W,Bi as X,rt as Y,ai as Z,Oi as _,Ji as a,ti as a0,qi as b,hs as c,Di as d,ss as e,is as f,fs as g,rs as h,at as i,V as j,ds as k,Ii as l,zi as m,Zi as n,ie as o,Ui as p,Hi as q,Ki as r,Fi as s,Li as t,Vi as u,ji as v,I as w,Xi as x,$i as y,Wi as z};
+var Zt = Array.isArray,
+  Wn = Array.prototype.indexOf,
+  Ne = Array.prototype.includes,
+  it = Array.from,
+  Kn = Object.defineProperty,
+  xe = Object.getOwnPropertyDescriptor,
+  Jt = Object.getOwnPropertyDescriptors,
+  Xn = Object.prototype,
+  Zn = Array.prototype,
+  Ct = Object.getPrototypeOf,
+  Ut = Object.isExtensible;
+const Jn = () => {};
+function Qn(e) {
+  for (var t = 0; t < e.length; t++) e[t]();
+}
+function Qt() {
+  var e,
+    t,
+    n = new Promise((r, i) => {
+      (e = r), (t = i);
+    });
+  return { promise: n, resolve: e, reject: t };
+}
+const C = 2,
+  Oe = 4,
+  st = 8,
+  en = 1 << 24,
+  Y = 16,
+  K = 32,
+  ce = 64,
+  pt = 128,
+  j = 512,
+  k = 1024,
+  M = 2048,
+  J = 4096,
+  R = 8192,
+  B = 16384,
+  Ae = 32768,
+  gt = 1 << 25,
+  be = 65536,
+  Qe = 1 << 17,
+  er = 1 << 18,
+  De = 1 << 19,
+  tr = 1 << 20,
+  X = 1 << 25,
+  ye = 65536,
+  et = 1 << 21,
+  Re = 1 << 22,
+  ue = 1 << 23,
+  re = Symbol("$state"),
+  nr = Symbol("legacy props"),
+  rr = Symbol(""),
+  tn = Symbol("attributes"),
+  mt = Symbol("class"),
+  wt = Symbol("style"),
+  bt = Symbol("text"),
+  Xe = Symbol("form reset"),
+  ft = new (class extends Error {
+    name = "StaleReactionError";
+    message = "The reaction that called `getAbortSignal()` was re-run or destroyed";
+  })();
+function ir(e) {
+  throw new Error("https://svelte.dev/e/lifecycle_outside_component");
+}
+function sr() {
+  throw new Error("https://svelte.dev/e/async_derived_orphan");
+}
+function fr(e, t, n) {
+  throw new Error("https://svelte.dev/e/each_key_duplicate");
+}
+function lr(e) {
+  throw new Error("https://svelte.dev/e/effect_in_teardown");
+}
+function ar() {
+  throw new Error("https://svelte.dev/e/effect_in_unowned_derived");
+}
+function or(e) {
+  throw new Error("https://svelte.dev/e/effect_orphan");
+}
+function ur() {
+  throw new Error("https://svelte.dev/e/effect_update_depth_exceeded");
+}
+function cr(e) {
+  throw new Error("https://svelte.dev/e/props_invalid_value");
+}
+function hr() {
+  throw new Error("https://svelte.dev/e/state_descriptors_fixed");
+}
+function dr() {
+  throw new Error("https://svelte.dev/e/state_prototype_fixed");
+}
+function vr() {
+  throw new Error("https://svelte.dev/e/state_unsafe_mutation");
+}
+function _r() {
+  throw new Error("https://svelte.dev/e/svelte_boundary_reset_onerror");
+}
+const pr = 1,
+  gr = 2,
+  nn = 4,
+  mr = 8,
+  wr = 16,
+  br = 1,
+  yr = 4,
+  Er = 8,
+  Sr = 16,
+  Ar = 1,
+  Tr = 2,
+  T = Symbol("uninitialized"),
+  rn = "http://www.w3.org/1999/xhtml",
+  kr = "http://www.w3.org/2000/svg",
+  Mr = "http://www.w3.org/1998/Math/MathML";
+function Cr() {
+  console.warn("https://svelte.dev/e/derived_inert");
+}
+function xr() {
+  console.warn("https://svelte.dev/e/svelte_boundary_reset_noop");
+}
+function sn(e) {
+  return e === this.v;
+}
+function fn(e, t) {
+  return e != e ? t == t : e !== t || (e !== null && typeof e == "object") || typeof e == "function";
+}
+function ln(e) {
+  return !fn(e, this.v);
+}
+let P = null;
+function Ie(e) {
+  P = e;
+}
+function Rr(e, t = !1, n) {
+  P = { p: P, i: !1, c: null, e: null, s: e, x: null, r: g, l: null };
+}
+function Nr(e) {
+  var t = P,
+    n = t.e;
+  if (n !== null) {
+    t.e = null;
+    for (var r of n) Mn(r);
+  }
+  return (t.i = !0), (P = t.p), {};
+}
+function an() {
+  return !0;
+}
+let ve = [];
+function on() {
+  var e = ve;
+  (ve = []), Qn(e);
+}
+function W(e) {
+  if (ve.length === 0 && !je) {
+    var t = ve;
+    queueMicrotask(() => {
+      t === ve && on();
+    });
+  }
+  ve.push(e);
+}
+function Or() {
+  for (; ve.length > 0; ) on();
+}
+function un(e) {
+  var t = g;
+  if (t === null) return (b.f |= ue), e;
+  if ((t.f & Ae) === 0 && (t.f & Oe) === 0) throw e;
+  oe(e, t);
+}
+function oe(e, t) {
+  for (; t !== null; ) {
+    if ((t.f & pt) !== 0) {
+      if ((t.f & Ae) === 0) throw e;
+      try {
+        t.b.error(e);
+        return;
+      } catch (n) {
+        e = n;
+      }
+    }
+    t = t.parent;
+  }
+  throw e;
+}
+const Ir = -7169;
+function S(e, t) {
+  e.f = (e.f & Ir) | t;
+}
+function xt(e) {
+  (e.f & j) !== 0 || e.deps === null ? S(e, k) : S(e, J);
+}
+function cn(e) {
+  if (e !== null) for (const t of e) (t.f & C) === 0 || (t.f & ye) === 0 || ((t.f ^= ye), cn(t.deps));
+}
+function hn(e, t, n) {
+  (e.f & M) !== 0 ? t.add(e) : (e.f & J) !== 0 && n.add(e), cn(e.deps), S(e, k);
+}
+let $e = !1;
+function Lr(e) {
+  var t = $e;
+  try {
+    return ($e = !1), [e(), $e];
+  } finally {
+    $e = t;
+  }
+}
+let ot = null,
+  Me = null,
+  p = null,
+  yt = null,
+  G = null,
+  Et = null,
+  je = !1,
+  ut = !1,
+  Ce = null,
+  Ze = null;
+var Vt = 0;
+let Pr = 1;
+class he {
+  id = Pr++;
+  #t = !1;
+  linked = !0;
+  #l = null;
+  #e = null;
+  async_deriveds = new Map();
+  current = new Map();
+  previous = new Map();
+  unblocked = new Set();
+  #a = new Set();
+  #n = new Set();
+  #i = new Set();
+  #r = 0;
+  #s = new Map();
+  #h = null;
+  #f = [];
+  #v = [];
+  #d = new Set();
+  #o = new Set();
+  #u = new Map();
+  #c = new Set();
+  is_fork = !1;
+  #p = !1;
+  #E() {
+    if (this.is_fork) return !0;
+    for (const r of this.#s.keys()) {
+      for (var t = r, n = !1; t.parent !== null; ) {
+        if (this.#u.has(t)) {
+          n = !0;
+          break;
+        }
+        t = t.parent;
+      }
+      if (!n) return !0;
+    }
+    return !1;
+  }
+  skip_effect(t) {
+    this.#u.has(t) || this.#u.set(t, { d: [], m: [] }), this.#c.delete(t);
+  }
+  unskip_effect(t, n = (r) => this.schedule(r)) {
+    var r = this.#u.get(t);
+    if (r) {
+      this.#u.delete(t);
+      for (var i of r.d) S(i, M), n(i);
+      for (i of r.m) S(i, J), n(i);
+    }
+    this.#c.add(t);
+  }
+  #g() {
+    if (((this.#t = !0), Vt++ > 1e3 && (this.#b(), Fr()), !this.#E())) {
+      for (const f of this.#d) this.#o.delete(f), S(f, M), this.schedule(f);
+      for (const f of this.#o) S(f, J), this.schedule(f);
+    }
+    const t = this.#f;
+    (this.#f = []), this.apply();
+    var n = (Ce = []),
+      r = [],
+      i = (Ze = []);
+    for (const f of t)
+      try {
+        this.#S(f, n, r);
+      } catch (o) {
+        throw (_n(f), o);
+      }
+    if (((p = null), i.length > 0)) {
+      var s = he.ensure();
+      for (const f of i) s.schedule(f);
+    }
+    if (((Ce = null), (Ze = null), this.#E())) {
+      this.#_(r), this.#_(n);
+      for (const [f, o] of this.#u) vn(f, o);
+      i.length > 0 && p.#g();
+      return;
+    }
+    const l = this.#y();
+    if (l) {
+      l.#m(this);
+      return;
+    }
+    this.#d.clear(), this.#o.clear();
+    for (const f of this.#a) f(this);
+    this.#a.clear(), (yt = this), jt(r), jt(n), (yt = null), this.#h?.resolve();
+    var a = p;
+    if ((this.linked && this.#r === 0 && this.#b(), this.#f.length > 0)) {
+      a === null && ((a = this), this.#w());
+      const f = a;
+      f.#f.push(...this.#f.filter((o) => !f.#f.includes(o)));
+    }
+    a !== null && a.#g();
+  }
+  #S(t, n, r) {
+    t.f ^= k;
+    for (var i = t.first; i !== null; ) {
+      var s = i.f,
+        l = (s & (K | ce)) !== 0,
+        a = l && (s & k) !== 0,
+        f = a || (s & R) !== 0 || this.#u.has(i);
+      if (!f && i.fn !== null) {
+        l ? (i.f ^= k) : (s & Oe) !== 0 ? n.push(i) : Ge(i) && ((s & Y) !== 0 && this.#o.add(i), Pe(i));
+        var o = i.first;
+        if (o !== null) {
+          i = o;
+          continue;
+        }
+      }
+      for (; i !== null; ) {
+        var u = i.next;
+        if (u !== null) {
+          i = u;
+          break;
+        }
+        i = i.parent;
+      }
+    }
+  }
+  #y() {
+    for (var t = this.#l; t !== null; ) {
+      if (!t.is_fork) {
+        for (const [n, [, r]] of this.current) if (t.current.has(n) && !r) return t;
+      }
+      t = t.#l;
+    }
+    return null;
+  }
+  #m(t) {
+    for (const [r, i] of t.current)
+      !this.previous.has(r) && t.previous.has(r) && this.previous.set(r, t.previous.get(r)), this.current.set(r, i);
+    for (const [r, i] of t.async_deriveds) {
+      const s = this.async_deriveds.get(r);
+      s && i.promise.then(s.resolve);
+    }
+    const n = (r) => {
+      var i = r.reactions;
+      if (i !== null)
+        for (const a of i) {
+          var s = a.f;
+          if ((s & C) !== 0) n(a);
+          else {
+            var l = a;
+            s & (Re | Y) && !this.async_deriveds.has(l) && (this.#o.delete(l), S(l, M), this.schedule(l));
+          }
+        }
+    };
+    for (const r of this.current.keys()) n(r);
+    this.oncommit(() => t.discard()), t.#b(), (p = this), this.#g();
+  }
+  #_(t) {
+    for (var n = 0; n < t.length; n += 1) hn(t[n], this.#d, this.#o);
+  }
+  capture(t, n, r = !1) {
+    t.v !== T && !this.previous.has(t) && this.previous.set(t, t.v),
+      (t.f & ue) === 0 && (this.current.set(t, [n, r]), G?.set(t, n)),
+      this.is_fork || (t.v = n);
+  }
+  activate() {
+    p = this;
+  }
+  deactivate() {
+    (p = null), (G = null);
+  }
+  flush() {
+    try {
+      (ut = !0), (p = this), this.#g();
+    } finally {
+      (Vt = 0), (Et = null), (Ce = null), (Ze = null), (ut = !1), (p = null), (G = null), ge.clear();
+    }
+  }
+  discard() {
+    for (const t of this.#n) t(this);
+    this.#n.clear(), this.#i.clear(), this.#b();
+  }
+  register_created_effect(t) {
+    this.#v.push(t);
+  }
+  #A() {
+    this.#b();
+    for (let u = ot; u !== null; u = u.#e) {
+      var t = u.id < this.id,
+        n = [];
+      for (const [h, [c, v]] of this.current) {
+        if (u.current.has(h)) {
+          var r = u.current.get(h)[0];
+          if (t && c !== r) u.current.set(h, [c, v]);
+          else continue;
+        }
+        n.push(h);
+      }
+      if (t)
+        for (const [h, c] of this.async_deriveds) {
+          const v = u.async_deriveds.get(h);
+          v && c.promise.then(v.resolve);
+        }
+      if (u.#t) {
+        var i = [...u.current.keys()].filter((h) => !this.current.has(h));
+        if (i.length === 0) t && u.discard();
+        else if (n.length > 0) {
+          if (t)
+            for (const h of this.#c)
+              u.unskip_effect(h, (c) => {
+                (c.f & (Y | Re)) !== 0 ? u.schedule(c) : u.#_([c]);
+              });
+          u.activate();
+          var s = new Set(),
+            l = new Map();
+          for (var a of n) dn(a, i, s, l);
+          l = new Map();
+          var f = [...u.current.keys()].filter((h) => (this.current.has(h) ? this.current.get(h)[0] !== h.v : !0));
+          if (f.length > 0)
+            for (const h of this.#v)
+              (h.f & (B | R | Qe)) === 0 &&
+                Rt(h, f, l) &&
+                ((h.f & (Re | Y)) !== 0 ? (S(h, M), u.schedule(h)) : u.#d.add(h));
+          if (u.#f.length > 0) {
+            u.apply();
+            for (var o of u.#f) u.#S(o, [], []);
+            u.#f = [];
+          }
+          u.deactivate();
+        }
+      }
+    }
+  }
+  increment(t, n) {
+    if (((this.#r += 1), t)) {
+      let r = this.#s.get(n) ?? 0;
+      this.#s.set(n, r + 1);
+    }
+  }
+  decrement(t, n) {
+    if (((this.#r -= 1), t)) {
+      let r = this.#s.get(n) ?? 0;
+      r === 1 ? this.#s.delete(n) : this.#s.set(n, r - 1);
+    }
+    this.#p ||
+      ((this.#p = !0),
+      W(() => {
+        (this.#p = !1), this.linked && this.flush();
+      }));
+  }
+  transfer_effects(t, n) {
+    for (const r of t) this.#d.add(r);
+    for (const r of n) this.#o.add(r);
+    t.clear(), n.clear();
+  }
+  oncommit(t) {
+    this.#a.add(t);
+  }
+  ondiscard(t) {
+    this.#n.add(t);
+  }
+  on_fork_commit(t) {
+    this.#i.add(t);
+  }
+  run_fork_commit_callbacks() {
+    for (const t of this.#i) t(this);
+    this.#i.clear();
+  }
+  settled() {
+    return (this.#h ??= Qt()).promise;
+  }
+  static ensure() {
+    if (p === null) {
+      const t = (p = new he());
+      t.#w(),
+        !ut &&
+          !je &&
+          W(() => {
+            t.#t || t.flush();
+          });
+    }
+    return p;
+  }
+  apply() {
+    {
+      G = null;
+      return;
+    }
+  }
+  schedule(t) {
+    if (((Et = t), t.b?.is_pending && (t.f & (Oe | st | en)) !== 0 && (t.f & Ae) === 0)) {
+      t.b.defer_effect(t);
+      return;
+    }
+    for (var n = t; n.parent !== null; ) {
+      n = n.parent;
+      var r = n.f;
+      if (Ce !== null && n === g && (b === null || (b.f & C) === 0)) return;
+      if ((r & (ce | K)) !== 0) {
+        if ((r & k) === 0) return;
+        n.f ^= k;
+      }
+    }
+    this.#f.push(n);
+  }
+  #w() {
+    Me === null ? (ot = Me = this) : ((Me.#e = this), (this.#l = Me)), (Me = this);
+  }
+  #b() {
+    var t = this.#l,
+      n = this.#e;
+    t === null ? (ot = n) : (t.#e = n), n === null ? (Me = t) : (n.#l = t), (this.linked = !1);
+  }
+}
+function Dr(e) {
+  var t = je;
+  je = !0;
+  try {
+    for (var n; ; ) {
+      if ((Or(), p === null)) return n;
+      p.flush();
+    }
+  } finally {
+    je = t;
+  }
+}
+function Fr() {
+  try {
+    ur();
+  } catch (e) {
+    oe(e, Et);
+  }
+}
+let ee = null;
+function jt(e) {
+  var t = e.length;
+  if (t !== 0) {
+    for (var n = 0; n < t; ) {
+      var r = e[n++];
+      if (
+        (r.f & (B | R)) === 0 &&
+        Ge(r) &&
+        ((ee = new Set()),
+        Pe(r),
+        r.deps === null && r.first === null && r.nodes === null && r.teardown === null && r.ac === null && Nn(r),
+        ee?.size > 0)
+      ) {
+        ge.clear();
+        for (const i of ee) {
+          if ((i.f & (B | R)) !== 0) continue;
+          const s = [i];
+          let l = i.parent;
+          for (; l !== null; ) ee.has(l) && (ee.delete(l), s.push(l)), (l = l.parent);
+          for (let a = s.length - 1; a >= 0; a--) {
+            const f = s[a];
+            (f.f & (B | R)) === 0 && Pe(f);
+          }
+        }
+        ee.clear();
+      }
+    }
+    ee = null;
+  }
+}
+function dn(e, t, n, r) {
+  if (!n.has(e) && (n.add(e), e.reactions !== null))
+    for (const i of e.reactions) {
+      const s = i.f;
+      (s & C) !== 0 ? dn(i, t, n, r) : (s & (Re | Y)) !== 0 && (s & M) === 0 && Rt(i, t, r) && (S(i, M), Nt(i));
+    }
+}
+function Rt(e, t, n) {
+  const r = n.get(e);
+  if (r !== void 0) return r;
+  if (e.deps !== null)
+    for (const i of e.deps) {
+      if (Ne.call(t, i)) return !0;
+      if ((i.f & C) !== 0 && Rt(i, t, n)) return n.set(i, !0), !0;
+    }
+  return n.set(e, !1), !1;
+}
+function Nt(e) {
+  p.schedule(e);
+}
+function vn(e, t) {
+  if (!((e.f & K) !== 0 && (e.f & k) !== 0)) {
+    (e.f & M) !== 0 ? t.d.push(e) : (e.f & J) !== 0 && t.m.push(e), S(e, k);
+    for (var n = e.first; n !== null; ) vn(n, t), (n = n.next);
+  }
+}
+function _n(e) {
+  S(e, k);
+  for (var t = e.first; t !== null; ) _n(t), (t = t.next);
+}
+function Hr(e) {
+  let t = 0,
+    n = Ee(0),
+    r;
+  return () => {
+    Lt() &&
+      (I(n),
+      Fe(
+        () => (
+          t === 0 && (r = Te(() => e(() => Be(n)))),
+          (t += 1),
+          () => {
+            W(() => {
+              (t -= 1), t === 0 && (r?.(), (r = void 0), Be(n));
+            });
+          }
+        )
+      ));
+  };
+}
+var Ur = be | De;
+function Vr(e, t, n, r) {
+  new jr(e, t, n, r);
+}
+class jr {
+  parent;
+  is_pending = !1;
+  transform_error;
+  #t;
+  #l = null;
+  #e;
+  #a;
+  #n;
+  #i = null;
+  #r = null;
+  #s = null;
+  #h = null;
+  #f = 0;
+  #v = 0;
+  #d = !1;
+  #o = new Set();
+  #u = new Set();
+  #c = null;
+  #p = Hr(
+    () => (
+      (this.#c = Ee(this.#f)),
+      () => {
+        this.#c = null;
+      }
+    )
+  );
+  constructor(t, n, r, i) {
+    (this.#t = t),
+      (this.#e = n),
+      (this.#a = (s) => {
+        var l = g;
+        (l.b = this), (l.f |= pt), r(s);
+      }),
+      (this.parent = g.b),
+      (this.transform_error = i ?? this.parent?.transform_error ?? ((s) => s)),
+      (this.#n = at(() => {
+        this.#y();
+      }, Ur));
+  }
+  #E() {
+    try {
+      this.#i = V(() => this.#a(this.#t));
+    } catch (t) {
+      this.error(t);
+    }
+  }
+  #g(t) {
+    const n = this.#e.failed;
+    n &&
+      (this.#s = V(() => {
+        n(
+          this.#t,
+          () => t,
+          () => () => {}
+        );
+      }));
+  }
+  #S() {
+    const t = this.#e.pending;
+    t &&
+      ((this.is_pending = !0),
+      (this.#r = V(() => t(this.#t))),
+      W(() => {
+        var n = (this.#h = document.createDocumentFragment()),
+          r = ie();
+        n.append(r),
+          (this.#i = this.#_(() => V(() => this.#a(r)))),
+          this.#v === 0 &&
+            (this.#t.before(n),
+            (this.#h = null),
+            me(this.#r, () => {
+              this.#r = null;
+            }),
+            this.#m(p));
+      }));
+  }
+  #y() {
+    try {
+      if (
+        ((this.is_pending = this.has_pending_snippet()),
+        (this.#v = 0),
+        (this.#f = 0),
+        (this.#i = V(() => {
+          this.#a(this.#t);
+        })),
+        this.#v > 0)
+      ) {
+        var t = (this.#h = document.createDocumentFragment());
+        Ht(this.#i, t);
+        const n = this.#e.pending;
+        this.#r = V(() => n(this.#t));
+      } else this.#m(p);
+    } catch (n) {
+      this.error(n);
+    }
+  }
+  #m(t) {
+    (this.is_pending = !1), t.transfer_effects(this.#o, this.#u);
+  }
+  defer_effect(t) {
+    hn(t, this.#o, this.#u);
+  }
+  is_rendered() {
+    return !this.is_pending && (!this.parent || this.parent.is_rendered());
+  }
+  has_pending_snippet() {
+    return !!this.#e.pending;
+  }
+  #_(t) {
+    var n = g,
+      r = b,
+      i = P;
+    q(this.#n), D(this.#n), Ie(this.#n.ctx);
+    try {
+      return he.ensure(), t();
+    } catch (s) {
+      return un(s), null;
+    } finally {
+      q(n), D(r), Ie(i);
+    }
+  }
+  #A(t, n) {
+    if (!this.has_pending_snippet()) {
+      this.parent && this.parent.#A(t, n);
+      return;
+    }
+    (this.#v += t),
+      this.#v === 0 &&
+        (this.#m(n),
+        this.#r &&
+          me(this.#r, () => {
+            this.#r = null;
+          }),
+        this.#h && (this.#t.before(this.#h), (this.#h = null)));
+  }
+  update_pending_count(t, n) {
+    this.#A(t, n),
+      (this.#f += t),
+      !(!this.#c || this.#d) &&
+        ((this.#d = !0),
+        W(() => {
+          (this.#d = !1), this.#c && Le(this.#c, this.#f);
+        }));
+  }
+  get_effect_pending() {
+    return this.#p(), I(this.#c);
+  }
+  error(t) {
+    if (!this.#e.onerror && !this.#e.failed) throw t;
+    p?.is_fork
+      ? (this.#i && p.skip_effect(this.#i),
+        this.#r && p.skip_effect(this.#r),
+        this.#s && p.skip_effect(this.#s),
+        p.on_fork_commit(() => {
+          this.#w(t);
+        }))
+      : this.#w(t);
+  }
+  #w(t) {
+    this.#i && (L(this.#i), (this.#i = null)),
+      this.#r && (L(this.#r), (this.#r = null)),
+      this.#s && (L(this.#s), (this.#s = null));
+    var n = this.#e.onerror;
+    let r = this.#e.failed;
+    var i = !1,
+      s = !1;
+    const l = () => {
+        if (i) {
+          xr();
+          return;
+        }
+        (i = !0),
+          s && _r(),
+          this.#s !== null &&
+            me(this.#s, () => {
+              this.#s = null;
+            }),
+          this.#_(() => {
+            this.#y();
+          });
+      },
+      a = (f) => {
+        try {
+          (s = !0), n?.(f, l), (s = !1);
+        } catch (o) {
+          oe(o, this.#n && this.#n.parent);
+        }
+        r &&
+          (this.#s = this.#_(() => {
+            try {
+              return V(() => {
+                var o = g;
+                (o.b = this),
+                  (o.f |= pt),
+                  r(
+                    this.#t,
+                    () => f,
+                    () => l
+                  );
+              });
+            } catch (o) {
+              return oe(o, this.#n.parent), null;
+            }
+          }));
+      };
+    W(() => {
+      var f;
+      try {
+        f = this.transform_error(t);
+      } catch (o) {
+        oe(o, this.#n && this.#n.parent);
+        return;
+      }
+      f !== null && typeof f == "object" && typeof f.then == "function"
+        ? f.then(a, (o) => oe(o, this.#n && this.#n.parent))
+        : a(f);
+    });
+  }
+}
+function Br(e, t, n, r) {
+  const i = ze;
+  var s = e.filter((c) => !c.settled);
+  if (n.length === 0 && s.length === 0) {
+    r(t.map(i));
+    return;
+  }
+  var l = g,
+    a = zr(),
+    f = s.length === 1 ? s[0].promise : s.length > 1 ? Promise.all(s.map((c) => c.promise)) : null;
+  function o(c) {
+    if ((l.f & B) === 0) {
+      a();
+      try {
+        r(c);
+      } catch (v) {
+        oe(v, l);
+      }
+      tt();
+    }
+  }
+  var u = pn();
+  if (n.length === 0) {
+    f.then(() => o(t.map(i))).finally(u);
+    return;
+  }
+  function h() {
+    Promise.all(n.map((c) => qr(c)))
+      .then((c) => o([...t.map(i), ...c]))
+      .catch((c) => oe(c, l))
+      .finally(u);
+  }
+  f
+    ? f.then(() => {
+        a(), h(), tt();
+      })
+    : h();
+}
+function zr() {
+  var e = g,
+    t = b,
+    n = P,
+    r = p;
+  return function (s = !0) {
+    q(e), D(t), Ie(n), s && (e.f & B) === 0 && (r?.activate(), r?.apply());
+  };
+}
+function tt(e = !0) {
+  q(null), D(null), Ie(null), e && p?.deactivate();
+}
+function pn() {
+  var e = g,
+    t = e.b,
+    n = p,
+    r = t.is_rendered();
+  return (
+    t.update_pending_count(1, n),
+    n.increment(r, e),
+    () => {
+      t.update_pending_count(-1, n), n.decrement(r, e);
+    }
+  );
+}
+function ze(e) {
+  var t = C | M;
+  return (
+    g !== null && (g.f |= De),
+    {
+      ctx: P,
+      deps: null,
+      effects: null,
+      equals: sn,
+      f: t,
+      fn: e,
+      reactions: null,
+      rv: 0,
+      v: T,
+      wv: 0,
+      parent: g,
+      ac: null,
+    }
+  );
+}
+const We = Symbol("obsolete");
+function qr(e, t, n) {
+  let r = g;
+  r === null && sr();
+  var i = void 0,
+    s = Ee(T),
+    l = !b,
+    a = new Set();
+  return (
+    ri(() => {
+      var f = g,
+        o = Qt();
+      i = o.promise;
+      try {
+        Promise.resolve(e())
+          .then(o.resolve, (v) => {
+            v !== ft && o.reject(v);
+          })
+          .finally(tt);
+      } catch (v) {
+        o.reject(v), tt();
+      }
+      var u = p;
+      if (l) {
+        if ((f.f & Ae) !== 0) var h = pn();
+        if (r.b.is_rendered()) u.async_deriveds.get(f)?.reject(We);
+        else for (const v of a.values()) v.reject(We);
+        a.add(o), u.async_deriveds.set(f, o);
+      }
+      const c = (v, _ = void 0) => {
+        h?.(),
+          a.delete(o),
+          _ !== We &&
+            (u.activate(), _ ? ((s.f |= ue), Le(s, _)) : ((s.f & ue) !== 0 && (s.f ^= ue), Le(s, v)), u.deactivate());
+      };
+      o.promise.then(c, (v) => c(null, v || "unknown"));
+    }),
+    Pt(() => {
+      for (const f of a) f.reject(We);
+    }),
+    new Promise((f) => {
+      function o(u) {
+        function h() {
+          u === i ? f(s) : o(i);
+        }
+        u.then(h, h);
+      }
+      o(i);
+    })
+  );
+}
+function Ni(e) {
+  const t = ze(e);
+  return Ln(t), t;
+}
+function gn(e) {
+  const t = ze(e);
+  return (t.equals = ln), t;
+}
+function Yr(e) {
+  var t = e.effects;
+  if (t !== null) {
+    e.effects = null;
+    for (var n = 0; n < t.length; n += 1) L(t[n]);
+  }
+}
+function Ot(e) {
+  var t,
+    n = g,
+    r = e.parent;
+  if (!se && r !== null && e.v !== T && (r.f & (B | R)) !== 0) return Cr(), e.v;
+  q(r);
+  try {
+    (e.f &= ~ye), Yr(e), (t = Hn(e));
+  } finally {
+    q(n);
+  }
+  return t;
+}
+function mn(e) {
+  var t = Ot(e);
+  if (
+    !e.equals(t) &&
+    ((e.wv = Dn()),
+    (!p?.is_fork || e.deps === null) &&
+      (p !== null ? (p.capture(e, t, !0), yt?.capture(e, t, !0)) : (e.v = t), e.deps === null))
+  ) {
+    S(e, k);
+    return;
+  }
+  se || (G !== null ? (Lt() || p?.is_fork) && G.set(e, t) : xt(e));
+}
+function Gr(e) {
+  if (e.effects !== null)
+    for (const t of e.effects)
+      (t.teardown || t.ac) &&
+        (t.teardown?.(), t.ac?.abort(ft), t.fn !== null && (t.teardown = Jn), (t.ac = null), qe(t, 0), Dt(t));
+}
+function wn(e) {
+  if (e.effects !== null) for (const t of e.effects) t.teardown && t.fn !== null && Pe(t);
+}
+let nt = new Set();
+const ge = new Map();
+let bn = !1;
+function Ee(e, t) {
+  var n = { f: 0, v: e, reactions: null, equals: sn, rv: 0, wv: 0 };
+  return n;
+}
+function le(e, t) {
+  const n = Ee(e);
+  return Ln(n), n;
+}
+function $r(e, t = !1, n = !0) {
+  const r = Ee(e);
+  return t || (r.equals = ln), r;
+}
+function ne(e, t, n = !1) {
+  b !== null &&
+    (!$ || (b.f & Qe) !== 0) &&
+    an() &&
+    (b.f & (C | Y | Re | Qe)) !== 0 &&
+    (z === null || !Ne.call(z, e)) &&
+    vr();
+  let r = n ? _e(t) : t;
+  return Le(e, r, Ze);
+}
+function Le(e, t, n = null) {
+  if (!e.equals(t)) {
+    ge.set(e, se ? t : e.v);
+    var r = he.ensure();
+    if ((r.capture(e, t), (e.f & C) !== 0)) {
+      const i = e;
+      (e.f & M) !== 0 && Ot(i), G === null && xt(i);
+    }
+    (e.wv = Dn()),
+      yn(e, M, n),
+      g !== null && (g.f & k) !== 0 && (g.f & (K | ce)) === 0 && (U === null ? fi([e]) : U.push(e)),
+      !r.is_fork && nt.size > 0 && !bn && Wr();
+  }
+  return t;
+}
+function Wr() {
+  bn = !1;
+  for (const e of nt) {
+    (e.f & k) !== 0 && S(e, J);
+    let t;
+    try {
+      t = Ge(e);
+    } catch {
+      t = !0;
+    }
+    t && Pe(e);
+  }
+  nt.clear();
+}
+function Oi(e, t = 1) {
+  var n = I(e),
+    r = t === 1 ? n++ : n--;
+  return ne(e, n), r;
+}
+function Be(e) {
+  ne(e, e.v + 1);
+}
+function yn(e, t, n) {
+  var r = e.reactions;
+  if (r !== null)
+    for (var i = r.length, s = 0; s < i; s++) {
+      var l = r[s],
+        a = l.f,
+        f = (a & M) === 0;
+      if ((f && S(l, t), (a & Qe) !== 0)) nt.add(l);
+      else if ((a & C) !== 0) {
+        var o = l;
+        G?.delete(o), (a & ye) === 0 && (a & j && (g === null || (g.f & et) === 0) && (l.f |= ye), yn(o, J, n));
+      } else if (f) {
+        var u = l;
+        (a & Y) !== 0 && ee !== null && ee.add(u), n !== null ? n.push(u) : Nt(u);
+      }
+    }
+}
+function _e(e) {
+  if (typeof e != "object" || e === null || re in e) return e;
+  const t = Ct(e);
+  if (t !== Xn && t !== Zn) return e;
+  var n = new Map(),
+    r = Zt(e),
+    i = le(0),
+    s = we,
+    l = (a) => {
+      if (we === s) return a();
+      var f = b,
+        o = we;
+      D(null), Gt(s);
+      var u = a();
+      return D(f), Gt(o), u;
+    };
+  return (
+    r && n.set("length", le(e.length)),
+    new Proxy(e, {
+      defineProperty(a, f, o) {
+        (!("value" in o) || o.configurable === !1 || o.enumerable === !1 || o.writable === !1) && hr();
+        var u = n.get(f);
+        return (
+          u === void 0
+            ? l(() => {
+                var h = le(o.value);
+                return n.set(f, h), h;
+              })
+            : ne(u, o.value, !0),
+          !0
+        );
+      },
+      deleteProperty(a, f) {
+        var o = n.get(f);
+        if (o === void 0) {
+          if (f in a) {
+            const u = l(() => le(T));
+            n.set(f, u), Be(i);
+          }
+        } else ne(o, T), Be(i);
+        return !0;
+      },
+      get(a, f, o) {
+        if (f === re) return e;
+        var u = n.get(f),
+          h = f in a;
+        if (
+          (u === void 0 &&
+            (!h || xe(a, f)?.writable) &&
+            ((u = l(() => {
+              var v = _e(h ? a[f] : T),
+                _ = le(v);
+              return _;
+            })),
+            n.set(f, u)),
+          u !== void 0)
+        ) {
+          var c = I(u);
+          return c === T ? void 0 : c;
+        }
+        return Reflect.get(a, f, o);
+      },
+      getOwnPropertyDescriptor(a, f) {
+        var o = Reflect.getOwnPropertyDescriptor(a, f);
+        if (o && "value" in o) {
+          var u = n.get(f);
+          u && (o.value = I(u));
+        } else if (o === void 0) {
+          var h = n.get(f),
+            c = h?.v;
+          if (h !== void 0 && c !== T) return { enumerable: !0, configurable: !0, value: c, writable: !0 };
+        }
+        return o;
+      },
+      has(a, f) {
+        if (f === re) return !0;
+        var o = n.get(f),
+          u = (o !== void 0 && o.v !== T) || Reflect.has(a, f);
+        if (o !== void 0 || (g !== null && (!u || xe(a, f)?.writable))) {
+          o === void 0 &&
+            ((o = l(() => {
+              var c = u ? _e(a[f]) : T,
+                v = le(c);
+              return v;
+            })),
+            n.set(f, o));
+          var h = I(o);
+          if (h === T) return !1;
+        }
+        return u;
+      },
+      set(a, f, o, u) {
+        var h = n.get(f),
+          c = f in a;
+        if (r && f === "length")
+          for (var v = o; v < h.v; v += 1) {
+            var _ = n.get(v + "");
+            _ !== void 0 ? ne(_, T) : v in a && ((_ = l(() => le(T))), n.set(v + "", _));
+          }
+        if (h === void 0) (!c || xe(a, f)?.writable) && ((h = l(() => le(void 0))), ne(h, _e(o)), n.set(f, h));
+        else {
+          c = h.v !== T;
+          var m = l(() => _e(o));
+          ne(h, m);
+        }
+        var d = Reflect.getOwnPropertyDescriptor(a, f);
+        if ((d?.set && d.set.call(u, o), !c)) {
+          if (r && typeof f == "string") {
+            var w = n.get("length"),
+              A = Number(f);
+            Number.isInteger(A) && A >= w.v && ne(w, A + 1);
+          }
+          Be(i);
+        }
+        return !0;
+      },
+      ownKeys(a) {
+        I(i);
+        var f = Reflect.ownKeys(a).filter((h) => {
+          var c = n.get(h);
+          return c === void 0 || c.v !== T;
+        });
+        for (var [o, u] of n) u.v !== T && !(o in a) && f.push(o);
+        return f;
+      },
+      setPrototypeOf() {
+        dr();
+      },
+    })
+  );
+}
+function Bt(e) {
+  try {
+    if (e !== null && typeof e == "object" && re in e) return e[re];
+  } catch {}
+  return e;
+}
+function Kr(e, t) {
+  return Object.is(Bt(e), Bt(t));
+}
+var zt, En, Sn, An;
+function Xr() {
+  if (zt === void 0) {
+    (zt = window), (En = /Firefox/.test(navigator.userAgent));
+    var e = Element.prototype,
+      t = Node.prototype,
+      n = Text.prototype;
+    (Sn = xe(t, "firstChild").get),
+      (An = xe(t, "nextSibling").get),
+      Ut(e) && ((e[mt] = void 0), (e[tn] = null), (e[wt] = void 0), (e.__e = void 0)),
+      Ut(n) && (n[bt] = void 0);
+  }
+}
+function ie(e = "") {
+  return document.createTextNode(e);
+}
+function Z(e) {
+  return Sn.call(e);
+}
+function Ye(e) {
+  return An.call(e);
+}
+function Ii(e, t) {
+  return Z(e);
+}
+function Li(e, t = !1) {
+  {
+    var n = Z(e);
+    return n instanceof Comment && n.data === "" ? Ye(n) : n;
+  }
+}
+function Pi(e, t = 1, n = !1) {
+  let r = e;
+  for (; t--; ) r = Ye(r);
+  return r;
+}
+function Zr(e) {
+  e.textContent = "";
+}
+function Tn() {
+  return !1;
+}
+function kn(e, t, n) {
+  return document.createElementNS(t ?? rn, e, void 0);
+}
+function Di(e, t) {
+  {
+    const n = document.body;
+    (e.autofocus = !0),
+      W(() => {
+        document.activeElement === n && e.focus();
+      });
+  }
+}
+let qt = !1;
+function Jr() {
+  qt ||
+    ((qt = !0),
+    document.addEventListener(
+      "reset",
+      (e) => {
+        Promise.resolve().then(() => {
+          if (!e.defaultPrevented) for (const t of e.target.elements) t[Xe]?.();
+        });
+      },
+      { capture: !0 }
+    ));
+}
+function lt(e) {
+  var t = b,
+    n = g;
+  D(null), q(null);
+  try {
+    return e();
+  } finally {
+    D(t), q(n);
+  }
+}
+function It(e, t, n, r = n) {
+  e.addEventListener(t, () => lt(n));
+  const i = e[Xe];
+  i
+    ? (e[Xe] = () => {
+        i(), r(!0);
+      })
+    : (e[Xe] = () => r(!0)),
+    Jr();
+}
+function Qr(e) {
+  g === null && (b === null && or(), ar()), se && lr();
+}
+function ei(e, t) {
+  var n = t.last;
+  n === null ? (t.last = t.first = e) : ((n.next = e), (e.prev = n), (t.last = e));
+}
+function fe(e, t) {
+  var n = g;
+  n !== null && (n.f & R) !== 0 && (e |= R);
+  var r = {
+    ctx: P,
+    deps: null,
+    nodes: null,
+    f: e | M | j,
+    first: null,
+    fn: t,
+    last: null,
+    next: null,
+    parent: n,
+    b: n && n.b,
+    prev: null,
+    teardown: null,
+    wv: 0,
+    ac: null,
+  };
+  p?.register_created_effect(r);
+  var i = r;
+  if ((e & Oe) !== 0) Ce !== null ? Ce.push(r) : he.ensure().schedule(r);
+  else if (t !== null) {
+    try {
+      Pe(r);
+    } catch (l) {
+      throw (L(r), l);
+    }
+    i.deps === null &&
+      i.teardown === null &&
+      i.nodes === null &&
+      i.first === i.last &&
+      (i.f & De) === 0 &&
+      ((i = i.first), (e & Y) !== 0 && (e & be) !== 0 && i !== null && (i.f |= be));
+  }
+  if (i !== null && ((i.parent = n), n !== null && ei(i, n), b !== null && (b.f & C) !== 0 && (e & ce) === 0)) {
+    var s = b;
+    (s.effects ??= []).push(i);
+  }
+  return r;
+}
+function Lt() {
+  return b !== null && !$;
+}
+function Pt(e) {
+  const t = fe(st, null);
+  return S(t, k), (t.teardown = e), t;
+}
+function ti(e) {
+  Qr();
+  var t = g.f,
+    n = !b && (t & K) !== 0 && (t & Ae) === 0;
+  if (n) {
+    var r = P;
+    (r.e ??= []).push(e);
+  } else return Mn(e);
+}
+function Mn(e) {
+  return fe(Oe | tr, e);
+}
+function ni(e) {
+  he.ensure();
+  const t = fe(ce | De, e);
+  return (n = {}) =>
+    new Promise((r) => {
+      n.outro
+        ? me(t, () => {
+            L(t), r(void 0);
+          })
+        : (L(t), r(void 0));
+    });
+}
+function Cn(e) {
+  return fe(Oe, e);
+}
+function ri(e) {
+  return fe(Re | De, e);
+}
+function Fe(e, t = 0) {
+  return fe(st | t, e);
+}
+function ii(e, t = [], n = [], r = []) {
+  Br(r, t, n, (i) => {
+    fe(st, () => e(...i.map(I)));
+  });
+}
+function at(e, t = 0) {
+  var n = fe(Y | t, e);
+  return n;
+}
+function V(e) {
+  return fe(K | De, e);
+}
+function xn(e) {
+  var t = e.teardown;
+  if (t !== null) {
+    const n = se,
+      r = b;
+    Yt(!0), D(null);
+    try {
+      t.call(null);
+    } finally {
+      Yt(n), D(r);
+    }
+  }
+}
+function Dt(e, t = !1) {
+  var n = e.first;
+  for (e.first = e.last = null; n !== null; ) {
+    const i = n.ac;
+    i !== null &&
+      lt(() => {
+        i.abort(ft);
+      });
+    var r = n.next;
+    (n.f & ce) !== 0 ? (n.parent = null) : L(n, t), (n = r);
+  }
+}
+function si(e) {
+  for (var t = e.first; t !== null; ) {
+    var n = t.next;
+    (t.f & K) === 0 && L(t), (t = n);
+  }
+}
+function L(e, t = !0) {
+  var n = !1;
+  (t || (e.f & er) !== 0) && e.nodes !== null && e.nodes.end !== null && (Rn(e.nodes.start, e.nodes.end), (n = !0)),
+    S(e, gt),
+    Dt(e, t && !n),
+    qe(e, 0);
+  var r = e.nodes && e.nodes.t;
+  if (r !== null) for (const s of r) s.stop();
+  xn(e), (e.f ^= gt), (e.f |= B);
+  var i = e.parent;
+  i !== null && i.first !== null && Nn(e),
+    (e.next = e.prev = e.teardown = e.ctx = e.deps = e.fn = e.nodes = e.ac = e.b = null);
+}
+function Rn(e, t) {
+  for (; e !== null; ) {
+    var n = e === t ? null : Ye(e);
+    e.remove(), (e = n);
+  }
+}
+function Nn(e) {
+  var t = e.parent,
+    n = e.prev,
+    r = e.next;
+  n !== null && (n.next = r),
+    r !== null && (r.prev = n),
+    t !== null && (t.first === e && (t.first = r), t.last === e && (t.last = n));
+}
+function me(e, t, n = !0) {
+  var r = [];
+  On(e, r, !0);
+  var i = () => {
+      n && L(e), t && t();
+    },
+    s = r.length;
+  if (s > 0) {
+    var l = () => --s || i();
+    for (var a of r) a.out(l);
+  } else i();
+}
+function On(e, t, n) {
+  if ((e.f & R) === 0) {
+    e.f ^= R;
+    var r = e.nodes && e.nodes.t;
+    if (r !== null) for (const a of r) (a.is_global || n) && t.push(a);
+    for (var i = e.first; i !== null; ) {
+      var s = i.next;
+      if ((i.f & ce) === 0) {
+        var l = (i.f & be) !== 0 || ((i.f & K) !== 0 && (e.f & Y) !== 0);
+        On(i, t, l ? n : !1);
+      }
+      i = s;
+    }
+  }
+}
+function Ft(e) {
+  In(e, !0);
+}
+function In(e, t) {
+  if ((e.f & R) !== 0) {
+    (e.f ^= R), (e.f & k) === 0 && (S(e, M), he.ensure().schedule(e));
+    for (var n = e.first; n !== null; ) {
+      var r = n.next,
+        i = (n.f & be) !== 0 || (n.f & K) !== 0;
+      In(n, i ? t : !1), (n = r);
+    }
+    var s = e.nodes && e.nodes.t;
+    if (s !== null) for (const l of s) (l.is_global || t) && l.in();
+  }
+}
+function Ht(e, t) {
+  if (e.nodes)
+    for (var n = e.nodes.start, r = e.nodes.end; n !== null; ) {
+      var i = n === r ? null : Ye(n);
+      t.append(n), (n = i);
+    }
+}
+let Je = !1,
+  se = !1;
+function Yt(e) {
+  se = e;
+}
+let b = null,
+  $ = !1;
+function D(e) {
+  b = e;
+}
+let g = null;
+function q(e) {
+  g = e;
+}
+let z = null;
+function Ln(e) {
+  b !== null && (z === null ? (z = [e]) : z.push(e));
+}
+let O = null,
+  H = 0,
+  U = null;
+function fi(e) {
+  U = e;
+}
+let Pn = 1,
+  pe = 0,
+  we = pe;
+function Gt(e) {
+  we = e;
+}
+function Dn() {
+  return ++Pn;
+}
+function Ge(e) {
+  var t = e.f;
+  if ((t & M) !== 0) return !0;
+  if ((t & C && (e.f &= ~ye), (t & J) !== 0)) {
+    for (var n = e.deps, r = n.length, i = 0; i < r; i++) {
+      var s = n[i];
+      if ((Ge(s) && mn(s), s.wv > e.wv)) return !0;
+    }
+    (t & j) !== 0 && G === null && S(e, k);
+  }
+  return !1;
+}
+function Fn(e, t, n = !0) {
+  var r = e.reactions;
+  if (r !== null && !(z !== null && Ne.call(z, e)))
+    for (var i = 0; i < r.length; i++) {
+      var s = r[i];
+      (s.f & C) !== 0 ? Fn(s, t, !1) : t === s && (n ? S(s, M) : (s.f & k) !== 0 && S(s, J), Nt(s));
+    }
+}
+function Hn(e) {
+  var t = O,
+    n = H,
+    r = U,
+    i = b,
+    s = z,
+    l = P,
+    a = $,
+    f = we,
+    o = e.f;
+  (O = null),
+    (H = 0),
+    (U = null),
+    (b = (o & (K | ce)) === 0 ? e : null),
+    (z = null),
+    Ie(e.ctx),
+    ($ = !1),
+    (we = ++pe),
+    e.ac !== null &&
+      (lt(() => {
+        e.ac.abort(ft);
+      }),
+      (e.ac = null));
+  try {
+    e.f |= et;
+    var u = e.fn,
+      h = u();
+    e.f |= Ae;
+    var c = e.deps,
+      v = p?.is_fork;
+    if (O !== null) {
+      var _;
+      if ((v || qe(e, H), c !== null && H > 0)) for (c.length = H + O.length, _ = 0; _ < O.length; _++) c[H + _] = O[_];
+      else e.deps = c = O;
+      if (Lt() && (e.f & j) !== 0) for (_ = H; _ < c.length; _++) (c[_].reactions ??= []).push(e);
+    } else !v && c !== null && H < c.length && (qe(e, H), (c.length = H));
+    if (an() && U !== null && !$ && c !== null && (e.f & (C | J | M)) === 0) for (_ = 0; _ < U.length; _++) Fn(U[_], e);
+    if (i !== null && i !== e) {
+      if ((pe++, i.deps !== null)) for (let m = 0; m < n; m += 1) i.deps[m].rv = pe;
+      if (t !== null) for (const m of t) m.rv = pe;
+      U !== null && (r === null ? (r = U) : r.push(...U));
+    }
+    return (e.f & ue) !== 0 && (e.f ^= ue), h;
+  } catch (m) {
+    return un(m);
+  } finally {
+    (e.f ^= et), (O = t), (H = n), (U = r), (b = i), (z = s), Ie(l), ($ = a), (we = f);
+  }
+}
+function li(e, t) {
+  let n = t.reactions;
+  if (n !== null) {
+    var r = Wn.call(n, e);
+    if (r !== -1) {
+      var i = n.length - 1;
+      i === 0 ? (n = t.reactions = null) : ((n[r] = n[i]), n.pop());
+    }
+  }
+  if (n === null && (t.f & C) !== 0 && (O === null || !Ne.call(O, t))) {
+    var s = t;
+    (s.f & j) !== 0 && ((s.f ^= j), (s.f &= ~ye)), s.v !== T && xt(s), Gr(s), qe(s, 0);
+  }
+}
+function qe(e, t) {
+  var n = e.deps;
+  if (n !== null) for (var r = t; r < n.length; r++) li(e, n[r]);
+}
+function Pe(e) {
+  var t = e.f;
+  if ((t & B) === 0) {
+    S(e, k);
+    var n = g,
+      r = Je;
+    (g = e), (Je = !0);
+    try {
+      (t & (Y | en)) !== 0 ? si(e) : Dt(e), xn(e);
+      var i = Hn(e);
+      (e.teardown = typeof i == "function" ? i : null), (e.wv = Pn);
+      var s;
+    } finally {
+      (Je = r), (g = n);
+    }
+  }
+}
+async function ai() {
+  await Promise.resolve(), Dr();
+}
+function I(e) {
+  var t = e.f,
+    n = (t & C) !== 0;
+  if (b !== null && !$) {
+    var r = g !== null && (g.f & B) !== 0;
+    if (!r && (z === null || !Ne.call(z, e))) {
+      var i = b.deps;
+      if ((b.f & et) !== 0)
+        e.rv < pe && ((e.rv = pe), O === null && i !== null && i[H] === e ? H++ : O === null ? (O = [e]) : O.push(e));
+      else {
+        (b.deps ??= []).push(e);
+        var s = e.reactions;
+        s === null ? (e.reactions = [b]) : Ne.call(s, b) || s.push(b);
+      }
+    }
+  }
+  if (se && ge.has(e)) return ge.get(e);
+  if (n) {
+    var l = e;
+    if (se) {
+      var a = l.v;
+      return (((l.f & k) === 0 && l.reactions !== null) || Vn(l)) && (a = Ot(l)), ge.set(l, a), a;
+    }
+    var f = (l.f & j) === 0 && !$ && b !== null && (Je || (b.f & j) !== 0),
+      o = (l.f & Ae) === 0;
+    Ge(l) && (f && (l.f |= j), mn(l)), f && !o && (wn(l), Un(l));
+  }
+  if (G?.has(e)) return G.get(e);
+  if ((e.f & ue) !== 0) throw e.v;
+  return e.v;
+}
+function Un(e) {
+  if (((e.f |= j), e.deps !== null))
+    for (const t of e.deps) (t.reactions ??= []).push(e), (t.f & C) !== 0 && (t.f & j) === 0 && (wn(t), Un(t));
+}
+function Vn(e) {
+  if (e.v === T) return !0;
+  if (e.deps === null) return !1;
+  for (const t of e.deps) if (ge.has(t) || ((t.f & C) !== 0 && Vn(t))) return !0;
+  return !1;
+}
+function Te(e) {
+  var t = $;
+  try {
+    return ($ = !0), e();
+  } finally {
+    $ = t;
+  }
+}
+function oi(e) {
+  if (!(typeof e != "object" || !e || e instanceof EventTarget)) {
+    if (re in e) St(e);
+    else if (!Array.isArray(e))
+      for (let t in e) {
+        const n = e[t];
+        typeof n == "object" && n && re in n && St(n);
+      }
+  }
+}
+function St(e, t = new Set()) {
+  if (typeof e == "object" && e !== null && !(e instanceof EventTarget) && !t.has(e)) {
+    t.add(e), e instanceof Date && e.getTime();
+    for (let r in e)
+      try {
+        St(e[r], t);
+      } catch {}
+    const n = Ct(e);
+    if (
+      n !== Object.prototype &&
+      n !== Array.prototype &&
+      n !== Map.prototype &&
+      n !== Set.prototype &&
+      n !== Date.prototype
+    ) {
+      const r = Jt(n);
+      for (let i in r) {
+        const s = r[i].get;
+        if (s)
+          try {
+            s.call(e);
+          } catch {}
+      }
+    }
+  }
+}
+const ui = ["touchstart", "touchmove"];
+function ci(e) {
+  return ui.includes(e);
+}
+const Ue = Symbol("events"),
+  jn = new Set(),
+  At = new Set();
+function hi(e, t, n, r = {}) {
+  function i(s) {
+    if ((r.capture || Tt.call(t, s), !s.cancelBubble)) return lt(() => n?.call(this, s));
+  }
+  return (
+    e.startsWith("pointer") || e.startsWith("touch") || e === "wheel"
+      ? W(() => {
+          t.addEventListener(e, i, r);
+        })
+      : t.addEventListener(e, i, r),
+    i
+  );
+}
+function Fi(e, t, n, r, i) {
+  var s = { capture: r, passive: i },
+    l = hi(e, t, n, s);
+  (t === document.body || t === window || t === document || t instanceof HTMLMediaElement) &&
+    Pt(() => {
+      t.removeEventListener(e, l, s);
+    });
+}
+function Hi(e, t, n) {
+  (t[Ue] ??= {})[e] = n;
+}
+function Ui(e) {
+  for (var t = 0; t < e.length; t++) jn.add(e[t]);
+  for (var n of At) n(e);
+}
+let $t = null;
+function Tt(e) {
+  var t = this,
+    n = t.ownerDocument,
+    r = e.type,
+    i = e.composedPath?.() || [],
+    s = i[0] || e.target;
+  $t = e;
+  var l = 0,
+    a = $t === e && e[Ue];
+  if (a) {
+    var f = i.indexOf(a);
+    if (f !== -1 && (t === document || t === window)) {
+      e[Ue] = t;
+      return;
+    }
+    var o = i.indexOf(t);
+    if (o === -1) return;
+    f <= o && (l = f);
+  }
+  if (((s = i[l] || e.target), s !== t)) {
+    Kn(e, "currentTarget", {
+      configurable: !0,
+      get() {
+        return s || n;
+      },
+    });
+    var u = b,
+      h = g;
+    D(null), q(null);
+    try {
+      for (var c, v = []; s !== null; ) {
+        var _ = s.assignedSlot || s.parentNode || s.host || null;
+        try {
+          var m = s[Ue]?.[r];
+          m != null && (!s.disabled || e.target === s) && m.call(s, e);
+        } catch (d) {
+          c ? v.push(d) : (c = d);
+        }
+        if (e.cancelBubble || _ === t || _ === null) break;
+        s = _;
+      }
+      if (c) {
+        for (let d of v)
+          queueMicrotask(() => {
+            throw d;
+          });
+        throw c;
+      }
+    } finally {
+      (e[Ue] = t), delete e.currentTarget, D(u), q(h);
+    }
+  }
+}
+const di =
+  globalThis?.window?.trustedTypes &&
+  globalThis.window.trustedTypes.createPolicy("svelte-trusted-html", { createHTML: (e) => e });
+function vi(e) {
+  return di?.createHTML(e) ?? e;
+}
+function Bn(e) {
+  var t = kn("template");
+  return (t.innerHTML = vi(e.replaceAll("<!>", "<!---->"))), t.content;
+}
+function Se(e, t) {
+  var n = g;
+  n.nodes === null && (n.nodes = { start: e, end: t, a: null, t: null });
+}
+function Vi(e, t) {
+  var n = (t & Ar) !== 0,
+    r = (t & Tr) !== 0,
+    i,
+    s = !e.startsWith("<!>");
+  return () => {
+    i === void 0 && ((i = Bn(s ? e : "<!>" + e)), n || (i = Z(i)));
+    var l = r || En ? document.importNode(i, !0) : i.cloneNode(!0);
+    if (n) {
+      var a = Z(l),
+        f = l.lastChild;
+      Se(a, f);
+    } else Se(l, l);
+    return l;
+  };
+}
+function _i(e, t, n = "svg") {
+  var r = !e.startsWith("<!>"),
+    i = `<${n}>${r ? e : "<!>" + e}</${n}>`,
+    s;
+  return () => {
+    if (!s) {
+      var l = Bn(i),
+        a = Z(l);
+      s = Z(a);
+    }
+    var f = s.cloneNode(!0);
+    return Se(f, f), f;
+  };
+}
+function ji(e, t) {
+  return _i(e, t, "svg");
+}
+function Bi(e = "") {
+  {
+    var t = ie(e + "");
+    return Se(t, t), t;
+  }
+}
+function zi() {
+  var e = document.createDocumentFragment(),
+    t = document.createComment(""),
+    n = ie();
+  return e.append(t, n), Se(t, n), e;
+}
+function qi(e, t) {
+  e !== null && e.before(t);
+}
+function Yi(e, t) {
+  var n = t == null ? "" : typeof t == "object" ? `${t}` : t;
+  n !== (e[bt] ??= e.nodeValue) && ((e[bt] = n), (e.nodeValue = `${n}`));
+}
+function Gi(e, t) {
+  return pi(e, t);
+}
+const Ke = new Map();
+function pi(e, { target: t, anchor: n, props: r = {}, events: i, context: s, intro: l = !0, transformError: a }) {
+  Xr();
+  var f = void 0,
+    o = ni(() => {
+      var u = n ?? t.appendChild(ie());
+      Vr(
+        u,
+        { pending: () => {} },
+        (v) => {
+          Rr({});
+          var _ = P;
+          s && (_.c = s), i && (r.$$events = i), (f = e(v, r) || {}), Nr();
+        },
+        a
+      );
+      var h = new Set(),
+        c = (v) => {
+          for (var _ = 0; _ < v.length; _++) {
+            var m = v[_];
+            if (!h.has(m)) {
+              h.add(m);
+              var d = ci(m);
+              for (const E of [t, document]) {
+                var w = Ke.get(E);
+                w === void 0 && ((w = new Map()), Ke.set(E, w));
+                var A = w.get(m);
+                A === void 0 ? (E.addEventListener(m, Tt, { passive: d }), w.set(m, 1)) : w.set(m, A + 1);
+              }
+            }
+          }
+        };
+      return (
+        c(it(jn)),
+        At.add(c),
+        () => {
+          for (var v of h)
+            for (const d of [t, document]) {
+              var _ = Ke.get(d),
+                m = _.get(v);
+              --m == 0 ? (d.removeEventListener(v, Tt), _.delete(v), _.size === 0 && Ke.delete(d)) : _.set(v, m);
+            }
+          At.delete(c), u !== n && u.parentNode?.removeChild(u);
+        }
+      );
+    });
+  return gi.set(f, o), f;
+}
+let gi = new WeakMap();
+class zn {
+  anchor;
+  #t = new Map();
+  #l = new Map();
+  #e = new Map();
+  #a = new Set();
+  #n = !0;
+  constructor(t, n = !0) {
+    (this.anchor = t), (this.#n = n);
+  }
+  #i = (t) => {
+    if (this.#t.has(t)) {
+      var n = this.#t.get(t),
+        r = this.#l.get(n);
+      if (r) Ft(r), this.#a.delete(n);
+      else {
+        var i = this.#e.get(n);
+        i &&
+          (this.#l.set(n, i.effect),
+          this.#e.delete(n),
+          i.fragment.lastChild.remove(),
+          this.anchor.before(i.fragment),
+          (r = i.effect));
+      }
+      for (const [s, l] of this.#t) {
+        if ((this.#t.delete(s), s === t)) break;
+        const a = this.#e.get(l);
+        a && (L(a.effect), this.#e.delete(l));
+      }
+      for (const [s, l] of this.#l) {
+        if (s === n || this.#a.has(s)) continue;
+        const a = () => {
+          if (Array.from(this.#t.values()).includes(s)) {
+            var o = document.createDocumentFragment();
+            Ht(l, o), o.append(ie()), this.#e.set(s, { effect: l, fragment: o });
+          } else L(l);
+          this.#a.delete(s), this.#l.delete(s);
+        };
+        this.#n || !r ? (this.#a.add(s), me(l, a, !1)) : a();
+      }
+    }
+  };
+  #r = (t) => {
+    this.#t.delete(t);
+    const n = Array.from(this.#t.values());
+    for (const [r, i] of this.#e) n.includes(r) || (L(i.effect), this.#e.delete(r));
+  };
+  ensure(t, n) {
+    var r = p,
+      i = Tn();
+    if (n && !this.#l.has(t) && !this.#e.has(t))
+      if (i) {
+        var s = document.createDocumentFragment(),
+          l = ie();
+        s.append(l), this.#e.set(t, { effect: V(() => n(l)), fragment: s });
+      } else
+        this.#l.set(
+          t,
+          V(() => n(this.anchor))
+        );
+    if ((this.#t.set(r, t), i)) {
+      for (const [a, f] of this.#l) a === t ? r.unskip_effect(f) : r.skip_effect(f);
+      for (const [a, f] of this.#e) a === t ? r.unskip_effect(f.effect) : r.skip_effect(f.effect);
+      r.oncommit(this.#i), r.ondiscard(this.#r);
+    } else this.#i(r);
+  }
+}
+function $i(e, t, n = !1) {
+  var r = new zn(e),
+    i = n ? be : 0;
+  function s(l, a) {
+    r.ensure(l, a);
+  }
+  at(() => {
+    var l = !1;
+    t((a, f = 0) => {
+      (l = !0), s(f, a);
+    }),
+      l || s(-1, null);
+  }, i);
+}
+function Wi(e, t) {
+  return t;
+}
+function mi(e, t, n) {
+  for (var r = [], i = t.length, s, l = t.length, a = 0; a < i; a++) {
+    let h = t[a];
+    me(
+      h,
+      () => {
+        if (s) {
+          if ((s.pending.delete(h), s.done.add(h), s.pending.size === 0)) {
+            var c = e.outrogroups;
+            kt(e, it(s.done)), c.delete(s), c.size === 0 && (e.outrogroups = null);
+          }
+        } else l -= 1;
+      },
+      !1
+    );
+  }
+  if (l === 0) {
+    var f = r.length === 0 && n !== null;
+    if (f) {
+      var o = n,
+        u = o.parentNode;
+      Zr(u), u.append(o), e.items.clear();
+    }
+    kt(e, t, !f);
+  } else (s = { pending: new Set(t), done: new Set() }), (e.outrogroups ??= new Set()).add(s);
+}
+function kt(e, t, n = !0) {
+  var r;
+  if (e.pending.size > 0) {
+    r = new Set();
+    for (const l of e.pending.values()) for (const a of l) r.add(e.items.get(a).e);
+  }
+  for (var i = 0; i < t.length; i++) {
+    var s = t[i];
+    if (r?.has(s)) {
+      s.f |= X;
+      const l = document.createDocumentFragment();
+      Ht(s, l);
+    } else L(t[i], n);
+  }
+}
+var Wt;
+function Ki(e, t, n, r, i, s = null) {
+  var l = e,
+    a = new Map(),
+    f = (t & nn) !== 0;
+  if (f) {
+    var o = e;
+    l = o.appendChild(ie());
+  }
+  var u = null,
+    h = gn(() => {
+      var E = n();
+      return Zt(E) ? E : E == null ? [] : it(E);
+    }),
+    c,
+    v = new Map(),
+    _ = !0;
+  function m(E) {
+    (A.effect.f & B) === 0 &&
+      (A.pending.delete(E),
+      (A.fallback = u),
+      wi(A, c, l, t, r),
+      u !== null &&
+        (c.length === 0
+          ? (u.f & X) === 0
+            ? Ft(u)
+            : ((u.f ^= X), Ve(u, null, l))
+          : me(u, () => {
+              u = null;
+            })));
+  }
+  function d(E) {
+    A.pending.delete(E);
+  }
+  var w = at(() => {
+      c = I(h);
+      for (var E = c.length, y = new Set(), N = p, Q = Tn(), F = 0; F < E; F += 1) {
+        var de = c[F],
+          ke = r(de, F),
+          x = _ ? null : a.get(ke);
+        x
+          ? (x.v && Le(x.v, de), x.i && Le(x.i, F), Q && N.unskip_effect(x.e))
+          : ((x = bi(a, _ ? l : (Wt ??= ie()), de, ke, F, i, t, n)), _ || (x.e.f |= X), a.set(ke, x)),
+          y.add(ke);
+      }
+      if (
+        (E === 0 && s && !u && (_ ? (u = V(() => s(l))) : ((u = V(() => s((Wt ??= ie())))), (u.f |= X))),
+        E > y.size && fr(),
+        !_)
+      )
+        if ((v.set(N, y), Q)) {
+          for (const [Gn, $n] of a) y.has(Gn) || N.skip_effect($n.e);
+          N.oncommit(m), N.ondiscard(d);
+        } else m(N);
+      I(h);
+    }),
+    A = { effect: w, items: a, pending: v, outrogroups: null, fallback: u };
+  _ = !1;
+}
+function He(e) {
+  for (; e !== null && (e.f & K) === 0; ) e = e.next;
+  return e;
+}
+function wi(e, t, n, r, i) {
+  var s = (r & mr) !== 0,
+    l = t.length,
+    a = e.items,
+    f = He(e.effect.first),
+    o,
+    u = null,
+    h,
+    c = [],
+    v = [],
+    _,
+    m,
+    d,
+    w;
+  if (s)
+    for (w = 0; w < l; w += 1)
+      (_ = t[w]), (m = i(_, w)), (d = a.get(m).e), (d.f & X) === 0 && (d.nodes?.a?.measure(), (h ??= new Set()).add(d));
+  for (w = 0; w < l; w += 1) {
+    if (((_ = t[w]), (m = i(_, w)), (d = a.get(m).e), e.outrogroups !== null))
+      for (const x of e.outrogroups) x.pending.delete(d), x.done.delete(d);
+    if (((d.f & R) !== 0 && (Ft(d), s && (d.nodes?.a?.unfix(), (h ??= new Set()).delete(d))), (d.f & X) !== 0))
+      if (((d.f ^= X), d === f)) Ve(d, null, n);
+      else {
+        var A = u ? u.next : f;
+        d === e.effect.last && (e.effect.last = d.prev),
+          d.prev && (d.prev.next = d.next),
+          d.next && (d.next.prev = d.prev),
+          ae(e, u, d),
+          ae(e, d, A),
+          Ve(d, A, n),
+          (u = d),
+          (c = []),
+          (v = []),
+          (f = He(u.next));
+        continue;
+      }
+    if (d !== f) {
+      if (o !== void 0 && o.has(d)) {
+        if (c.length < v.length) {
+          var E = v[0],
+            y;
+          u = E.prev;
+          var N = c[0],
+            Q = c[c.length - 1];
+          for (y = 0; y < c.length; y += 1) Ve(c[y], E, n);
+          for (y = 0; y < v.length; y += 1) o.delete(v[y]);
+          ae(e, N.prev, Q.next), ae(e, u, N), ae(e, Q, E), (f = E), (u = Q), (w -= 1), (c = []), (v = []);
+        } else
+          o.delete(d),
+            Ve(d, f, n),
+            ae(e, d.prev, d.next),
+            ae(e, d, u === null ? e.effect.first : u.next),
+            ae(e, u, d),
+            (u = d);
+        continue;
+      }
+      for (c = [], v = []; f !== null && f !== d; ) (o ??= new Set()).add(f), v.push(f), (f = He(f.next));
+      if (f === null) continue;
+    }
+    (d.f & X) === 0 && c.push(d), (u = d), (f = He(d.next));
+  }
+  if (e.outrogroups !== null) {
+    for (const x of e.outrogroups) x.pending.size === 0 && (kt(e, it(x.done)), e.outrogroups?.delete(x));
+    e.outrogroups.size === 0 && (e.outrogroups = null);
+  }
+  if (f !== null || o !== void 0) {
+    var F = [];
+    if (o !== void 0) for (d of o) (d.f & R) === 0 && F.push(d);
+    for (; f !== null; ) (f.f & R) === 0 && f !== e.fallback && F.push(f), (f = He(f.next));
+    var de = F.length;
+    if (de > 0) {
+      var ke = (r & nn) !== 0 && l === 0 ? n : null;
+      if (s) {
+        for (w = 0; w < de; w += 1) F[w].nodes?.a?.measure();
+        for (w = 0; w < de; w += 1) F[w].nodes?.a?.fix();
+      }
+      mi(e, F, ke);
+    }
+  }
+  s &&
+    W(() => {
+      if (h !== void 0) for (d of h) d.nodes?.a?.apply();
+    });
+}
+function bi(e, t, n, r, i, s, l, a) {
+  var f = (l & pr) !== 0 ? ((l & wr) === 0 ? $r(n, !1, !1) : Ee(n)) : null,
+    o = (l & gr) !== 0 ? Ee(i) : null;
+  return {
+    v: f,
+    i: o,
+    e: V(
+      () => (
+        s(t, f ?? n, o ?? i, a),
+        () => {
+          e.delete(r);
+        }
+      )
+    ),
+  };
+}
+function Ve(e, t, n) {
+  if (e.nodes)
+    for (var r = e.nodes.start, i = e.nodes.end, s = t && (t.f & X) === 0 ? t.nodes.start : n; r !== null; ) {
+      var l = Ye(r);
+      if ((s.before(r), r === i)) return;
+      r = l;
+    }
+}
+function ae(e, t, n) {
+  t === null ? (e.effect.first = n) : (t.next = n), n === null ? (e.effect.last = t) : (n.prev = t);
+}
+function Xi(e, t, n = !1, r = !1, i = !1, s = !1) {
+  var l = e,
+    a = "";
+  if (n) var f = e;
+  ii(() => {
+    var o = g;
+    if (a !== (a = t() ?? "")) {
+      if (n) {
+        (o.nodes = null), (f.innerHTML = a), a !== "" && Se(Z(f), f.lastChild);
+        return;
+      }
+      if ((o.nodes !== null && (Rn(o.nodes.start, o.nodes.end), (o.nodes = null)), a !== "")) {
+        var u = r ? kr : i ? Mr : void 0,
+          h = kn(r ? "svg" : i ? "math" : "template", u);
+        h.innerHTML = a;
+        var c = r || i ? h : h.content;
+        if ((Se(Z(c), c.lastChild), r || i)) for (; Z(c); ) l.before(Z(c));
+        else l.before(c);
+      }
+    }
+  });
+}
+function Zi(e, t, n) {
+  var r = new zn(e);
+  at(() => {
+    var i = t() ?? null;
+    r.ensure(i, i && ((s) => n(s, i)));
+  }, be);
+}
+function Ji(e, t, n) {
+  Cn(() => {
+    var r = Te(() => t(e, n?.()) || {});
+    if (n && r?.update) {
+      var i = !1,
+        s = {};
+      Fe(() => {
+        var l = n();
+        oi(l), i && fn(s, l) && ((s = l), r.update(l));
+      }),
+        (i = !0);
+    }
+    if (r?.destroy) return () => r.destroy();
+  });
+}
+const Kt = [
+  ...` 	
+\r\f \v\uFEFF`,
+];
+function yi(e, t, n) {
+  var r = e == null ? "" : "" + e;
+  if ((t && (r = r ? r + " " + t : t), n)) {
+    for (var i of Object.keys(n))
+      if (n[i]) r = r ? r + " " + i : i;
+      else if (r.length)
+        for (var s = i.length, l = 0; (l = r.indexOf(i, l)) >= 0; ) {
+          var a = l + s;
+          (l === 0 || Kt.includes(r[l - 1])) && (a === r.length || Kt.includes(r[a]))
+            ? (r = (l === 0 ? "" : r.substring(0, l)) + r.substring(a + 1))
+            : (l = a);
+        }
+  }
+  return r === "" ? null : r;
+}
+function Xt(e, t = !1) {
+  var n = t ? " !important;" : ";",
+    r = "";
+  for (var i of Object.keys(e)) {
+    var s = e[i];
+    s != null && s !== "" && (r += " " + i + ": " + s + n);
+  }
+  return r;
+}
+function Ei(e, t) {
+  if (t) {
+    var n = "",
+      r,
+      i;
+    return (
+      Array.isArray(t) ? ((r = t[0]), (i = t[1])) : (r = t),
+      r && (n += Xt(r)),
+      i && (n += Xt(i, !0)),
+      (n = n.trim()),
+      n === "" ? null : n
+    );
+  }
+  return String(e);
+}
+function Qi(e, t, n, r, i, s) {
+  var l = e[mt];
+  if (l !== n || l === void 0) {
+    var a = yi(n, r, s);
+    a == null ? e.removeAttribute("class") : (e.className = a), (e[mt] = n);
+  } else if (s && i !== s)
+    for (var f in s) {
+      var o = !!s[f];
+      (i == null || o !== !!i[f]) && e.classList.toggle(f, o);
+    }
+  return s;
+}
+function ct(e, t = {}, n, r) {
+  for (var i in n) {
+    var s = n[i];
+    t[i] !== s && (n[i] == null ? e.style.removeProperty(i) : e.style.setProperty(i, s, r));
+  }
+}
+function es(e, t, n, r) {
+  var i = e[wt];
+  if (i !== t) {
+    var s = Ei(t, r);
+    s == null ? e.removeAttribute("style") : (e.style.cssText = s), (e[wt] = t);
+  } else r && (Array.isArray(r) ? (ct(e, n?.[0], r[0]), ct(e, n?.[1], r[1], "important")) : ct(e, n, r));
+  return r;
+}
+const Si = Symbol("is custom element"),
+  Ai = Symbol("is html");
+function ts(e, t) {
+  var n = qn(e);
+  n.checked !== (n.checked = t ?? void 0) && (e.checked = t);
+}
+function Ti(e, t, n, r) {
+  var i = qn(e);
+  i[t] !== (i[t] = n) &&
+    (t === "loading" && (e[rr] = n),
+    n == null ? e.removeAttribute(t) : typeof n != "string" && Yn(e).includes(t) ? (e[t] = n) : e.setAttribute(t, n));
+}
+function ns(e, t, n) {
+  var r = b,
+    i = g;
+  D(null), q(null);
+  try {
+    t !== "style" &&
+    (Mt.has(e.getAttribute("is") || e.nodeName) ||
+    !customElements ||
+    customElements.get(e.getAttribute("is") || e.nodeName.toLowerCase())
+      ? Yn(e).includes(t)
+      : n && typeof n == "object")
+      ? (e[t] = n)
+      : Ti(e, t, n == null ? n : String(n));
+  } finally {
+    D(r), q(i);
+  }
+}
+function qn(e) {
+  return (e[tn] ??= { [Si]: e.nodeName.includes("-"), [Ai]: e.namespaceURI === rn });
+}
+var Mt = new Map();
+function Yn(e) {
+  var t = e.getAttribute("is") || e.nodeName,
+    n = Mt.get(t);
+  if (n) return n;
+  Mt.set(t, (n = []));
+  for (var r, i = e, s = Element.prototype; s !== i; ) {
+    r = Jt(i);
+    for (var l in r) r[l].set && l !== "innerHTML" && l !== "textContent" && l !== "innerText" && n.push(l);
+    i = Ct(i);
+  }
+  return n;
+}
+function rs(e, t, n = t) {
+  var r = new WeakSet();
+  It(e, "input", async (i) => {
+    var s = i ? e.defaultValue : e.value;
+    if (((s = dt(e) ? vt(s) : s), n(s), p !== null && r.add(p), await ai(), s !== (s = t()))) {
+      var l = e.selectionStart,
+        a = e.selectionEnd,
+        f = e.value.length;
+      if (((e.value = s ?? ""), a !== null)) {
+        var o = e.value.length;
+        l === a && a === f && o > f
+          ? ((e.selectionStart = o), (e.selectionEnd = o))
+          : ((e.selectionStart = l), (e.selectionEnd = Math.min(a, o)));
+      }
+    }
+  }),
+    Te(t) == null && e.value && (n(dt(e) ? vt(e.value) : e.value), p !== null && r.add(p)),
+    Fe(() => {
+      var i = t();
+      if (e === document.activeElement) {
+        var s = p;
+        if (r.has(s)) return;
+      }
+      (dt(e) && i === vt(e.value)) || (e.type === "date" && !i && !e.value) || (i !== e.value && (e.value = i ?? ""));
+    });
+}
+const ht = new Set();
+function is(e, t, n, r, i = r) {
+  var s = n.getAttribute("type") === "checkbox",
+    l = e;
+  if (t !== null) for (var a of t) l = l[a] ??= [];
+  l.push(n),
+    It(
+      n,
+      "change",
+      () => {
+        var f = n.__value;
+        s && (f = ki(l, f, n.checked)), i(f);
+      },
+      () => i(s ? [] : null)
+    ),
+    Fe(() => {
+      var f = r();
+      s ? ((f = f || []), (n.checked = f.includes(n.__value))) : (n.checked = Kr(n.__value, f));
+    }),
+    Pt(() => {
+      var f = l.indexOf(n);
+      f !== -1 && l.splice(f, 1);
+    }),
+    ht.has(l) ||
+      (ht.add(l),
+      W(() => {
+        l.sort((f, o) => (f.compareDocumentPosition(o) === 4 ? -1 : 1)), ht.delete(l);
+      })),
+    W(() => {});
+}
+function ss(e, t, n = t) {
+  It(e, "change", (r) => {
+    var i = r ? e.defaultChecked : e.checked;
+    n(i);
+  }),
+    Te(t) == null && n(e.checked),
+    Fe(() => {
+      var r = t();
+      e.checked = !!r;
+    });
+}
+function ki(e, t, n) {
+  for (var r = new Set(), i = 0; i < e.length; i += 1) e[i].checked && r.add(e[i].__value);
+  return n || r.delete(t), Array.from(r);
+}
+function dt(e) {
+  var t = e.type;
+  return t === "number" || t === "range";
+}
+function vt(e) {
+  return e === "" ? null : +e;
+}
+function _t(e, t) {
+  return e === t || e?.[re] === t;
+}
+function fs(e = {}, t, n, r) {
+  var i = P.r,
+    s = g;
+  return (
+    Cn(() => {
+      var l, a;
+      return (
+        Fe(() => {
+          (l = a),
+            (a = []),
+            Te(() => {
+              _t(n(...a), e) || (t(e, ...a), l && _t(n(...l), e) && t(null, ...l));
+            });
+        }),
+        () => {
+          let f = s;
+          for (; f !== i && f.parent !== null && f.parent.f & gt; ) f = f.parent;
+          const o = () => {
+              a && _t(n(...a), e) && t(null, ...a);
+            },
+            u = f.teardown;
+          f.teardown = () => {
+            o(), u?.();
+          };
+        }
+      );
+    }),
+    e
+  );
+}
+function ls(e, t, n, r) {
+  var i = !0,
+    s = (n & Er) !== 0,
+    l = (n & Sr) !== 0,
+    a = r,
+    f = !0,
+    o = void 0,
+    u = () => (l && i ? ((o ??= ze(r)), I(o)) : (f && ((f = !1), (a = l ? Te(r) : r)), a));
+  let h;
+  if (s) {
+    var c = re in e || nr in e;
+    h = xe(e, t)?.set ?? (c && t in e ? (y) => (e[t] = y) : void 0);
+  }
+  var v,
+    _ = !1;
+  s ? ([v, _] = Lr(() => e[t])) : (v = e[t]), v === void 0 && r !== void 0 && ((v = u()), h && (cr(), h(v)));
+  var m;
+  if (
+    ((m = () => {
+      var y = e[t];
+      return y === void 0 ? u() : ((f = !0), y);
+    }),
+    (n & yr) === 0)
+  )
+    return m;
+  if (h) {
+    var d = e.$$legacy;
+    return function (y, N) {
+      return arguments.length > 0 ? ((!N || d || _) && h(N ? m() : y), y) : m();
+    };
+  }
+  var w = !1,
+    A = ((n & br) !== 0 ? ze : gn)(() => ((w = !1), m()));
+  s && I(A);
+  var E = g;
+  return function (y, N) {
+    if (arguments.length > 0) {
+      const Q = N ? I(A) : s ? _e(y) : y;
+      return ne(A, Q), (w = !0), a !== void 0 && (a = Q), y;
+    }
+    return (se && w) || (E.f & B) !== 0 ? A.v : I(A);
+  };
+}
+function as(e) {
+  P === null && ir(),
+    ti(() => {
+      const t = Te(e);
+      if (typeof t == "function") return t;
+    });
+}
+const Mi = "5";
+typeof window < "u" && ((window.__svelte ??= {}).v ??= new Set()).add(Mi);
+const rt = _e({ light: !1 });
+let te = null;
+async function os() {
+  if (chrome.runtime.getManifest().version_name.includes("-prerelease")) {
+    const t = getComputedStyle(document.documentElement).getPropertyValue("--blue");
+    document.documentElement.style.setProperty("--brand-orange", t);
+    const n = document.getElementById("favicon");
+    n && (n.href = chrome.runtime.getURL("/images/icon-blue.png"));
+  }
+  return (
+    (te = document.createElement("link")),
+    te.setAttribute("rel", "stylesheet"),
+    te.setAttribute("href", chrome.runtime.getURL("/webpages/styles/colors-light.css")),
+    te.setAttribute("data-below-vue-components", ""),
+    (te.media = "not all"),
+    document.head.appendChild(te),
+    new Promise((t) => {
+      chrome.storage.sync.get(["globalTheme"], ({ globalTheme: n = !1 }) => {
+        (rt.light = n === !0), rt.light && te.removeAttribute("media"), t();
+      });
+    })
+  );
+}
+function us(e) {
+  rt.light !== e &&
+    (chrome.storage.sync.set({ globalTheme: e }, () => {
+      e ? te.removeAttribute("media") : (te.media = "not all");
+    }),
+    (rt.light = e));
+}
+function cs() {
+  return typeof new Error().fileName < "u";
+}
+const Ci = ["ar", "az", "ckb", "fa", "he", "ug", "ur", "yi"];
+function xi(e) {
+  if (!e) return "ltr";
+  const t = e.split("-")[0];
+  return Ci.includes(t) ? "rtl" : "ltr";
+}
+function hs() {
+  (document.documentElement.lang = chrome.i18n.getUILanguage()), (document.body.dir = xi(chrome.i18n.getUILanguage()));
+}
+function ds() {
+  const e = () => {
+      const l = /(Firefox|Chrome)\/([0-9.]+)/.exec(navigator.userAgent);
+      return l ? { browser: l[1], version: l[2].split(".")[0] } : { browser: null, version: null };
+    },
+    { browser: t, version: n } = e();
+  if ((t === "Chrome" && n < 96) || (t === "Firefox" && n < 109)) {
+    const l = new URL(location.href).pathname.startsWith("/webpages/popup/"),
+      a = chrome.runtime.getURL("webpages/error/unsupported-browser.html");
+    l ? chrome.tabs.create({ url: a, active: !0 }) : (location.href = a);
+  }
+}
+export {
+  Ni as $,
+  os as A,
+  zn as B,
+  cs as C,
+  Gi as D,
+  be as E,
+  Jn as F,
+  as as G,
+  er as H,
+  Nr as I,
+  ls as J,
+  _e as K,
+  Rr as L,
+  ne as M,
+  us as N,
+  Ti as O,
+  ts as P,
+  Qi as Q,
+  ns as R,
+  es as S,
+  Yi as T,
+  Pi as U,
+  le as V,
+  ii as W,
+  Bi as X,
+  rt as Y,
+  ai as Z,
+  Oi as _,
+  Ji as a,
+  ti as a0,
+  qi as b,
+  hs as c,
+  Di as d,
+  ss as e,
+  is as f,
+  fs as g,
+  rs as h,
+  at as i,
+  V as j,
+  ds as k,
+  Ii as l,
+  zi as m,
+  Zi as n,
+  ie as o,
+  Ui as p,
+  Hi as q,
+  Ki as r,
+  Fi as s,
+  Li as t,
+  Vi as u,
+  ji as v,
+  I as w,
+  Xi as x,
+  $i as y,
+  Wi as z,
+};

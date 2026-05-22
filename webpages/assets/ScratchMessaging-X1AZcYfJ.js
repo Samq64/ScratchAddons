@@ -1,2 +1,3613 @@
-import{o as Gs,i as Zs,j as Qs,H as Ys,C as er,p as Kt,L as Ht,V as O,K as qe,G as vs,M,w as e,t as rt,y as k,U as c,b as u,I as Bt,$ as $e,O as E,W as C,T as b,S as Ft,q as xe,r as Te,Q as ze,l as o,z as Mt,_ as hs,u as g,x as Ct,a0 as fs,g as ps,J as tr,m as bt,h as sr,X as cs,a as rr}from"./page-init-D8Z4tyJC.js";function _s(r,t){var s;s=document.head.appendChild(Gs());try{Zs(()=>{var a=Qs(()=>t(s));a.f|=Ys})}finally{}}class Vt extends EventTarget{constructor(...t){super(...t),this._eventTargetKey!==null&&scratchAddons.eventTargets[this._eventTargetKey].push(this)}dispatchEvent(...t){return super.dispatchEvent(...t)}get _eventTargetKey(){return null}dispose(){const t=this._eventTargetKey;t!==null&&scratchAddons.eventTargets[t].splice(scratchAddons.eventTargets[t].findIndex(s=>s===this),1)}}let bs=class extends Vt{fetchIsLoggedIn(){return Promise.resolve(scratchAddons.globalState.auth.isLoggedIn)}fetchUsername(){return Promise.resolve(scratchAddons.globalState.auth.username)}fetchUserId(){return Promise.resolve(scratchAddons.globalState.auth.userId)}fetchXToken(){return Promise.resolve(scratchAddons.globalState.auth.xToken)}get csrfToken(){return scratchAddons.globalState.auth.csrfToken}get scratchLang(){return scratchAddons.globalState.auth.scratchLang}get _eventTargetKey(){return"auth"}};class ar extends Vt{constructor(t,s){super(),this._addonId=s.id,this.id=s.id,this._addonObj=t,this.browser=er()?"firefox":"chrome",this.disabled=!1,this.addEventListener("disabled",()=>this.disabled=!0),this.addEventListener("reenabled",()=>this.disabled=!1)}get dir(){return`${this._addonObj._path}addons/${this.id}`}get _eventTargetKey(){return"self"}getEnabledAddons(t){return scratchAddons.methods.getEnabledAddons(t)}}class nr extends Vt{constructor(t){super(),this._addonId=t.self.id}get(t){const a=(scratchAddons.globalState.addonSettings[this._addonId]||{})[t];if(a===void 0)throw"ScratchAddons exception: invalid setting ID";return a}get _eventTargetKey(){return"settings"}}class or{constructor(t){this.self=new ar(this,t),this.auth=new bs(this),this.settings=new nr(this)}get _path(){throw new Error("Subclasses must implement this.")}}class ir{constructor(t){this._addonId=t.self.id}get isFullscreen(){return window.parent===window}get isLightMode(){return scratchAddons.isLightMode}getSelectedTabUrl(){return new Promise(t=>{chrome.tabs.query({active:!0,currentWindow:!0},s=>s.length===0?t(null):t(s[0]?.url||null))})}changeSettings(t={}){const s=scratchAddons.globalState.addonSettings[this._addonId]||{},a=Object.keys(t).filter(n=>!Object.prototype.hasOwnProperty.call(s,n));if(a.length)throw new Error(`Unknown setting keys passed: ${a}`);chrome.runtime.sendMessage({changeAddonSettings:{addonId:this._addonId,newSettings:{...s,...t}}})}}class cr extends bs{constructor(...t){super(...t),this._refresh()}_refresh(t){this._lastUsername=void 0,this._lastUserId=void 0,this._lastIsLoggedIn=void 0,this._lastXToken=void 0,t&&(this._requestFetchFn=t)}_getCookie(){throw new Error("Subclasses must implement this.")}_waitUntilFetched(){const t=new Promise(s=>this.addEventListener("session",s,{once:!0}));return this._requestFetchFn&&(this._requestFetchFn(),this._requestFetchFn=void 0),t}_update(t){this._lastUsername=t.user?.username||null,this._lastUserId=t.user?.id||null,this._lastIsLoggedIn=!!t.user,this._lastXToken=t.user?.token||null,this.dispatchEvent(new CustomEvent("session")),this.dispatchEvent(new CustomEvent("change"))}_fetchProperty(t){return typeof this[t]<"u"?Promise.resolve(this[t]):this._waitUntilFetched().then(()=>this[t])}fetchIsLoggedIn(){return this._fetchProperty("_lastIsLoggedIn")}fetchUsername(){return this._fetchProperty("_lastUsername")}fetchUserId(){return this._fetchProperty("_lastUserId")}fetchXToken(){return this._fetchProperty("_lastXToken")}get csrfToken(){return this._getCookie("scratchcsrftoken")}get scratchLang(){return this._getCookie("scratchlanguage")||navigator.language}}class lr extends cr{_getCookie(t){return scratchAddons.cookies.get(t)||null}}class dr extends or{constructor(t){super(t),this.auth.dispose(),this.auth=new lr(this),this.popup=new ir(this)}get _path(){return chrome.runtime.getURL("")}}const ft=r=>r.replace(/([<>'"&])/g,(t,s)=>`&#${s.charCodeAt(0)};`);function ls(r,t){var s=Object.keys(r);if(Object.getOwnPropertySymbols){var a=Object.getOwnPropertySymbols(r);t&&(a=a.filter((function(n){return Object.getOwnPropertyDescriptor(r,n).enumerable}))),s.push.apply(s,a)}return s}function ds(r){for(var t=1;t<arguments.length;t++){var s=arguments[t]!=null?arguments[t]:{};t%2?ls(Object(s),!0).forEach((function(a){ys(r,a,s[a])})):Object.getOwnPropertyDescriptors?Object.defineProperties(r,Object.getOwnPropertyDescriptors(s)):ls(Object(s)).forEach((function(a){Object.defineProperty(r,a,Object.getOwnPropertyDescriptor(s,a))}))}return r}function ur(r,t){if(!(r instanceof t))throw new TypeError("Cannot call a class as a function")}function mr(r,t){for(var s=0;s<t.length;s++){var a=t[s];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(r,a.key,a)}}function ys(r,t,s){return t in r?Object.defineProperty(r,t,{value:s,enumerable:!0,configurable:!0,writable:!0}):r[t]=s,r}function gr(r,t){return(function(s){if(Array.isArray(s))return s})(r)||(function(s,a){var n=s==null?null:typeof Symbol<"u"&&s[Symbol.iterator]||s["@@iterator"];if(n!=null){var l,v,d=[],m=!0,f=!1;try{for(n=n.call(s);!(m=(l=n.next()).done)&&(d.push(l.value),!a||d.length!==a);m=!0);}catch(x){f=!0,v=x}finally{try{m||n.return==null||n.return()}finally{if(f)throw v}}return d}})(r,t)||(function(s,a){if(s){if(typeof s=="string")return us(s,a);var n=Object.prototype.toString.call(s).slice(8,-1);if(n==="Object"&&s.constructor&&(n=s.constructor.name),n==="Map"||n==="Set")return Array.from(s);if(n==="Arguments"||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return us(s,a)}})(r,t)||(function(){throw new TypeError(`Invalid attempt to destructure non-iterable instance.
-In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`)})()}function us(r,t){(t==null||t>r.length)&&(t=r.length);for(var s=0,a=new Array(t);s<t;s++)a[s]=r[s];return a}function vr(r){for(var t=function(x){return/\s/.test(x)},s=[],a={},n=0,l=null,v=!1,d=0;d<r.length;){if(v&&(t(r[d])||r[d]==="{"))v=!1,l=r.slice(n,d),r[d]==="{"&&d--;else if(!v&&!t(r[d])){var m=r[d]==="{";if(l&&m){var f=ws(r,d);if(f===-1)throw new Error('Unbalanced curly braces in string: "'.concat(r,'"'));a[l]=r.slice(d+1,f),d=f,l=null}else l&&(s.push(l),l=null),v=!0,n=d}d++}return v&&(l=r.slice(n)),l&&s.push(l),{args:s,cases:a}}function ws(r,t){for(var s=0,a=t+1;a<r.length;a++){var n=r.charAt(a);if(n==="}"){if(s===0)return a;s--}else n==="{"&&s++}return-1}function hr(r){return xs(r.slice(1,-1),",",3)}function xs(r,t,s){var a=arguments.length>3&&arguments[3]!==void 0?arguments[3]:[];if(!r)return a;if(s===1)return a.push(r),a;var n=r.indexOf(t);if(n===-1)return a.push(r),a;var l=r.substring(0,n).trim(),v=r.substring(n+t.length+1).trim();return a.push(l),xs(v,t,s-1,a)}function ks(r){return r.reduce((function(t,s){return t.concat(Array.isArray(s)?ks(s):s)}),[])}function fr(r){var t={};return function(){for(var s=arguments.length,a=new Array(s),n=0;n<s;n++)a[n]=arguments[n];var l=a.length?a.map((function(d){return d===null?"null":d===void 0?"undefined":typeof d=="function"?d.toString():d instanceof Date?d.toISOString():JSON.stringify(d)})).join("|"):"_(no-args)_";if(Object.prototype.hasOwnProperty.call(t,l))return t[l];var v=r.apply(void 0,a);return t[l]=v,v}}var $t,pr=(function(){function r(a){var n=this,l=arguments.length>1&&arguments[1]!==void 0?arguments[1]:{};ur(this,r),ys(this,"format",fr((function(v){var d=arguments.length>1&&arguments[1]!==void 0?arguments[1]:{};return ks(n.process(v,d)).join("")}))),this.locale=a,this.typeHandlers=l}var t,s;return t=r,s=[{key:"process",value:function(a){var n=arguments.length>1&&arguments[1]!==void 0?arguments[1]:{};if(!a)return[];var l=a.indexOf("{");if(l!==-1){var v=ws(a,l);if(v===-1)throw new Error('Unbalanced curly braces in string: "'.concat(a,'"'));var d=a.substring(l,v+1);if(d){var m=[],f=a.substring(0,l);f&&m.push(f);var x=hr(d),S=gr(x,3),U=S[0],ce=S[1],de=S[2],I=n[U];I==null&&(I="");var ne=ce&&this.typeHandlers[ce];m.push(ne?ne(I,de,this.locale,n,this.process.bind(this)):I);var Xe=a.substring(v+1);return Xe&&m.push(this.process(Xe,n)),m}}return[a]}}],s&&mr(t.prototype,s),r})(),_r=0;function br(r,t){for(var s=0,a="",n=0,l={};s<r.length;){if(r[s]!=="#"||n)a+=r[s];else{var v="__hashToken".concat(_r++);a+="{".concat(v,", number}"),l[v]=t}r[s]==="{"?n++:r[s]==="}"&&n--,s++}return{caseBody:a,numberValues:l}}function yr(r){var t=arguments.length>1&&arguments[1]!==void 0?arguments[1]:"",s=arguments.length>2?arguments[2]:void 0,a=arguments.length>3?arguments[3]:void 0,n=arguments.length>4?arguments[4]:void 0,l=vr(t),v=l.args,d=l.cases,m=parseInt(r);v.forEach((function(ne){ne.startsWith("offset:")&&(m-=parseInt(ne.slice(7)))}));var f=[];if("PluralRules"in Intl){$t!==void 0&&$t.resolvedOptions().locale===s||($t=new Intl.PluralRules(s));var x=$t.select(m);x!=="other"&&f.push(x)}m===1&&f.push("one"),f.push("=".concat(m),"other");for(var S=0;S<f.length;S++){var U=f[S];if(U in d){var ce=br(d[U],m),de=ce.caseBody,I=ce.numberValues;return n(de,ds(ds({},a),I))}}return r}class wr extends EventTarget{constructor(){super(),this.messages={},this._reconfigure()}_reconfigure(){const t=this.locale;this._date=new Intl.DateTimeFormat(t),this._datetime=new Intl.DateTimeFormat(t,{timeStyle:"short",dateStyle:"short"}),this.formatter=new pr(t,{plural:yr})}_get(t,s,a,n){if(a=a||(l=>l),Object.prototype.hasOwnProperty.call(this.messages,t)){const l=this.messages[t],v=a(l.string||l);return this.formatter.format(v,s)}return n||(globalThis.scratchAddons?.console||console).warn("Key missing:",t),n||t}get(t,s={},a=""){return this._get(t,s,null,a)}escaped(t,s={},a=""){return this._get(t,s,n=>ft(n),a)}get locale(){return this.messages._locale||"en"}get localeName(){return this.messages._locale_name||"English"}date(t){return this._date.format(t)}datetime(t){return this._datetime.format(t)}}class xr extends wr{async loadByAddonId(t){const s=await new Promise(a=>chrome.runtime.sendMessage({l10nAddonId:t},a));this.messages=Object.assign(s,this.messages),this._reconfigure()}}const kr=(...r)=>new Promise(t=>chrome.runtime.sendMessage(...r,t));let Nt=null;function Mr(){return Nt||(Nt=(async()=>{const r=window.scratchAddons=window.scratchAddons||{};r.eventTargets=r.eventTargets||{auth:[],settings:[],self:[]},r.localEvents=r.localEvents||new EventTarget,r.globalState=r.globalState||{},r.methods=r.methods||{},r.l10n=r.l10n||new xr,r.isLightMode=r.isLightMode||!1,r.cookieFetchingFailed=r.cookieFetchingFailed||!1,r.cookies=r.cookies||new Map,r.methods.getEnabledAddons=t=>kr({getEnabledAddons:{tag:t}}),await Ms()})(),Nt)}async function ms(r,t,s){return new Promise(a=>{chrome.cookies.get({url:"https://scratch.mit.edu/",name:r,storeId:s},n=>{n&&n.value?a(t?n:n.value):a(null)})})}async function Cr(){return(await chrome.tabs.getCurrent())?.cookieStoreId||void 0}async function Ms(r=!1){if(r)try{await fetch("https://scratch.mit.edu/csrf_token/")}catch(n){console.error(n),window.scratchAddons.cookieFetchingFailed=!0;return}const t=await Cr(),s=await ms("scratchlanguage",!1,t)||navigator.language,a=await ms("scratchcsrftoken",!0,t);window.scratchAddons.cookieStoreId=t||a?.storeId,window.scratchAddons.cookies.set("scratchlanguage",s),window.scratchAddons.cookies.set("scratchcsrftoken",a?.value)}async function Jt(r){let t,s;if(!window.scratchAddons.isFetchingSession){window.scratchAddons.isFetchingSession=!0,r.auth._refresh();try{t=await fetch("https://scratch.mit.edu/session/",{headers:{"X-Requested-With":"XMLHttpRequest"}}),s=await t.json()}catch(a){s={},console.warn("Session fetch failed: ",a),(t&&!t.ok||!t)&&setTimeout(()=>Jt(r),6e4)}window.scratchAddons.session=s,r.auth._update(s),window.scratchAddons.isFetchingSession=!1}}const Dt=new Map;async function Cs(r,t){if(await Mr(),Dt.has(r))return Dt.get(r);const s=window.scratchAddons,a=chrome.runtime.connect(void 0,{name:r});await new Promise(m=>{const f=x=>{x==="ping"&&(a.onMessage.removeListener(f),m())};a.onMessage.addListener(f)});const n=new dr({id:r});a.onMessage.addListener(m=>{if(m.newGlobalState){s.globalState=m.newGlobalState;return}if(m.fireEvent&&m.fireEvent.addonId===r){s.eventTargets[m.fireEvent.target]?.forEach(f=>f.dispatchEvent(new CustomEvent(m.fireEvent.name)));return}if(m.refetchSession){Ms(!1).then(()=>Jt(n));return}}),await s.l10n.loadByAddonId(r),Jt(n);const l=(m,f)=>s.l10n.get(m.startsWith("/")?m.slice(1):`${r}/${m}`,f);l.locale=s.l10n.locale;const d={addon:n,msg:l,safeMsg:(m,f)=>s.l10n.escaped(m.startsWith("/")?m.slice(1):`${r}/${m}`,f),dispose(){try{a.disconnect()}catch{}Dt.delete(r)}};return Dt.set(r,d),d}class Ee extends Error{constructor(t,s){super(t),this.code=s}static fromResponse(t,s){return new Ee(`${t}: status ${s.status}`,s.status)}}class Sr{constructor(t,s){this.db=t,this.stores=s}objectStore(t){return{put:s=>this.db.put(t,s)}}get done(){return null}}class Et{constructor(){this.messages=[],this.msgCount=0}get(t){switch(t){case"cache":return this.messages.slice();case"count":return this.msgCount}}put(t,s){switch(t){case"cache":{this.messages=s;return}case"count":{this.msgCount=s;return}}}close(){}transaction(t){return new Sr(this,t)}static isIncognito(){return chrome.extension.inIncognitoContext}}const Ar=new Et;async function Ss(r,t){const s=t?!!t.bypassCache:!1,a=`https://api.scratch.mit.edu/users/${r}/messages/count${s?"?addons_bypass_cache_after_marking_read=1":""}`,l=await fetch(a,{credentials:"omit",cache:s?"reload":"default"}),v=await l.json(),d=s?null:l.headers.get("X-Amz-Cf-Id");return{count:v.count||0,resId:d}}async function jr(r,t,s){const a=await fetch(`https://api.scratch.mit.edu/users/${r}/messages?limit=40&offset=${s}`,{headers:{"x-token":t}});if(!a.ok){if(a.status===404)return[];throw Ee.fromResponse(`Fetching message offset ${s} for ${r} failed`,a)}return a.json()}async function Ut(){return Et.isIncognito()?Ar:idb.openDB("messaging",1,{upgrade(t){t.createObjectStore("cache"),t.createObjectStore("lastUpdated"),t.createObjectStore("count")}})}async function Tr(r,t){const s=await Ut();if(!(s instanceof Et))try{const a=await s.transaction(["cache","lastUpdated","count"],"readwrite"),n=await a.objectStore("lastUpdated").get(r);(n===void 0||t||n+720*60*1e3<Date.now())&&(await a.objectStore("cache").put([],r),await a.objectStore("count").put(0,r),await a.objectStore("count").put(null,`${r}_resId`)),await a.done}finally{await s.close()}}async function Er(r,t,s,a){if(await Tr(r,t),s===null)return[];const n=await Ss(s),l=await As(r,n),v=Math.min(Math.ceil(l/40)+1,25),d=await Ut();try{const m=await d.get("cache",r),f=m[0]?new Date(m[0].datetime_created).getTime():0,x=[],S=new Set;e:for(let ce=0;ce<v;ce++){const de=await jr(s,a,ce*40);for(const I of de){if(new Date(I.datetime_created).getTime()<=f)break e;S.has(I.id)||(x.push(I),S.add(I.id))}}m.unshift(...x),m.length=Math.min(m.length,v*40),x.length=Math.min(x.length,l);const U=await d.transaction(["cache","lastUpdated","count"],"readwrite");return await U.objectStore("cache").put(m,r),await U.objectStore("lastUpdated").put(Date.now(),r),await U.objectStore("count").put(l,r),n.resId&&!(d instanceof Et)&&await U.objectStore("count").put(n.resId,`${r}_resId`),await U.done,x}finally{await d.close()}}async function As(r,{count:t,resId:s}){const a=await Ut();if(a instanceof Et)return t;try{const n=await a.get("count",`${r}_resId`);return n&&n===s?(console.log("Ignored network-cached response for message count endpoint."),await a.get("count",r)):t}catch(n){return console.error(n),t}finally{await a.close()}}function Lr(r){return fetch("https://scratch.mit.edu/site-api/messages/messages-clear/?sareferer",{method:"POST",headers:{"x-csrftoken":r,"x-requested-with":"XMLHttpRequest"}}).then(t=>{if(!t.ok)throw Ee.fromResponse("Marking messages as read failed: ",t)})}var Ir=g('<link rel="stylesheet"/>'),Pr=g('<div class="loading svelte-1ch8etj"> <div class="loading-progress svelte-1ch8etj"></div></div>'),Or=g("<span></span>"),Rr=g("<p> </p>"),Ur=g("<p> </p>"),$r=g("<div><!></div>"),Nr=g('<div class="error svelte-1ch8etj"> <!> <!></div>'),Dr=g('<span><img class="small-icon svelte-1ch8etj" draggable="false" alt=""/> <span> </span></span>'),Fr=g('<span><img class="small-icon svelte-1ch8etj" draggable="false" alt=""/> <span> </span></span>'),Hr=g('<div class="add-button svelte-1ch8etj"><button type="button" class="large-button"><!></button></div>'),Br=g('<div class="username-list svelte-1ch8etj"> <code> </code></div>'),qr=g('<div class="username-list svelte-1ch8etj"> </div>'),zr=g('<a target="_blank" class="nolink"> </a>'),Xr=g('<div class="username-list svelte-1ch8etj"></div>'),Jr=g('<div><div class="title svelte-1ch8etj"><a class="project-name nolink svelte-1ch8etj" target="_blank"> </a> <span class="float-right svelte-1ch8etj"><img class="small-icon svelte-1ch8etj" draggable="false" alt=""/> </span></div> <div class="project-details svelte-1ch8etj"><!></div></div>'),Kr=g("<div></div>"),Vr=g('<div class="game svelte-1ch8etj"><div class="title svelte-1ch8etj"><span class="title-placeholder svelte-1ch8etj"></span><br/></div> <div class="project-details svelte-1ch8etj"></div></div>'),Wr=g("<div></div>"),Gr=g("<!> <!> <!> <!>",1);function In(r,t){Ht(t,!0);let s=O(null),a=O(qe([])),n=O(qe([])),l=O(!1),v=O(0),d=O(null),m=O(null),f=O(null),x=O(!1);const S=()=>/^(?:(?:https?:\/\/scratch\.mit\.edu\/)?(project|studio)s\/)?(\d+)/,U=h=>{if(!h)return{};const _=h.match(S());if(!_)return{};const L=_[1]||"project",X=_[2];return isNaN(X)?{}:{id:+X,type:L}};async function ce(h){let _;try{_=await fetch(`https://api.scratch.mit.edu/studios/${h}/projects/?limit=40`)}catch(L){throw console.warn("Error when fetching studio: ",L),new Ee(`Error when fetching studio: ${L}`,500)}if(_.status>=400)throw console.warn("Error when fetching studio: ",_.status),Ee.fromResponse("Error when fetching studio",_);return _.json().catch(L=>{throw console.warn("Error when fetching studio JSON: ",L),L})}async function de(h,_){const X=(await Promise.all(_.map(async({id:ie,type:J})=>{if(!ie)return;if(J==="studio")return await ce(ie);let q;try{q=await fetch(`https://api.scratch.mit.edu/projects/${ie}`)}catch(He){return console.warn("Error when fetching project: ",He),null}return q.status>=400?(console.warn("Error when fetching project: ",q.status),null):q.json().catch(He=>(console.warn("Error when fetching project JSON: ",He),null))}))).flat(),ge=[],Ie=new Set;for(const ie of X)!ie||Ie.has(ie.id)||(Ie.add(ie.id),ge.push(ie));return ge}const I=$e(()=>{if(!e(s))return{};const{msg:h}=e(s);return{loadingMsg:h("loading"),noUsersMsg:h("no-users"),addProject:h("add-project"),addProjectDescription:h("add-project-desc"),addStudio:h("add-studio"),addStudioDescription:h("add-studio-desc"),added:h("added"),changeDisplay2:h("change-display-2")}}),ne=$e(()=>e(n).slice().sort((h,_)=>h.id===_.id?0:h.id===e(f)?-1:_.id===e(f)?1:h.online&&!_.online?-1:_.online&&!h.online?1:h.amt!==_.amt?_.amt-h.amt:_.timestamp-h.timestamp)),Xe=$e(()=>e(s)&&e(d)?e(s).msg(e(d)):""),Ne=$e(()=>{if(e(n).length===0&&e(d)!=="no-projects"||e(v)!==e(n).length)return null;const{id:h,type:_}=U(e(m));return!h||e(n).some(L=>L.id===h)?null:_}),oe=$e(()=>!e(s)||!e(Ne)?"":e(s).msg("change-display-open",{buttonName:e(s).msg(`add-${e(Ne)}`)}));function fe(){if(!e(s))return"";const h=document.createElement("a");return h.target="_blank",h.href=chrome.runtime.getURL("/webpages/settings/index.html#addon-cloud-games"),h.textContent=e(s).msg("addon-settings"),e(s).safeMsg("change-display",{settings:h.outerHTML})}function Ge(){if(!e(s))return;M(x,!0);const{id:h,type:_}=U(e(m)),L=`https://scratch.mit.edu/${_}s/${h}`;e(s).addon.popup.changeSettings({displayedGames:[...e(s).addon.settings.get("displayedGames"),{url:L}]}),setTimeout(()=>location.reload(),1500)}function at(h,_){return new Promise(L=>{setTimeout(async()=>{const X=()=>{hs(v),e(v)/e(n).length>.5&&M(l,!0),L()};let ge=await e(s).addon.auth.fetchUsername(),Ie;try{const q=await fetch(`https://clouddata.scratch.mit.edu/logs?projectid=${h.id}&limit=40&offset=0`);if(q.status>=400)throw q.status>=500&&(h.errorMessage=e(s).msg("server-error")),Ee.fromResponse(`Error when fetching cloud data for ${h.id}`,q);Ie=await q.json()}catch(q){console.warn("Error when fetching cloud data",q),h.error=e(s).msg("fetch-error"),h.errorMessage||(h.errorMessage=String(q)),X();return}const ie=Date.now(),J=new Set;h.online=!1;for(const q of Ie){if(ie-q.timestamp>6e4)break;q.user===ge&&(h.online=!0),J.add(q.user)}h.timestamp=Ie[0]?.timestamp||0,h.amt=J.size,h.users=Array.from(J),X()},_*125)})}vs(async()=>{M(s,await Cs(t.addonId),!0),typeof document<"u"&&(document.title=e(s).msg("popup-title")),M(a,e(s).addon.settings.get("displayedGames").map(({url:_})=>_).map(U),!0),e(s).addon.popup.getSelectedTabUrl().then(_=>{M(m,_,!0);const{id:L}=U(_);M(f,L,!0)});let h;try{h=await de(e(s).addon,e(a))}catch(_){if(_ instanceof Ee){const L=_.code;L>=500?M(d,"server-error"):L>=400&&M(d,"general-error");return}throw _}if(h.length===0){M(d,"no-projects");return}M(n,h.map(_=>({title:_.title,id:_.id,amt:0,users:[],online:_.online,extended:!0,error:null,errorMessage:"",timestamp:0})).reverse(),!0),await Promise.all(e(n).map((_,L)=>at(_,L)))});const gt=$e(()=>!e(d)&&(e(n).length===0||e(n).length!==e(v)));var ue=Gr();_s("1ch8etj",h=>{var _=Ir();E(_,"href",chrome.runtime.getURL("webpages/styles/components/buttons.css")),u(h,_)});var De=rt(ue);{var Oe=h=>{var _=Pr(),L=o(_),X=c(L);let ge;C(Ie=>{b(L,`${e(I).loadingMsg??""??""} `),ge=Ft(X,"",ge,Ie)},[()=>({width:`${100*e(v)/Math.max(e(n).length,1)||0}%`})]),u(h,_)};k(De,h=>{e(gt)&&h(Oe)})}var Le=c(De,2);{var _e=h=>{var _=Nr(),L=o(_),X=c(L);{var ge=J=>{var q=Or();Ct(q,fe,!0),u(J,q)};k(X,J=>{e(d)!=="server-error"&&J(ge)})}var Ie=c(X,2);{var ie=J=>{var q=$r(),He=o(q);{var Ze=Ye=>{var ot=Rr(),D=o(ot);C(()=>b(D,e(oe))),u(Ye,ot)},pt=Ye=>{var ot=Ur(),D=o(ot);C(()=>b(D,e(I).changeDisplay2)),u(Ye,ot)};k(He,Ye=>{e(Ne)?Ye(Ze):Ye(pt,-1)})}u(J,q)};k(Ie,J=>{e(d)!=="server-error"&&J(ie)})}C(()=>b(L,`${e(Xe)??""} `)),u(h,_)};k(Le,h=>{e(d)&&h(_e)})}var be=c(Le,2);{var Je=h=>{var _=Hr(),L=o(_),X=o(L);{var ge=ie=>{var J=Dr(),q=o(J);E(q,"src",chrome.runtime.getURL("images/icons/plus.svg"));var He=c(q,2),Ze=o(He);C(()=>b(Ze,e(Ne)==="project"?e(I).addProject:e(I).addStudio)),u(ie,J)},Ie=ie=>{var J=Fr(),q=o(J);E(q,"src",chrome.runtime.getURL("images/icons/check.svg"));var He=c(q,2),Ze=o(He);C(()=>b(Ze,e(I).added)),u(ie,J)};k(X,ie=>{e(x)?ie(Ie,-1):ie(ge)})}C(()=>{L.disabled=e(x),E(L,"title",e(x)?"":e(Ne)==="project"?e(I).addProjectDescription:e(I).addStudioDescription)}),xe("click",L,Ge),u(h,_)};k(be,h=>{e(Ne)&&h(Je)})}var nt=c(be,2);{var $=h=>{var _=Kr();Te(_,21,()=>e(ne),L=>L.id,(L,X)=>{var ge=Jr();let Ie;var ie=o(ge),J=o(ie),q=o(J),He=c(J,2),Ze=o(He);E(Ze,"src",chrome.runtime.getURL("images/icons/users.svg"));var pt=c(Ze),Ye=c(ie,2),ot=o(Ye);{var D=Se=>{var ke=Br(),Ve=o(ke),dt=c(Ve);let ut;var yt=o(dt);C(()=>{b(Ve,e(X).error),ut=Ft(dt,"",ut,{display:e(X).errorMessage?"":"none"}),b(yt,e(X).errorMessage)}),u(Se,ke)},te=Se=>{var ke=qr(),Ve=o(ke);C(()=>b(Ve,e(I).noUsersMsg)),u(Se,ke)},Ce=Se=>{var ke=Xr();Te(ke,20,()=>e(X).users,Ve=>Ve,(Ve,dt)=>{var ut=zr(),yt=o(ut);C(()=>{E(ut,"href",`https://scratch.mit.edu/users/${dt}`),b(yt,dt)}),u(Ve,ut)}),u(Se,ke)};k(ot,Se=>{e(X).error?Se(D):e(X).amt===0?Se(te,1):Se(Ce,-1)})}C(()=>{Ie=ze(ge,1,"game svelte-1ch8etj",null,Ie,{opened:e(X).id===e(f)}),E(J,"href",`https://scratch.mit.edu/projects/${e(X).id}`),b(q,e(X).title),b(pt,` ${(e(X).error?"?":e(X).amt)??""}`)}),u(L,ge)}),u(h,_)},B=h=>{var _=Wr();Te(_,21,()=>new Array(Math.max(Math.floor(e(n).length/2),1)),Mt,(L,X)=>{var ge=Vr();u(L,ge)}),u(h,_)};k(nt,h=>{e(l)?h($):h(B,-1)})}u(r,ue),Bt()}Kt(["click"]);var Zr=g('<div class="dom-element-renderer svelte-kumhzk"></div>');function Qr(r,t){Ht(t,!0);let s=O(null);fs(()=>{if(e(s)&&t.element)return e(s).replaceChildren(t.element),()=>{try{e(s).removeChild(t.element)}catch{}}});var a=Zr();ps(a,n=>M(s,n),()=>e(s)),u(r,a),Bt()}const js=new DOMParser;class Wt extends Error{constructor(t,s){super(t),this.details=s}}async function Yr(r,{resourceType:t,resourceId:s,commentId:a}){if(t==="user")return ea(r,{resourceType:t,resourceId:s,commentId:a});const n=t==="project"?"project":"studio",l=await r.auth.fetchXToken();return fetch(`https://api.scratch.mit.edu/proxy/comments/${n}/${s}/comment/${a}?sareferer`,{headers:{"content-type":"application/json","x-csrftoken":r.auth.csrfToken,"x-token":l},method:"DELETE"}).then(v=>{if(!v.ok)throw Ee.fromResponse(`Deleting ${n} comment ${a} of ${s} failed`,v)})}const ea=async(r,{resourceType:t,resourceId:s,commentId:a})=>fetch(`https://scratch.mit.edu/site-api/comments/${t}/${s}/del/?sareferer`,{headers:{"content-type":"application/json","x-csrftoken":r.auth.csrfToken,"x-requested-with":"XMLHttpRequest"},body:JSON.stringify({id:String(a)}),method:"POST"}).then(n=>{if(!n.ok)throw Ee.fromResponse(`Deleting ${t} comment ${a} of ${s} failed`,n)});async function ta(r,t){return fetch("https://scratch.mit.edu/site-api/messages/messages-delete/?sareferer",{headers:{"content-type":"application/json","x-csrftoken":r.auth.csrfToken,"x-requested-with":"XMLHttpRequest"},body:JSON.stringify({alertType:"notification",alertId:t}),method:"POST"}).then(s=>{if(!s.ok)throw Ee.fromResponse(`Dismissing alert ${t} failed`,s)})}async function sa(r,{resourceType:t,resourceId:s,content:a,parentId:n,commenteeId:l}){return t==="user"?aa(r,{resourceType:t,resourceId:s,content:a,parentId:n,commenteeId:l}):ra(r,{resourceType:t,resourceId:s,content:a,parentId:n,commenteeId:l})}async function ra(r,{resourceType:t,resourceId:s,content:a,parentId:n,commenteeId:l}){const v=t==="project"?"project":"studio",d=await r.auth.fetchXToken();return fetch(`https://api.scratch.mit.edu/proxy/comments/${v}/${s}?sareferer`,{headers:{"content-type":"application/json","x-csrftoken":r.auth.csrfToken,"x-token":d},body:JSON.stringify({content:a,parent_id:n,commentee_id:l}),method:"POST"}).then(m=>{if(!m.ok)throw Ee.fromResponse(`Sending ${v} comment on ${s} failed`,m);return m.json()}).then(m=>{if(m.rejected)throw new Wt(`Server rejected sending ${v} comment`,{error:m.rejected,muteStatus:m.status?.mute_status||null});return{id:m.id,content:m.content}})}async function aa(r,{resourceType:t,resourceId:s,content:a,parentId:n,commenteeId:l}){return fetch(`https://scratch.mit.edu/site-api/comments/${t}/${s}/add/?sareferer`,{headers:{"content-type":"application/json","x-csrftoken":r.auth.csrfToken,"x-requested-with":"XMLHttpRequest"},method:"POST",body:JSON.stringify({content:a,parent_id:n,commentee_id:l})}).then(v=>{if(!v.ok)throw Ee.fromResponse(`Sending ${t} comment on ${s} failed`,v);return v.text()}).then(v=>{const d=js.parseFromString(v,"text/html"),m=d.querySelector(".comment"),f=d.querySelector("script#error-data");if(m){const x=Number(m.getAttribute("data-comment-id")),S=d.querySelector(".content");return{id:x,content:S}}else if(f){const x=JSON.parse(f.textContent);throw new Wt(`Server rejected sending ${t} comment`,{error:x.error,muteStatus:x.status?.mute_status||null})}else throw console.warn("Unexpected state while sending legacy comment: ",v),new Error("Unexpected state while sending legacy comment, see logs")})}async function na(r,{resourceType:t,resourceId:s,commentMessages:a,page:n=1,commentsObj:l={}}){const v=a.map(m=>m.comment_id);let d;t==="user"?d=await Ts(r,{resourceType:t,resourceId:s,commentIds:v,page:n,commentsObj:l}):d=await oa(r,{resourceType:t,resourceId:s,commentIds:v,page:n,commentsObj:l});for(let m of a)d[`${t[0]}_${m.comment_id}`]||(d[`${t[0]}_${m.comment_id}`]={author:m.actor_username,authorId:m.actor_id,content:m.comment_fragment,date:m.datetime_created,children:[],childOf:null,replyingTo:m.commentee_username});return d}async function oa(r,{resourceType:t,resourceId:s,commentIds:a,page:n=1,commentsObj:l={}}){let v;if(t==="project"){const f=await fetch(`https://api.scratch.mit.edu/projects/${s}`);if(!f.ok)return l;v=(await f.json()).author.username}const d=f=>t==="project"?`https://api.scratch.mit.edu/users/${v}/projects/${s}/comments/${f}`:`https://api.scratch.mit.edu/studios/${s}/comments/${f}`,m=(f,x)=>t==="project"?`https://api.scratch.mit.edu/users/${v}/projects/${s}/comments/${f}/replies?offset=${x}&limit=40`:`https://api.scratch.mit.edu/studios/${s}/comments/${f}/replies?offset=${x}&limit=40`;for(const f of a){if(l[`${t[0]}_${f}`])continue;const x=await fetch(d(f));if(!x.ok){if(x.status===404||x.status===403)continue;throw Ee.fromResponse(`Error when fetching comment ${t}/${f}`,x)}const S=await x.json();if(S===null)continue;const U=S.parent_id||f,ce={};let de;if(S.parent_id){const oe=await fetch(d(U));if(!oe.ok)throw Ee.fromResponse(`Error when fetching parent ${U} for comment ${t}/${f}`,oe);const fe=await oe.json();if(fe===null)continue;de=fe}else de=S;const I=async oe=>{const fe=await fetch(m(U,oe));if(!fe.ok){if(fe.status===404||fe.status===403)return null;throw Ee.fromResponse(`Ignoring comment ${t}/${f}`,fe)}return await fe.json()},ne=[];let Xe=40,Ne=0;if(de.reply_count>0)for(;Xe===40;){const oe=await I(Ne);if(!Array.isArray(oe))break;oe.forEach(fe=>ne.push(fe)),Xe=oe.length,Ne+=40}S.parent_id&&ne.length===0&&(console.error(`No replies found on comment ${t}/${s}/${f} with parents ${S.parent_id}`),ne.push(S));for(const oe of ne){const fe=ne.find(at=>at.author.id===oe.commentee_id),Ge=fe?fe.author.username:de.author.username;ce[`${t[0]}_${oe.id}`]={author:oe.author.username,authorId:oe.author.id,content:oe.content,date:oe.datetime_created,children:null,childOf:`${t[0]}_${U}`,replyingTo:Ge,scratchTeam:oe.author.scratchteam,projectAuthor:v}}for(const oe of Object.keys(ce))l[oe]=ce[oe];l[`${t[0]}_${U}`]={author:de.author.username,authorId:de.author.id,content:de.content,date:de.datetime_created,children:Object.keys(ce),childOf:null,replyingTo:"",scratchTeam:de.author.scratchteam,projectAuthor:v}}return l}async function Ts(r,{resourceType:t,resourceId:s,commentIds:a,page:n=1,commentsObj:l={}}){const v=await fetch(`https://scratch.mit.edu/site-api/comments/${t}/${s}/?page=${n}`,{credentials:"omit"});if(!v.ok)return console.warn(`Ignoring comments ${t}/${s} page ${n}, status ${v.status}`),l;const d=await v.text(),m=js.parseFromString(d,"text/html");for(const f of m.querySelectorAll(".top-level-reply:not(.removed)")){if(a.length===0)return l;let x=!1;const S=f.querySelector("div"),U=Number(S.getAttribute("data-comment-id")),ce={},de=f.querySelectorAll("li.reply:not(.removed)");for(const I of de){const ne=Number(I.querySelector("div").getAttribute("data-comment-id"));a.includes(ne)&&(x=!0,a.splice(a.findIndex(Ne=>Ne===ne),1));const Xe=I.querySelector(".name").textContent.trim();ce[`${t[0]}_${ne}`]={author:Xe.replace(/\*/g,""),authorId:Number(I.querySelector(".reply").getAttribute("data-commentee-id")),content:I.querySelector(".content"),date:I.querySelector(".time").getAttribute("title"),children:null,childOf:`${t[0]}_${U}`,scratchTeam:Xe.includes("*")}}if(a.includes(U)&&(x=!0,a.splice(a.findIndex(I=>I===U),1)),x){const I=S.querySelector(".name").textContent.trim();l[`${t[0]}_${U}`]={author:I.replace(/\*/g,""),authorId:Number(S.querySelector(".reply").getAttribute("data-commentee-id")),content:S.querySelector(".content"),date:S.querySelector(".time").getAttribute("title"),children:Object.keys(ce),childOf:null,scratchTeam:I.includes("*")};for(const ne of Object.keys(ce))l[ne]=ce[ne]}}return n<3?await Ts(r,{resourceType:t,resourceId:s,commentIds:a,page:n+1,commentsObj:l}):(console.log("Could not find all comments for ",t," ",s,", remaining ids: ",JSON.parse(JSON.stringify(a))),l)}async function ia(r){const t=await r.auth.fetchUsername(),s=await r.auth.fetchXToken();return fetch(`https://api.scratch.mit.edu/users/${t}/messages/admin`,{headers:{"x-token":s}}).then(a=>{if(!a.ok)throw Ee.fromResponse("Fetching alerts failed",a);return a.json()})}const gs=Object.assign(Object.create(null),{"meow.png":"[meow emoji]","gobo.png":"[gobo emoji]","waffle.png":"[waffle emoji]","taco.png":"🌮","sushi.png":"🍣","apple.png":"🍎","broccoli.png":"🥦","pizza.png":"🍕","candycorn.png":"[candycorn emoji]","10mil.png":"🎉","map.png":"🗺️","camera.png":"📷","suitcase.png":"💼","compass.png":"🧭","binoculars.png":"[binoculars emoji]","cupcake.png":"🧁","cat.png":"🐱","aww-cat.png":"😀","cool-cat.png":"😎","tongue-out-cat.png":"😛","wink-cat.png":"😜","lol-cat.png":"😹","upside-down-cat.png":"🙃","huh-cat.png":"🤨","love-it-cat.png":"😻","fav-it-cat.png":"🤩","rainbow-cat.png":"[rainbow cat emoji]","pizza-cat.png":"[cat eating pizza emoji]","blm.png":"✊🏿","pride.png":"🏳️‍🌈"}),ca=()=>/((?:https?:\/\/)?(?:[\w-]+\.)+(?:xn--[a-zA-Z\d]+|[a-zA-Z]{2,})(?:\/[^\s"<>\\^`{|}]*)?)/g,la=r=>{r instanceof Text&&(r.nodeValue.split(ca()).forEach((t,s)=>{if(s%2){const n=document.createElement("a");n.textContent=t,/^https?:\/\//g.test(t)||(t=`http://${t}`),n.href=t,n.rel="noreferrer",r.parentNode.insertBefore(n,r)}else r.parentNode.insertBefore(document.createTextNode(t),r)}),r.remove())},da=()=>/^@[\w-]{3,20}$/g,ua=r=>{r instanceof Text&&(r.nodeValue.split(/(\s)/g).forEach(t=>{if(da().test(t)){const s=document.createElement("a");s.textContent=t,t.toLowerCase()==="@welcomingcommittee"?s.href="https://scratch.mit.edu/studios/146521/":s.href=`https://scratch.mit.edu/users/${t.slice(1)}/`,s.rel="noreferrer",r.parentNode.insertBefore(s,r)}else t&&r.parentNode.insertBefore(document.createTextNode(t),r)}),r.remove())},ma=r=>{for(const t of r.childNodes)la(t)},ga=r=>{for(const t of r.childNodes)ua(t)},va=r=>{let t=r.childNodes;for(let s of t)if(s instanceof Text)if(s===t[0])s.textContent=s.textContent.trimStart(),s.nextSibling||(s.textContent=s.textContent.trim());else{s===t[t.length-1]&&(s.textContent=s.textContent.trimEnd());const a=Array.prototype.find.call(t,n=>n instanceof HTMLAnchorElement&&(!n.previousSibling||!n.previousSibling.textContent));a&&s.previousSibling===a&&(s.textContent.startsWith("*")?s.textContent="* "+s.textContent.replace(/^\*\s*/,""):s.textContent=" "+s.textContent.trimStart())}},ha=new DOMParser,Es=(r,t)=>{const s=t.includes("more-links"),a=t.includes("comments-linebreaks");let n;r instanceof Node?(n=r.cloneNode(!0),a&&va(n)):n=ha.parseFromString(r.trim(),"text/html").body,n.normalize();for(let l=n.childNodes.length;l--;){const v=n.childNodes[l];let d=v.textContent;if(a||(d=d.replace(/\s+/g," ")),l===0&&(d=d.trimStart()),l===n.childNodes.length-1&&(d=d.trimEnd()),v.textContent=d,v instanceof Text&&v.textContent==="")v.remove();else if(v instanceof HTMLAnchorElement&&v.getAttribute("href").startsWith("/"))v.href="https://scratch.mit.edu"+v.getAttribute("href");else if(v instanceof HTMLImageElement){const m=v.src.split("/"),f=m[m.length-1];gs[f]&&v.replaceWith(gs[f])}}return s&&ma(n),ga(n),n};var fa=g('<span class="comment-time"> <a rel="noopener noreferrer" target="_blank"><img class="popout-comment" draggable="false" alt=""/></a></span>'),pa=g('<a tabindex="0" role="button"> </a>'),_a=g("<span> </span>"),ba=g("<span> </span>"),ya=g('<a tabindex="0" role="button"> </a>'),wa=g('<button type="button" class="large-button"> </button>'),xa=g('<div class="reply-box-comment"><textarea class="reply-textarea" maxlength="500"></textarea> <div class="reply-box-buttons"><button type="button" class="large-button post-button"> </button> <!> <span class="comment-chars"> </span></div></div>'),ka=g('<div><a class="comment-author" rel="noopener noreferrer" target="_blank"> </a> <!> <!> <bdo dir="ltr"><div><div class="comment-content-text"><!> <!> <!></div> <!></div></bdo> <!></div>');function Tt(r,t){Ht(t,!0);let s=tr(t,"commentsObj",7),a=O(!1),n=O(""),l=O(!1),v=O(!1),d=O(0),m=O(!1),f=O(null);const x={openNewTabMsg:t.msg("open-new-tab"),deleteMsg:t.msg("delete"),deleteConfirmMsg:t.msg("delete-confirm"),replyMsg:t.msg("reply"),postingMsg:t.msg("posting"),postMsg:t.msg("post"),cancelMsg:t.msg("cancel"),deletedMsg:t.msg("deleted"),deletingMsg:t.msg("deleting")},S=$e(()=>s()[t.commentId]),U=$e(()=>t.msg("chars-left",{num:500-e(n).length})),ce=$e(()=>{switch(t.resourceType){case"user":return t.resourceId===t.username;case"project":return e(S)?.projectAuthor===t.username;default:return!0}}),de=$e(()=>{if(!e(S))return"";const ue=new Intl.RelativeTimeFormat(t.msg.locale,{localeMatcher:"best fit",numeric:"auto",style:"short"}),De=new Date(e(S).date).getTime(),Oe=(t.dateNow-De)/1e3;let Le;return Oe<60?ue.format(0,"second"):(Oe<3600?Le={unit:"minute",divideBy:60}:Oe<86400?Le={unit:"hour",divideBy:3600}:Le={unit:"day",divideBy:3600*24},ue.format(-Math.round(Oe/Le.divideBy),Le.unit))}),I=$e(()=>{const ue=t.resourceType==="user"?"users":t.resourceType==="gallery"?"studios":"projects",De=t.resourceType==="gallery"?"comments/":"";return`https://scratch.mit.edu/${ue}/${t.resourceId}/${De}#comments-${t.commentId.substring(2)}`});fs(()=>{e(a)&&e(f)&&e(f).focus()});function ne(){M(a,!0)}function Xe(){M(a,!1)}function Ne(ue){ue.key==="Enter"&&(ue.ctrlKey||ue.metaKey)&&oe()}function oe(){const ue=_e=>_e.split("").filter((be,Je,nt)=>Je===0?!0:nt[Je-1]!==be).join("");if((_e=>ue(_e.toLowerCase().match(/[a-z]+/g)?.join("")||"").includes("scratchadon"))(e(n))){alert(chrome.i18n.getMessage("captureCommentError",[chrome.i18n.getMessage("captureCommentPolicy")]));return}M(m,!0);const Oe=t.isParent?t.commentId:e(S).childOf,Le=Number(Oe.substring(2));Promise.all([t.addon.auth.fetchUsername(),t.addon.auth.fetchUserId(),sa(t.addon,{resourceType:t.resourceType,resourceId:t.resourceId,content:e(n),parentId:Le,commenteeId:e(S).authorId}),t.addon.self.getEnabledAddons()]).then(([_e,be,{id:Je,content:nt},$])=>{M(a,!1);let B=Es(nt,$);if(t.resourceType!=="user"){const _=document.createElement("div");_.append(Object.assign(document.createElement("a"),{href:`https://scratch.mit.edu/users/${e(S).author}`,textContent:"@"+e(S).author})),_.append(" "),_.append(...B.childNodes),B=_}const h=`${t.resourceType[0]}_${Je}`;s()[h]={author:_e,authorId:be,content:B,date:new Date().toISOString(),children:null,childOf:Oe,projectAuthor:e(S).projectAuthor},s()[Oe].children?s()[Oe].children.push(h):s()[Oe].children=[h],M(n,"")}).catch(_e=>{let be;_e instanceof Wt?_e.details.muteStatus?(be=t.msg("comment-mute")+" ",be+=t.msg("comment-cannot-post-for",{mins:Math.max(Math.ceil((_e.details.muteStatus.muteExpiresAt-Date.now()/1e3)/60),1)})):be=t.msg(t.errorCodes[_e.details?.error]||"send-error"):_e instanceof Ee?be=t.msg(t.errorCodes[_e.code]||"send-error"):be=_e.toString(),alert(be)}).finally(()=>{M(m,!1)})}function fe(){if(e(d)===0){setTimeout(()=>M(d,1),250),setTimeout(()=>{e(d)===1&&M(d,0)},5e3);return}M(l,!0),M(v,!0),Yr(t.addon,{resourceType:t.resourceType,resourceId:t.resourceId,commentId:Number(t.commentId.substring(2))}).then(()=>{t.isParent&&(e(S).children=[])}).catch(ue=>{console.error("Error while deleting a comment: ",ue),alert(t.msg("delete-error")),M(d,0),M(l,!1)}).finally(()=>{M(v,!1)})}var Ge=bt(),at=rt(Ge);{var gt=ue=>{var De=ka();let Oe;var Le=o(De),_e=o(Le),be=c(Le),Je=c(be);{var nt=D=>{var te=fa(),Ce=o(te),Se=c(Ce),ke=o(Se);E(ke,"src",chrome.runtime.getURL("images/icons/popout.svg")),C(()=>{b(Ce,`· ${e(de)??""} `),E(Se,"href",e(I)),E(ke,"title",x.openNewTabMsg)}),u(D,te)};k(Je,D=>{e(d)!==1&&!e(l)&&D(nt)})}var $=c(Je,2);{var B=D=>{var te=pa();let Ce;var Se=o(te);C(()=>{Ce=ze(te,1,"delete-btn",null,Ce,{"delete-confirm":e(d)===1}),b(Se,e(d)===0?x.deleteMsg:x.deleteConfirmMsg)}),xe("click",te,fe),xe("keydown",te,ke=>ke.key==="Enter"&&fe()),u(D,te)};k($,D=>{!e(l)&&e(ce)&&D(B)})}var h=c($,2),_=o(h);let L;var X=o(_),ge=o(X);{var Ie=D=>{var te=_a(),Ce=o(te);C(()=>b(Ce,x.deletingMsg)),u(D,te)};k(ge,D=>{e(v)&&D(Ie)})}var ie=c(ge,2);{var J=D=>{var te=ba(),Ce=o(te);C(()=>b(Ce,x.deletedMsg)),u(D,te)};k(ie,D=>{e(l)&&!e(v)&&D(J)})}var q=c(ie,2);{var He=D=>{Qr(D,{get element(){return e(S).content}})};k(q,D=>{e(l)||D(He)})}var Ze=c(X,2);{var pt=D=>{var te=ya();let Ce,Se;var ke=o(te);C(()=>{Ce=ze(te,1,"reply-button-comment",null,Ce,{replying:e(a)}),Se=Ft(te,"",Se,{visibility:e(a)?"hidden":"visible"}),b(ke,x.replyMsg)}),xe("click",te,ne),xe("keydown",te,Ve=>Ve.key==="Enter"&&ne()),u(D,te)};k(Ze,D=>{e(l)||D(pt)})}var Ye=c(h,2);{var ot=D=>{var te=xa(),Ce=o(te);ps(Ce,vt=>M(f,vt),()=>e(f));var Se=c(Ce,2),ke=o(Se),Ve=o(ke),dt=c(ke,2);{var ut=vt=>{var Lt=wa(),zt=o(Lt);C(()=>b(zt,x.cancelMsg)),xe("click",Lt,Xe),u(vt,Lt)};k(dt,vt=>{e(m)||vt(ut)})}var yt=c(dt,2),qt=o(yt);C(()=>{ke.disabled=e(m),b(Ve,e(m)?x.postingMsg:x.postMsg),b(qt,e(U))}),xe("keyup",Ce,Ne),sr(Ce,()=>e(n),vt=>M(n,vt)),xe("click",ke,oe),u(D,te)};k(Ye,D=>{e(a)&&D(ot)})}C(()=>{Oe=ze(De,1,"comment",null,Oe,{"child-comment":!t.isParent,unread:t.unread,"comment-me":e(S).author===t.username}),E(Le,"href",`https://scratch.mit.edu/users/${e(S).author}/`),b(_e,e(S).author),b(be,`${e(S).scratchTeam?"*":""} `),L=ze(_,1,"comment-content",null,L,{"comment-self":e(S).author===t.username}),h.dir=h.dir}),u(ue,De)};k(at,ue=>{e(S)&&ue(gt)})}u(r,Ge),Bt()}Kt(["click","keydown","keyup"]);var Ma=g('<base target="_blank"/> <link rel="stylesheet"/> <link rel="stylesheet"/>',1),Ca=g('<div class="comment"><span class="comment-time"> </span> <a class="delete-btn" tabindex="0" role="button"> </a> <div class="dom-element-renderer svelte-1b1hi6l"></div></div>'),Sa=g('<div class="message-type-details"></div>'),Aa=g('<div class="message-type message-type-admin svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'),ja=g("<a> </a>"),Ta=g('<div class="message-type-details"><div class="username-list svelte-1b1hi6l"></div></div>'),Ea=g('<div class="message-type svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'),La=g('<div class="thread-list svelte-1b1hi6l"></div>'),Ia=g('<div class="message-type-details"></div>'),Pa=g('<div class="message-type svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'),Oa=g('<div class="thread-list svelte-1b1hi6l"></div>'),Ra=g('<div class="message-type-details"></div>'),Ua=g('<div class="message-type svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'),$a=g('<div class="thread-list svelte-1b1hi6l"></div>'),Na=g('<div class="message-type-details"></div>'),Da=g('<div class="message-type svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'),Fa=g('<div class="thread-list svelte-1b1hi6l"></div>'),Ha=g('<div class="message-type-details"></div>'),Ba=g('<div class="message-type svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'),qa=g("<span> </span>"),za=g('<div class="thread-list svelte-1b1hi6l"><!> <!></div>'),Xa=g('<div class="message-type-details"></div>'),Ja=g('<div class="message-type svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'),Ka=g('<div class="thread-list svelte-1b1hi6l"></div>'),Va=g('<div class="message-type-details"></div>'),Wa=g('<div class="message-type svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'),Ga=g('<span><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span>'),Za=g("<div><!> <!></div>"),Qa=g('<div class="message-type-details"></div>'),Ya=g('<div class="message-type svelte-1b1hi6l"><div class="message-type-title svelte-1b1hi6l"><a class="message-type-title-text nolink svelte-1b1hi6l" rel="noreferrer noopener" target="_blank"><!></a> <span class="float-right svelte-1b1hi6l"><!></span></div> <!></div>'),en=g('<span><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span>'),tn=g("<div><!> <!></div>"),sn=g('<div class="message-type-details"></div>'),rn=g('<div class="message-type svelte-1b1hi6l"><div class="message-type-title svelte-1b1hi6l"><a class="message-type-title-text nolink svelte-1b1hi6l" rel="noopener noreferrer" target="_blank"> </a> <span class="float-right svelte-1b1hi6l"><!></span></div> <!></div>'),an=g('<span><img class="small-icon colored svelte-1b1hi6l" draggable="false" alt=""/> </span>'),nn=g('<span><img class="small-icon colored svelte-1b1hi6l" draggable="false" alt=""/> </span>'),on=g('<img class="small-icon colored svelte-1b1hi6l" draggable="false" alt=""/>'),cn=g('<img class="small-icon colored svelte-1b1hi6l" draggable="false" alt=""/>'),ln=g("<div><!> <!> <a> </a></div>"),dn=g('<div class="tooltip svelte-1b1hi6l" tabindex="0"><span class="tooltip-indicator"><!> <!></span> <div class="tooltiptext tooltiptextleft"></div></div>'),un=g('<span><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span>'),mn=g("<div><!> <!></div>"),gn=g('<div class="message-type-details"></div>'),vn=g('<div class="message-type svelte-1b1hi6l"><div class="message-type-title svelte-1b1hi6l"><a class="message-type-title-text nolink svelte-1b1hi6l" target="_blank" rel="noopener noreferrer"> </a> <span class="float-right svelte-1b1hi6l"><!> <!></span></div> <!></div>'),hn=g('<div class="message-type svelte-1b1hi6l"><div class="message-type-details welcome-message svelte-1b1hi6l"> </div></div>'),fn=g("<!> <!> <!> <!> <!> <!> <!> <!> <!> <!> <!> <!>",1),pn=g("<p> </p>"),_n=g('<p> <a href="https://scratch.mit.edu/login"> </a></p>'),bn=g("<p> </p>"),yn=g("<p> </p>"),wn=g("<p> </p>"),xn=g('<p> <a target="_blank" rel="noopener noreferrer"> </a> <br/> <code class="error-message"> </code> (<a role="button" tabindex="0"> </a>)</p>'),kn=g('<span class="status-empty svelte-1b1hi6l"> </span>'),Mn=g('<button type="button" class="large-button svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/><span> </span></button>'),Cn=g('<button type="button" class="large-button svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/><span> </span></button>'),Sn=g('<div class="buttons-container svelte-1b1hi6l"><!> <!></div>'),An=g('<a tabindex="0" role="button"> </a>'),jn=g('<span class="marked-as-read svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span>'),Tn=g('<div class="contents svelte-1b1hi6l"><!> <div class="status-container svelte-1b1hi6l"><!> <!> <!> <!> <!> <!> <!> <!></div></div> <div id="bottom-bar" class="svelte-1b1hi6l"><!> <span class="separator svelte-1b1hi6l"></span> <a href="https://scratch.mit.edu/messages" class="nolink open-messages svelte-1b1hi6l"> <img class="popout svelte-1b1hi6l" draggable="false" alt=""/></a></div>',1);function Pn(r,t){Ht(t,!0);let s=O(null);function a(i,p){return p&&i.appendChild(p),{update(A){if(p)try{i.removeChild(p)}catch{}p=A,p&&i.appendChild(p)},destroy(){if(p)try{i.removeChild(p)}catch{}}}}const n={isEmpty:"comment-error-empty",isFlood:"comment-error-ratelimit",429:"comment-error-ratelimit",isBad:"comment-error-filterbot-generic",hasChatSite:"comment-error-filterbot-chat",isSpam:"comment-error-filterbot-spam",replyLimitReached:"comment-error-reply-limit",500:"comment-error-down",503:"comment-error-down"};let l=Date.now();const v=new DOMParser;let d=O(qe([])),m=O(qe([])),f=qe({}),x=O("notReady"),S=O(!1),U=O(null),ce=O(null),de=O(!1),I=O(!1),ne=O(0),Xe=O(!1),Ne=O(null),oe=O(!1),fe=O(qe([])),Ge=O(qe([])),at=O(qe([])),gt=O(qe([])),ue=O(qe([])),De=O(qe([])),Oe=O(0),Le=O(qe([])),_e=O(qe([])),be=O(qe([])),Je=O(qe([])),nt=O(!1),$=qe({stMessages:!1,follows:!1,studioInvites:!1,studioPromotions:!1,studioHostTransfers:!1,forumActivity:!1,studioActivity:!1,remixes:!1});const B=$e(()=>{if(!e(s))return{};const{msg:i}=e(s);return{stMessagesMsg:i("stMessages"),followsMsg:i("follows"),studioInvitesMsg:i("studio-invites"),forumMsg:i("forum"),studioActivityMsg:i("studio-activity"),remixesMsg:i("remixes"),yourProfileMsg:i("your-profile"),loadingMsg:i("loading"),loggedOutMsg:i("logged-out"),loggedOutLinkMsg:i("logged-out-link"),serverErrorMsg:i("server-error"),networkErrorMsg:i("network-error"),unknownFatalErrorMsg:i("unknown-fatal-error"),reportBugMsg:i("report-bug"),copyMsg:i("copy"),loadingCommentsMsg:i("loading-comments"),reloadMsg:i("reload"),dismissMsg:i("dismiss"),noUnreadMsg:i("no-unread"),showMoreMsg:i("show-more"),markAsReadMsg:i("mark-as-read"),markedAsReadMsg:i("marked-as-read"),openMessagesMsg:i("open-messages"),studioPromotionsMsg:i("studio-promotions"),studioHostTransfersMsg:i("studio-host-transfers"),welcomeToScratchMsg:i("welcome-to-scratch")}}),h=$e(()=>{const i=chrome.runtime.getManifest();return`https://scratchaddons.com/feedback/?ext_version=${i.version_name}&utm_source=extension&utm_medium=messagingcrash&utm_campaign=v${i.version}`}),_=$e(()=>[...e(_e).filter(i=>i.username===e(U)),...e(_e).filter(i=>i.username!==e(U))]),L=$e(()=>[...e(Je).filter(i=>i.unreadComments!==0),...e(Je).filter(i=>i.unreadComments===0)]),X=$e(()=>e(de)&&e(I)&&!e(x)&&e(Xe)===!1&&e(m).length>e(Ne));function ge(i,p){const A=e(Je).find(Re=>Re.id===i);if(A)return A;const F={id:i,title:p,unreadComments:0,commentChains:[],loveCount:0,favoriteCount:0,loversAndFavers:[],loadedComments:!1};return e(Je).push(F),F}function Ie(i){const p=e(_e).find(F=>F.username===i);if(p)return p;const A={username:i,unreadComments:0,commentChains:[],loadedComments:!1};return e(_e).push(A),A}function ie(i,p){const A=e(be).find(Re=>Re.id===i);if(A)return A;const F={id:i,title:p,unreadComments:0,commentChains:[],loadedComments:!1};return e(be).push(F),F}function J(i){const p=Number(i.substring(2)),A=e(m).findIndex(F=>F.comment_id===p);return A===-1?!1:A<e(ce)?f[i].childOf?!J(f[i].childOf):!0:!1}async function q(){const{addon:i}=e(s);try{const[p,A]=await Promise.all([i.auth.fetchUsername(),i.auth.fetchXToken()]);if(window.scratchAddons?.cookieFetchingFailed)throw new TypeError("NetworkError");if(!p)throw new Ee("Not logged in",401);M(U,p,!0);const[F,Re]=await Promise.all([Er(window.scratchAddons.cookieStoreId,!1,p,A),ia(i)]);chrome.runtime.sendMessage({forceBadgeUpdate:{store:window.scratchAddons.cookieStoreId},notifyNewMessages:{store:window.scratchAddons.cookieStoreId,messages:F}});const se=await Ut();try{M(m,await se.get("cache",window.scratchAddons.cookieStoreId),!0),M(ce,await se.get("count",window.scratchAddons.cookieStoreId),!0)}finally{await se.close()}return M(d,(Array.isArray(Re)?Re:[]).map(y=>{const H=v.parseFromString(y.message,"text/html");for(const Ke of H.getElementsByTagName("a"))Ke.href=new URL(Ke.getAttribute("href"),"https://scratch.mit.edu/").toString();const ve=document.createElement("div");return ve.append(...H.body.childNodes),{...y,element:ve,datetime_created:new Date(y.datetime_created).toDateString()}}),!0),M(x,void 0),!0}catch(p){if(p instanceof Ee){if(p.code===401||p.code===403)return M(x,"loggedOut"),!1;if(p.code>=500)return M(x,"serverError"),!1}else if(p instanceof TypeError&&String(p).includes("NetworkError"))return M(x,"networkError"),!1;return console.error("Error while initial getData",p),M(S,!0),M(x,String(p),!0),!1}}async function He(i=!1){const{addon:p}=e(s),A=await p.auth.fetchUsername(),F=await Ss(A,{bypassCache:i}),Re=await As(window.scratchAddons.cookieStoreId,F),se=await Ut();try{await se.put("count",Re,window.scratchAddons.cookieStoreId),!i&&F.resId&&!(se instanceof Et)&&await se.put("count",F.resId,`${window.scratchAddons.cookieStoreId}_resId`)}finally{await se.close()}chrome.runtime.sendMessage({forceBadgeUpdate:{store:window.scratchAddons.cookieStoreId}})}function Ze(){const{addon:i}=e(s);Lr(i.auth.csrfToken).then(()=>He(!0)).then(()=>{M(oe,!0)}).catch(p=>console.error("Marking messages as read failed:",p))}function pt(i){confirm(e(s).msg("stMessagesConfirm"))&&ta(e(s).addon,i).then(()=>{const p=e(d).findIndex(A=>A.id===i);p!==-1&&e(d).splice(p,1),He(!0)}).catch(p=>console.error("Dismissing alert failed:",p))}function Ye(){location.reload()}function ot(i){navigator.clipboard.writeText(i)}async function D(i,p,A,F){const{addon:Re}=e(s);try{const[se,y]=await Promise.all([na(Re,{resourceType:i,resourceId:p,commentMessages:A}),Re.self.getEnabledAddons()]);Object.keys(se).length===0&&(F.unreadComments=0);for(const et of Object.keys(se)){const it=se[et];let It=Es(it.content,y);if(i!=="user"){const wt=document.createElement("div");it.replyingTo&&(wt.append(Object.assign(document.createElement("a"),{href:`https://scratch.mit.edu/users/${it.replyingTo}`,textContent:"@"+it.replyingTo})),wt.append(" ")),wt.append(...It.childNodes),It=wt}it.content=It,f[et]=it}const Ke=Object.entries(se).filter(et=>et[1].childOf===null).sort((et,it)=>new Date(it[1].date)-new Date(et[1].date)).map(et=>et[0]),St=i==="project"?ge(p):i==="user"?Ie(p):ie(p);for(const et of Ke)St.commentChains.push(et);F.loadedComments=!0}catch(se){if(se instanceof Ee&&se.code>400){M(x,se.code<500?"loggedOut":"serverError",!0);return}else if(String(se).includes("NetworkError")){M(x,"networkError");return}console.error(se),M(x,String(se),!0),M(S,!0)}}async function te(i=!1){const p={0:[],1:[],2:[]};let A=e(ce)-e(d).length;const F=i?e(m).length:A;M(Ne,F,!0);for(const y of e(m).slice(0,F))if(y.type==="followuser")e(fe).push(y.actor_username);else if(y.type==="curatorinvite")e(Ge).push({actor:y.actor_username,studioId:y.gallery_id,studioTitle:y.title});else if(y.type==="becomeownerstudio")e(at).push({actor:y.actor_username,studioId:y.gallery_id,studioTitle:y.gallery_title});else if(y.type==="becomehoststudio")e(gt).push({actorAdmin:y.admin_actor,actor:y.actor_username,studioId:y.gallery_id,studioTitle:y.gallery_title});else if(y.type==="forumpost")e(ue).find(H=>H.topicId===y.topic_id)||e(ue).push({topicId:y.topic_id,topicTitle:y.topic_title});else if(y.type==="remixproject")e(Le).push({parentTitle:y.parent_title,actor:y.actor_username,projectId:y.project_id});else if(y.type==="studioactivity"){const H=e(De).find(ve=>ve.studioId===y.gallery_id);H?H.amount++:e(De).push({studioId:y.gallery_id,studioTitle:y.title,amount:1}),hs(Oe)}else if(y.type==="loveproject"){const H=ge(y.project_id,y.title);H.loveCount++;const ve=H.loversAndFavers.find(Ke=>Ke.username===y.actor_username);ve?ve.loved=!0:H.loversAndFavers.push({username:y.actor_username,loved:!0,faved:!1})}else if(y.type==="favoriteproject"){const H=ge(y.project_id,y.project_title);H.favoriteCount++;const ve=H.loversAndFavers.find(Ke=>Ke.username===y.actor_username);ve?ve.faved=!0:H.loversAndFavers.push({username:y.actor_username,loved:!1,faved:!0})}else if(y.type==="addcomment"){const H=y.comment_type===1?y.comment_obj_title:y.comment_obj_id;let ve=p[y.comment_type].find(St=>St.resourceId===H);ve||(ve={resourceId:H,commentMessages:[]},p[y.comment_type].push(ve)),ve.commentMessages.push(y);let Ke;y.comment_type===0?Ke=ge(H,y.comment_obj_title):y.comment_type===1?Ke=Ie(H):y.comment_type===2&&(Ke=ie(H,y.comment_obj_title)),Ke.unreadComments++}else y.type==="userjoin"&&M(nt,!0);M(de,!0);const Re=p[0].length+p[1].length+p[2].length;let se=0;for(const y of e(_)){const H=p[1].find(ve=>ve.resourceId===y.username);H&&(await D("user",H.resourceId,H.commentMessages,y),se++,M(ne,Math.round(se/Re*100),!0))}for(const y of e(be)){const H=p[2].find(ve=>ve.resourceId===y.id);H&&(await D("gallery",H.resourceId,H.commentMessages,y),se++,M(ne,Math.round(se/Re*100),!0))}for(const y of e(L)){const H=p[0].find(ve=>ve.resourceId===y.id);H&&(await D("project",H.resourceId,H.commentMessages,y),se++,M(ne,Math.round(se/Re*100),!0))}M(I,!0)}function Ce(){M(I,!1),M(ne,0),M(fe,[],!0),M(Ge,[],!0),M(at,[],!0),M(gt,[],!0),M(ue,[],!0),M(De,[],!0),M(Oe,0),M(Le,[],!0),M(_e,[],!0),M(be,[],!0),M(Je,[],!0),M(nt,!1)}function Se(){M(Xe,!0),Ce(),te(!0)}function ke(i){const{safeMsg:p}=e(s),A=`<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/users/${i.actor}/">${i.actor}</a>`,F=`<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/studios/${i.studioId}/curators/" style="text-decoration: underline">${ft(i.studioTitle)}</a>`;return p("curate-invite",{actor:A,title:F})}function Ve(i){const{safeMsg:p}=e(s),A=`<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/users/${i.actor}/">${i.actor}</a>`,F=`<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/studios/${i.studioId}/curators/" style="text-decoration: underline">${ft(i.studioTitle)}</a>`;return p("studio-promotion",{actor:A,title:F})}function dt(i){const{safeMsg:p}=e(s),A=i.actorAdmin?p("st"):`<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/users/${ft(i.actor)}/">${ft(i.actor)}</a>`,F=`<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/studios/${i.studioId}/" style="text-decoration: underline">${ft(i.studioTitle)}</a>`;return p("studio-host-transfer",{actor:A,title:F})}function ut(i){const{safeMsg:p}=e(s),A=`<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/discuss/topic/${i.topicId}/unread/" style="text-decoration: underline">${ft(i.topicTitle)}</a>`;return p("forum-new-post",{title:A})}function yt(i){const{safeMsg:p}=e(s),A=`<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/studios/${i.studioId}/activity/" style="text-decoration: underline">${ft(i.studioTitle)}</a>`;return p("new-activity",{title:A})}function qt(i){const{msg:p,safeMsg:A}=e(s),F=`<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/users/${i.actor}/">${i.actor}</a>`,Re=`<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/projects/${i.projectId}/" style="text-decoration: underline">${p("remix-link")}</a>`;return A("remix-as",{actor:F,link:Re,parentTitle:ft(i.parentTitle)})}function vt(i){return e(s).msg("others-profile",{username:i})}function Lt(i){return e(s).msg("studio",{title:i})}function zt(i){const p=A=>A.loved&&A.faved?0:A.faved?1:2;return i.loversAndFavers.slice(0,20).sort((A,F)=>p(A)-p(F))}vs(async()=>{M(s,await Cs(t.addonId),!0),document.title=e(s).msg("popup-title"),await q()&&await te()});var Gt=bt();_s("1b1hi6l",i=>{var p=Ma(),A=c(rt(p),2);E(A,"href",chrome.runtime.getURL("webpages/styles/components/buttons.css"));var F=c(A,2);E(F,"href",chrome.runtime.getURL("webpages/styles/components/tooltips.css")),u(i,p)});var Ls=rt(Gt);{var Is=i=>{var p=Tn(),A=rt(p),F=o(A);{var Re=P=>{var z=fn(),me=rt(z);{var Qe=j=>{var w=Aa(),R=o(w),W=o(R),re=o(W);E(re,"src",chrome.runtime.getURL("images/icons/expand.svg"));let K;var V=c(W,2),pe=o(V),le=c(V,2),Q=o(le);E(Q,"src",chrome.runtime.getURL("images/icons/notice.svg"));var ye=c(Q),Ae=c(R,2);{var je=N=>{var ae=Sa();Te(ae,21,()=>e(d),Z=>Z.id,(Z,G)=>{var T=Ca(),Y=o(T),ee=o(Y),he=c(Y,2),Me=o(he),Ue=c(he,2);rr(Ue,(Be,We)=>a?.(Be,We),()=>e(G).element),C(()=>{b(ee,e(G).datetime_created),b(Me,e(B).dismissMsg)}),xe("click",he,()=>pt(e(G).id)),xe("keydown",he,Be=>Be.key==="Enter"&&pt(e(G).id)),u(Z,T)}),u(N,ae)};k(Ae,N=>{$.stMessages&&N(je)})}C(()=>{K=ze(re,1,"",null,K,{reverted:$.stMessages}),b(pe,e(B).stMessagesMsg),b(ye,` ${e(d).length??""}`)}),xe("click",R,()=>$.stMessages=!$.stMessages),u(j,w)};k(me,j=>{e(d).length&&j(Qe)})}var _t=c(me,2);{var At=j=>{var w=Ea(),R=o(w),W=o(R),re=o(W);E(re,"src",chrome.runtime.getURL("images/icons/expand.svg"));let K;var V=c(W,2),pe=o(V),le=c(V,2),Q=o(le);E(Q,"src",chrome.runtime.getURL("images/icons/follow.svg"));var ye=c(Q),Ae=c(R,2);{var je=N=>{var ae=Ta(),Z=o(ae);Te(Z,20,()=>e(fe),G=>G,(G,T)=>{var Y=ja(),ee=o(Y);C(()=>{E(Y,"href",`https://scratch.mit.edu/users/${T}/`),b(ee,T)}),u(G,Y)}),u(N,ae)};k(Ae,N=>{$.follows&&N(je)})}C(()=>{K=ze(re,1,"",null,K,{reverted:$.follows}),b(pe,e(B).followsMsg),b(ye,` ${e(fe).length??""}`)}),xe("click",R,()=>$.follows=!$.follows),u(j,w)};k(_t,j=>{e(fe).length&&j(At)})}var tt=c(_t,2);{var st=j=>{var w=Pa(),R=o(w),W=o(R),re=o(W);E(re,"src",chrome.runtime.getURL("images/icons/expand.svg"));let K;var V=c(W,2),pe=o(V),le=c(V,2),Q=o(le);E(Q,"src",chrome.runtime.getURL("images/icons/studio-add.svg"));var ye=c(Q),Ae=c(R,2);{var je=N=>{var ae=Ia();Te(ae,21,()=>e(Ge),Mt,(Z,G)=>{var T=La();Ct(T,()=>ke(e(G)),!0),u(Z,T)}),u(N,ae)};k(Ae,N=>{$.studioInvites&&N(je)})}C(()=>{K=ze(re,1,"",null,K,{reverted:$.studioInvites}),b(pe,e(B).studioInvitesMsg),b(ye,` ${e(Ge).length??""}`)}),xe("click",R,()=>$.studioInvites=!$.studioInvites),u(j,w)};k(tt,j=>{e(Ge).length&&j(st)})}var mt=c(tt,2);{var Pt=j=>{var w=Ua(),R=o(w),W=o(R),re=o(W);E(re,"src",chrome.runtime.getURL("images/icons/expand.svg"));let K;var V=c(W,2),pe=o(V),le=c(V,2),Q=o(le);E(Q,"src",chrome.runtime.getURL("images/icons/adminusers.svg"));var ye=c(Q),Ae=c(R,2);{var je=N=>{var ae=Ra();Te(ae,21,()=>e(at),Mt,(Z,G)=>{var T=Oa();Ct(T,()=>Ve(e(G)),!0),u(Z,T)}),u(N,ae)};k(Ae,N=>{$.studioPromotions&&N(je)})}C(()=>{K=ze(re,1,"",null,K,{reverted:$.studioPromotions}),b(pe,e(B).studioPromotionsMsg),b(ye,` ${e(at).length??""}`)}),xe("click",R,()=>$.studioPromotions=!$.studioPromotions),u(j,w)};k(mt,j=>{e(at).length&&j(Pt)})}var jt=c(mt,2);{var qs=j=>{var w=Da(),R=o(w),W=o(R),re=o(W);E(re,"src",chrome.runtime.getURL("images/icons/expand.svg"));let K;var V=c(W,2),pe=o(V),le=c(V,2),Q=o(le);E(Q,"src",chrome.runtime.getURL("images/icons/users.svg"));var ye=c(Q),Ae=c(R,2);{var je=N=>{var ae=Na();Te(ae,21,()=>e(gt),Mt,(Z,G)=>{var T=$a();Ct(T,()=>dt(e(G)),!0),u(Z,T)}),u(N,ae)};k(Ae,N=>{$.studioHostTransfers&&N(je)})}C(()=>{K=ze(re,1,"",null,K,{reverted:$.studioHostTransfers}),b(pe,e(B).studioHostTransfersMsg),b(ye,` ${e(gt).length??""}`)}),xe("click",R,()=>$.studioHostTransfers=!$.studioHostTransfers),u(j,w)};k(jt,j=>{e(gt).length&&j(qs)})}var ts=c(jt,2);{var zs=j=>{var w=Ba(),R=o(w),W=o(R),re=o(W);E(re,"src",chrome.runtime.getURL("images/icons/expand.svg"));let K;var V=c(W,2),pe=o(V),le=c(V,2),Q=o(le);E(Q,"src",chrome.runtime.getURL("images/icons/forum.svg"));var ye=c(Q),Ae=c(R,2);{var je=N=>{var ae=Ha();Te(ae,21,()=>e(ue),Mt,(Z,G)=>{var T=Fa();Ct(T,()=>ut(e(G)),!0),u(Z,T)}),u(N,ae)};k(Ae,N=>{$.forumActivity&&N(je)})}C(()=>{K=ze(re,1,"",null,K,{reverted:$.forumActivity}),b(pe,e(B).forumMsg),b(ye,` ${e(ue).length??""}`)}),xe("click",R,()=>$.forumActivity=!$.forumActivity),u(j,w)};k(ts,j=>{e(ue).length&&j(zs)})}var ss=c(ts,2);{var Xs=j=>{var w=Ja(),R=o(w),W=o(R),re=o(W);E(re,"src",chrome.runtime.getURL("images/icons/expand.svg"));let K;var V=c(W,2),pe=o(V),le=c(V,2),Q=o(le);E(Q,"src",chrome.runtime.getURL("images/icons/studio.svg"));var ye=c(Q),Ae=c(R,2);{var je=N=>{var ae=Xa();Te(ae,21,()=>e(De),Mt,(Z,G)=>{var T=za(),Y=o(T);Ct(Y,()=>yt(e(G)));var ee=c(Y,2);{var he=Me=>{var Ue=qa(),Be=o(Ue);C(()=>b(Be,`(${e(G).amount??""})`)),u(Me,Ue)};k(ee,Me=>{e(G).amount>1&&Me(he)})}u(Z,T)}),u(N,ae)};k(Ae,N=>{$.studioActivity&&N(je)})}C(()=>{K=ze(re,1,"",null,K,{reverted:$.studioActivity}),b(pe,e(B).studioActivityMsg),b(ye,` ${e(Oe)??""}`)}),xe("click",R,()=>$.studioActivity=!$.studioActivity),u(j,w)};k(ss,j=>{e(De).length&&j(Xs)})}var rs=c(ss,2);{var Js=j=>{var w=Wa(),R=o(w),W=o(R),re=o(W);E(re,"src",chrome.runtime.getURL("images/icons/expand.svg"));let K;var V=c(W,2),pe=o(V),le=c(V,2),Q=o(le);E(Q,"src",chrome.runtime.getURL("images/icons/remix.svg"));var ye=c(Q),Ae=c(R,2);{var je=N=>{var ae=Va();Te(ae,21,()=>e(Le),Mt,(Z,G)=>{var T=Ka();Ct(T,()=>qt(e(G)),!0),u(Z,T)}),u(N,ae)};k(Ae,N=>{$.remixes&&N(je)})}C(()=>{K=ze(re,1,"",null,K,{reverted:$.remixes}),b(pe,e(B).remixesMsg),b(ye,` ${e(Le).length??""}`)}),xe("click",R,()=>$.remixes=!$.remixes),u(j,w)};k(rs,j=>{e(Le).length&&j(Js)})}var as=c(rs,2);Te(as,17,()=>e(_),j=>j.username,(j,w)=>{var R=bt(),W=rt(R);{var re=K=>{var V=Ya(),pe=o(V),le=o(pe),Q=o(le);{var ye=T=>{var Y=cs();C(()=>b(Y,e(B).yourProfileMsg)),u(T,Y)},Ae=T=>{var Y=cs();C(ee=>b(Y,ee),[()=>vt(e(w).username)]),u(T,Y)};k(Q,T=>{e(w).username===e(U)?T(ye):T(Ae,-1)})}var je=c(le,2),N=o(je);{var ae=T=>{var Y=Ga(),ee=o(Y);E(ee,"src",chrome.runtime.getURL("images/icons/comment.svg"));var he=c(ee);C(()=>b(he,` ${e(w).unreadComments??""}`)),u(T,Y)};k(N,T=>{e(w).unreadComments&&T(ae)})}var Z=c(pe,2);{var G=T=>{var Y=Qa();Te(Y,20,()=>e(w).commentChains,ee=>ee,(ee,he)=>{var Me=Za();let Ue;var Be=o(Me);Tt(Be,{get commentId(){return he},get commentsObj(){return f},isParent:!0,unread:!1,resourceType:"user",get resourceId(){return e(w).username},get addon(){return e(s).addon},get msg(){return e(s).msg},get username(){return e(U)},get dateNow(){return l},get errorCodes(){return n}});var We=c(Be,2);{var ht=ct=>{var Pe=bt(),we=rt(Pe);Te(we,16,()=>f[he].children,Fe=>Fe,(Fe,lt)=>{{let xt=$e(()=>J(lt));Tt(Fe,{get commentId(){return lt},get commentsObj(){return f},isParent:!1,get unread(){return e(xt)},resourceType:"user",get resourceId(){return e(w).username},get addon(){return e(s).addon},get msg(){return e(s).msg},get username(){return e(U)},get dateNow(){return l},get errorCodes(){return n}})}}),u(ct,Pe)};k(We,ct=>{f[he]?.children&&ct(ht)})}C(ct=>Ue=ze(Me,1,"comment-chain",null,Ue,ct),[()=>({unread:J(he)})]),u(ee,Me)}),u(T,Y)};k(Z,T=>{e(w).commentChains.length&&T(G)})}C(()=>E(le,"href",`https://scratch.mit.edu/users/${e(w).username}/`)),u(K,V)};k(W,K=>{e(w).unreadComments&&e(w).loadedComments&&K(re)})}u(j,R)});var ns=c(as,2);Te(ns,17,()=>e(be),j=>j.id,(j,w)=>{var R=bt(),W=rt(R);{var re=K=>{var V=rn(),pe=o(V),le=o(pe),Q=o(le),ye=c(le,2),Ae=o(ye);{var je=Z=>{var G=en(),T=o(G);E(T,"src",chrome.runtime.getURL("images/icons/comment.svg"));var Y=c(T);C(()=>b(Y,` ${e(w).unreadComments??""}`)),u(Z,G)};k(Ae,Z=>{e(w).unreadComments&&Z(je)})}var N=c(pe,2);{var ae=Z=>{var G=sn();Te(G,20,()=>e(w).commentChains,T=>T,(T,Y)=>{var ee=tn();let he;var Me=o(ee);Tt(Me,{get commentId(){return Y},get commentsObj(){return f},isParent:!0,unread:!1,resourceType:"gallery",get resourceId(){return e(w).id},get addon(){return e(s).addon},get msg(){return e(s).msg},get username(){return e(U)},get dateNow(){return l},get errorCodes(){return n}});var Ue=c(Me,2);{var Be=We=>{var ht=bt(),ct=rt(ht);Te(ct,16,()=>f[Y].children,Pe=>Pe,(Pe,we)=>{{let Fe=$e(()=>J(we));Tt(Pe,{get commentId(){return we},get commentsObj(){return f},isParent:!1,get unread(){return e(Fe)},resourceType:"gallery",get resourceId(){return e(w).id},get addon(){return e(s).addon},get msg(){return e(s).msg},get username(){return e(U)},get dateNow(){return l},get errorCodes(){return n}})}}),u(We,ht)};k(Ue,We=>{f[Y]?.children&&We(Be)})}C(We=>he=ze(ee,1,"comment-chain",null,he,We),[()=>({unread:J(Y)})]),u(T,ee)}),u(Z,G)};k(N,Z=>{e(w).commentChains.length&&Z(ae)})}C(Z=>{E(le,"href",`https://scratch.mit.edu/studios/${e(w).id}/`),b(Q,Z)},[()=>Lt(e(w).title)]),u(K,V)};k(W,K=>{e(w).unreadComments&&e(w).loadedComments&&K(re)})}u(j,R)});var os=c(ns,2);Te(os,19,()=>e(L),j=>j.id,(j,w,R)=>{var W=bt(),re=rt(W);{var K=V=>{var pe=vn(),le=o(pe);let Q;var ye=o(le),Ae=o(ye),je=c(ye,2),N=o(je);{var ae=ee=>{var he=dn(),Me=o(he),Ue=o(Me);{var Be=Pe=>{var we=an(),Fe=o(we);E(Fe,"src",chrome.runtime.getURL("images/icons/heart.svg"));var lt=c(Fe);C(()=>b(lt,` ${e(w).loveCount??""}`)),u(Pe,we)};k(Ue,Pe=>{e(w).loveCount&&Pe(Be)})}var We=c(Ue,2);{var ht=Pe=>{var we=nn(),Fe=o(we);E(Fe,"src",chrome.runtime.getURL("images/icons/star.svg"));var lt=c(Fe);C(()=>b(lt,` ${e(w).favoriteCount??""}`)),u(Pe,we)};k(We,Pe=>{e(w).favoriteCount&&Pe(ht)})}var ct=c(Me,2);Te(ct,23,()=>zt(e(w)),(Pe,we)=>Pe.username+we,(Pe,we)=>{var Fe=ln(),lt=o(Fe);{var xt=kt=>{var Rt=on();E(Rt,"src",chrome.runtime.getURL("images/icons/heart.svg")),u(kt,Rt)};k(lt,kt=>{e(we).loved&&kt(xt)})}var Ot=c(lt,2);{var Xt=kt=>{var Rt=cn();E(Rt,"src",chrome.runtime.getURL("images/icons/star.svg")),u(kt,Rt)};k(Ot,kt=>{e(we).faved&&kt(Xt)})}var is=c(Ot,2),Ws=o(is);C(()=>{E(is,"href",`https://scratch.mit.edu/users/${e(we).username}/`),b(Ws,e(we).username)}),u(Pe,Fe)}),u(ee,he)};k(N,ee=>{(e(w).loveCount||e(w).favoriteCount)&&ee(ae)})}var Z=c(N,2);{var G=ee=>{var he=un(),Me=o(he);E(Me,"src",chrome.runtime.getURL("images/icons/comment.svg"));var Ue=c(Me);C(()=>b(Ue,` ${e(w).unreadComments??""}`)),u(ee,he)};k(Z,ee=>{e(w).unreadComments&&ee(G)})}var T=c(le,2);{var Y=ee=>{var he=gn();Te(he,20,()=>e(w).commentChains,Me=>Me,(Me,Ue)=>{var Be=mn();let We;var ht=o(Be);Tt(ht,{get commentId(){return Ue},get commentsObj(){return f},isParent:!0,unread:!1,resourceType:"project",get resourceId(){return e(w).id},get addon(){return e(s).addon},get msg(){return e(s).msg},get username(){return e(U)},get dateNow(){return l},get errorCodes(){return n}});var ct=c(ht,2);{var Pe=we=>{var Fe=bt(),lt=rt(Fe);Te(lt,16,()=>f[Ue].children,xt=>xt,(xt,Ot)=>{{let Xt=$e(()=>J(Ot));Tt(xt,{get commentId(){return Ot},get commentsObj(){return f},isParent:!1,get unread(){return e(Xt)},resourceType:"project",get resourceId(){return e(w).id},get addon(){return e(s).addon},get msg(){return e(s).msg},get username(){return e(U)},get dateNow(){return l},get errorCodes(){return n}})}}),u(we,Fe)};k(ct,we=>{f[Ue]?.children&&we(Pe)})}C(we=>We=ze(Be,1,"comment-chain",null,We,we),[()=>({unread:J(Ue)})]),u(Me,Be)}),u(ee,he)};k(T,ee=>{e(w).commentChains.length&&ee(Y)})}C(()=>{Q=Ft(le,"",Q,{zIndex:9999-e(R)}),E(ye,"href",`https://scratch.mit.edu/projects/${e(w).id}/`),b(Ae,e(w).title)}),u(V,pe)};k(re,V=>{(e(w).unreadComments&&e(w).loadedComments||!e(w).unreadComments&&e(I))&&V(K)})}u(j,W)});var Ks=c(os,2);{var Vs=j=>{var w=hn(),R=o(w),W=o(R);C(()=>b(W,e(B).welcomeToScratchMsg)),u(j,w)};k(Ks,j=>{e(nt)&&j(Vs)})}u(P,z)};k(F,P=>{e(x)||P(Re)})}var se=c(F,2),y=o(se);{var H=P=>{var z=pn(),me=o(z);C(()=>b(me,e(B).loadingMsg)),u(P,z)};k(y,P=>{e(x)==="notReady"&&P(H)})}var ve=c(y,2);{var Ke=P=>{var z=_n(),me=o(z),Qe=c(me),_t=o(Qe);C(()=>{b(me,`${e(B).loggedOutMsg??""} `),b(_t,e(B).loggedOutLinkMsg)}),u(P,z)};k(ve,P=>{e(x)==="loggedOut"&&P(Ke)})}var St=c(ve,2);{var et=P=>{var z=bn(),me=o(z);C(()=>b(me,e(B).serverErrorMsg)),u(P,z)};k(St,P=>{e(x)==="serverError"&&P(et)})}var it=c(St,2);{var It=P=>{var z=yn(),me=o(z);C(()=>b(me,e(B).networkErrorMsg)),u(P,z)};k(it,P=>{e(x)==="networkError"&&P(It)})}var wt=c(it,2);{var Ps=P=>{var z=wn(),me=o(z);C(()=>b(me,e(B).loadingCommentsMsg)),u(P,z)};k(wt,P=>{e(de)&&!e(I)&&P(Ps)})}var Zt=c(wt,2);{var Os=P=>{var z=xn(),me=o(z),Qe=c(me),_t=o(Qe),At=c(Qe,4),tt=o(At),st=c(At,2),mt=o(st);C(()=>{b(me,`${e(B).unknownFatalErrorMsg??""} `),E(Qe,"href",e(h)),b(_t,e(B).reportBugMsg),b(tt,e(x)),b(mt,e(B).copyMsg)}),xe("click",st,()=>ot(e(x))),u(P,z)};k(Zt,P=>{e(S)&&P(Os)})}var Qt=c(Zt,2);{var Rs=P=>{var z=kn(),me=o(z);C(()=>b(me,e(B).noUnreadMsg)),u(P,z)};k(Qt,P=>{e(de)&&e(Ne)===0&&e(d).length===0&&P(Rs)})}var Us=c(Qt,2);{var $s=P=>{var z=Sn(),me=o(z);{var Qe=tt=>{var st=Mn(),mt=o(st);E(mt,"src",chrome.runtime.getURL("images/icons/reload.svg"));var Pt=c(mt),jt=o(Pt);C(()=>b(jt,e(B).reloadMsg)),xe("click",st,Ye),u(tt,st)};k(me,tt=>{e(I)&&tt(Qe)})}var _t=c(me,2);{var At=tt=>{var st=Cn(),mt=o(st);E(mt,"src",chrome.runtime.getURL("images/icons/plus.svg"));var Pt=c(mt),jt=o(Pt);C(()=>b(jt,e(B).showMoreMsg)),xe("click",st,Se),u(tt,st)};k(_t,tt=>{e(X)&&tt(At)})}u(P,z)};k(Us,P=>{(e(I)||e(X))&&P($s)})}var Ns=c(A,2),Yt=o(Ns);{var Ds=P=>{var z=An(),me=o(z);C(()=>b(me,e(B).markAsReadMsg)),xe("click",z,Ze),xe("keydown",z,Qe=>Qe.key==="Enter"&&Ze()),u(P,z)},Fs=P=>{var z=jn(),me=o(z);E(me,"src",chrome.runtime.getURL("images/icons/read.svg"));var Qe=c(me);C(()=>b(Qe,` ${e(B).markedAsReadMsg??""}`)),u(P,z)};k(Yt,P=>{e(oe)?P(Fs,-1):P(Ds)})}var Hs=c(Yt,4),es=o(Hs),Bs=c(es);E(Bs,"src",chrome.runtime.getURL("images/icons/popout.svg")),C(()=>b(es,e(B).openMessagesMsg)),u(i,p)};k(Ls,i=>{e(s)&&i(Is)})}u(r,Gt),Bt()}Kt(["click","keydown"]);export{In as C,Pn as S};
+import {
+  o as Gs,
+  i as Zs,
+  j as Qs,
+  H as Ys,
+  C as er,
+  p as Kt,
+  L as Ht,
+  V as O,
+  K as qe,
+  G as vs,
+  M,
+  w as e,
+  t as rt,
+  y as k,
+  U as c,
+  b as u,
+  I as Bt,
+  $ as $e,
+  O as E,
+  W as C,
+  T as b,
+  S as Ft,
+  q as xe,
+  r as Te,
+  Q as ze,
+  l as o,
+  z as Mt,
+  _ as hs,
+  u as g,
+  x as Ct,
+  a0 as fs,
+  g as ps,
+  J as tr,
+  m as bt,
+  h as sr,
+  X as cs,
+  a as rr,
+} from "./page-init-D8Z4tyJC.js";
+function _s(r, t) {
+  var s;
+  s = document.head.appendChild(Gs());
+  try {
+    Zs(() => {
+      var a = Qs(() => t(s));
+      a.f |= Ys;
+    });
+  } finally {
+  }
+}
+class Vt extends EventTarget {
+  constructor(...t) {
+    super(...t), this._eventTargetKey !== null && scratchAddons.eventTargets[this._eventTargetKey].push(this);
+  }
+  dispatchEvent(...t) {
+    return super.dispatchEvent(...t);
+  }
+  get _eventTargetKey() {
+    return null;
+  }
+  dispose() {
+    const t = this._eventTargetKey;
+    t !== null &&
+      scratchAddons.eventTargets[t].splice(
+        scratchAddons.eventTargets[t].findIndex((s) => s === this),
+        1
+      );
+  }
+}
+let bs = class extends Vt {
+  fetchIsLoggedIn() {
+    return Promise.resolve(scratchAddons.globalState.auth.isLoggedIn);
+  }
+  fetchUsername() {
+    return Promise.resolve(scratchAddons.globalState.auth.username);
+  }
+  fetchUserId() {
+    return Promise.resolve(scratchAddons.globalState.auth.userId);
+  }
+  fetchXToken() {
+    return Promise.resolve(scratchAddons.globalState.auth.xToken);
+  }
+  get csrfToken() {
+    return scratchAddons.globalState.auth.csrfToken;
+  }
+  get scratchLang() {
+    return scratchAddons.globalState.auth.scratchLang;
+  }
+  get _eventTargetKey() {
+    return "auth";
+  }
+};
+class ar extends Vt {
+  constructor(t, s) {
+    super(),
+      (this._addonId = s.id),
+      (this.id = s.id),
+      (this._addonObj = t),
+      (this.browser = er() ? "firefox" : "chrome"),
+      (this.disabled = !1),
+      this.addEventListener("disabled", () => (this.disabled = !0)),
+      this.addEventListener("reenabled", () => (this.disabled = !1));
+  }
+  get dir() {
+    return `${this._addonObj._path}addons/${this.id}`;
+  }
+  get _eventTargetKey() {
+    return "self";
+  }
+  getEnabledAddons(t) {
+    return scratchAddons.methods.getEnabledAddons(t);
+  }
+}
+class nr extends Vt {
+  constructor(t) {
+    super(), (this._addonId = t.self.id);
+  }
+  get(t) {
+    const a = (scratchAddons.globalState.addonSettings[this._addonId] || {})[t];
+    if (a === void 0) throw "ScratchAddons exception: invalid setting ID";
+    return a;
+  }
+  get _eventTargetKey() {
+    return "settings";
+  }
+}
+class or {
+  constructor(t) {
+    (this.self = new ar(this, t)), (this.auth = new bs(this)), (this.settings = new nr(this));
+  }
+  get _path() {
+    throw new Error("Subclasses must implement this.");
+  }
+}
+class ir {
+  constructor(t) {
+    this._addonId = t.self.id;
+  }
+  get isFullscreen() {
+    return window.parent === window;
+  }
+  get isLightMode() {
+    return scratchAddons.isLightMode;
+  }
+  getSelectedTabUrl() {
+    return new Promise((t) => {
+      chrome.tabs.query({ active: !0, currentWindow: !0 }, (s) => (s.length === 0 ? t(null) : t(s[0]?.url || null)));
+    });
+  }
+  changeSettings(t = {}) {
+    const s = scratchAddons.globalState.addonSettings[this._addonId] || {},
+      a = Object.keys(t).filter((n) => !Object.prototype.hasOwnProperty.call(s, n));
+    if (a.length) throw new Error(`Unknown setting keys passed: ${a}`);
+    chrome.runtime.sendMessage({ changeAddonSettings: { addonId: this._addonId, newSettings: { ...s, ...t } } });
+  }
+}
+class cr extends bs {
+  constructor(...t) {
+    super(...t), this._refresh();
+  }
+  _refresh(t) {
+    (this._lastUsername = void 0),
+      (this._lastUserId = void 0),
+      (this._lastIsLoggedIn = void 0),
+      (this._lastXToken = void 0),
+      t && (this._requestFetchFn = t);
+  }
+  _getCookie() {
+    throw new Error("Subclasses must implement this.");
+  }
+  _waitUntilFetched() {
+    const t = new Promise((s) => this.addEventListener("session", s, { once: !0 }));
+    return this._requestFetchFn && (this._requestFetchFn(), (this._requestFetchFn = void 0)), t;
+  }
+  _update(t) {
+    (this._lastUsername = t.user?.username || null),
+      (this._lastUserId = t.user?.id || null),
+      (this._lastIsLoggedIn = !!t.user),
+      (this._lastXToken = t.user?.token || null),
+      this.dispatchEvent(new CustomEvent("session")),
+      this.dispatchEvent(new CustomEvent("change"));
+  }
+  _fetchProperty(t) {
+    return typeof this[t] < "u" ? Promise.resolve(this[t]) : this._waitUntilFetched().then(() => this[t]);
+  }
+  fetchIsLoggedIn() {
+    return this._fetchProperty("_lastIsLoggedIn");
+  }
+  fetchUsername() {
+    return this._fetchProperty("_lastUsername");
+  }
+  fetchUserId() {
+    return this._fetchProperty("_lastUserId");
+  }
+  fetchXToken() {
+    return this._fetchProperty("_lastXToken");
+  }
+  get csrfToken() {
+    return this._getCookie("scratchcsrftoken");
+  }
+  get scratchLang() {
+    return this._getCookie("scratchlanguage") || navigator.language;
+  }
+}
+class lr extends cr {
+  _getCookie(t) {
+    return scratchAddons.cookies.get(t) || null;
+  }
+}
+class dr extends or {
+  constructor(t) {
+    super(t), this.auth.dispose(), (this.auth = new lr(this)), (this.popup = new ir(this));
+  }
+  get _path() {
+    return chrome.runtime.getURL("");
+  }
+}
+const ft = (r) => r.replace(/([<>'"&])/g, (t, s) => `&#${s.charCodeAt(0)};`);
+function ls(r, t) {
+  var s = Object.keys(r);
+  if (Object.getOwnPropertySymbols) {
+    var a = Object.getOwnPropertySymbols(r);
+    t &&
+      (a = a.filter(function (n) {
+        return Object.getOwnPropertyDescriptor(r, n).enumerable;
+      })),
+      s.push.apply(s, a);
+  }
+  return s;
+}
+function ds(r) {
+  for (var t = 1; t < arguments.length; t++) {
+    var s = arguments[t] != null ? arguments[t] : {};
+    t % 2
+      ? ls(Object(s), !0).forEach(function (a) {
+          ys(r, a, s[a]);
+        })
+      : Object.getOwnPropertyDescriptors
+        ? Object.defineProperties(r, Object.getOwnPropertyDescriptors(s))
+        : ls(Object(s)).forEach(function (a) {
+            Object.defineProperty(r, a, Object.getOwnPropertyDescriptor(s, a));
+          });
+  }
+  return r;
+}
+function ur(r, t) {
+  if (!(r instanceof t)) throw new TypeError("Cannot call a class as a function");
+}
+function mr(r, t) {
+  for (var s = 0; s < t.length; s++) {
+    var a = t[s];
+    (a.enumerable = a.enumerable || !1),
+      (a.configurable = !0),
+      "value" in a && (a.writable = !0),
+      Object.defineProperty(r, a.key, a);
+  }
+}
+function ys(r, t, s) {
+  return (
+    t in r ? Object.defineProperty(r, t, { value: s, enumerable: !0, configurable: !0, writable: !0 }) : (r[t] = s), r
+  );
+}
+function gr(r, t) {
+  return (
+    (function (s) {
+      if (Array.isArray(s)) return s;
+    })(r) ||
+    (function (s, a) {
+      var n = s == null ? null : (typeof Symbol < "u" && s[Symbol.iterator]) || s["@@iterator"];
+      if (n != null) {
+        var l,
+          v,
+          d = [],
+          m = !0,
+          f = !1;
+        try {
+          for (n = n.call(s); !(m = (l = n.next()).done) && (d.push(l.value), !a || d.length !== a); m = !0);
+        } catch (x) {
+          (f = !0), (v = x);
+        } finally {
+          try {
+            m || n.return == null || n.return();
+          } finally {
+            if (f) throw v;
+          }
+        }
+        return d;
+      }
+    })(r, t) ||
+    (function (s, a) {
+      if (s) {
+        if (typeof s == "string") return us(s, a);
+        var n = Object.prototype.toString.call(s).slice(8, -1);
+        if ((n === "Object" && s.constructor && (n = s.constructor.name), n === "Map" || n === "Set"))
+          return Array.from(s);
+        if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return us(s, a);
+      }
+    })(r, t) ||
+    (function () {
+      throw new TypeError(`Invalid attempt to destructure non-iterable instance.
+In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
+    })()
+  );
+}
+function us(r, t) {
+  (t == null || t > r.length) && (t = r.length);
+  for (var s = 0, a = new Array(t); s < t; s++) a[s] = r[s];
+  return a;
+}
+function vr(r) {
+  for (
+    var t = function (x) {
+        return /\s/.test(x);
+      },
+      s = [],
+      a = {},
+      n = 0,
+      l = null,
+      v = !1,
+      d = 0;
+    d < r.length;
+
+  ) {
+    if (v && (t(r[d]) || r[d] === "{")) (v = !1), (l = r.slice(n, d)), r[d] === "{" && d--;
+    else if (!v && !t(r[d])) {
+      var m = r[d] === "{";
+      if (l && m) {
+        var f = ws(r, d);
+        if (f === -1) throw new Error('Unbalanced curly braces in string: "'.concat(r, '"'));
+        (a[l] = r.slice(d + 1, f)), (d = f), (l = null);
+      } else l && (s.push(l), (l = null)), (v = !0), (n = d);
+    }
+    d++;
+  }
+  return v && (l = r.slice(n)), l && s.push(l), { args: s, cases: a };
+}
+function ws(r, t) {
+  for (var s = 0, a = t + 1; a < r.length; a++) {
+    var n = r.charAt(a);
+    if (n === "}") {
+      if (s === 0) return a;
+      s--;
+    } else n === "{" && s++;
+  }
+  return -1;
+}
+function hr(r) {
+  return xs(r.slice(1, -1), ",", 3);
+}
+function xs(r, t, s) {
+  var a = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : [];
+  if (!r) return a;
+  if (s === 1) return a.push(r), a;
+  var n = r.indexOf(t);
+  if (n === -1) return a.push(r), a;
+  var l = r.substring(0, n).trim(),
+    v = r.substring(n + t.length + 1).trim();
+  return a.push(l), xs(v, t, s - 1, a);
+}
+function ks(r) {
+  return r.reduce(function (t, s) {
+    return t.concat(Array.isArray(s) ? ks(s) : s);
+  }, []);
+}
+function fr(r) {
+  var t = {};
+  return function () {
+    for (var s = arguments.length, a = new Array(s), n = 0; n < s; n++) a[n] = arguments[n];
+    var l = a.length
+      ? a
+          .map(function (d) {
+            return d === null
+              ? "null"
+              : d === void 0
+                ? "undefined"
+                : typeof d == "function"
+                  ? d.toString()
+                  : d instanceof Date
+                    ? d.toISOString()
+                    : JSON.stringify(d);
+          })
+          .join("|")
+      : "_(no-args)_";
+    if (Object.prototype.hasOwnProperty.call(t, l)) return t[l];
+    var v = r.apply(void 0, a);
+    return (t[l] = v), v;
+  };
+}
+var $t,
+  pr = (function () {
+    function r(a) {
+      var n = this,
+        l = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+      ur(this, r),
+        ys(
+          this,
+          "format",
+          fr(function (v) {
+            var d = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+            return ks(n.process(v, d)).join("");
+          })
+        ),
+        (this.locale = a),
+        (this.typeHandlers = l);
+    }
+    var t, s;
+    return (
+      (t = r),
+      (s = [
+        {
+          key: "process",
+          value: function (a) {
+            var n = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+            if (!a) return [];
+            var l = a.indexOf("{");
+            if (l !== -1) {
+              var v = ws(a, l);
+              if (v === -1) throw new Error('Unbalanced curly braces in string: "'.concat(a, '"'));
+              var d = a.substring(l, v + 1);
+              if (d) {
+                var m = [],
+                  f = a.substring(0, l);
+                f && m.push(f);
+                var x = hr(d),
+                  S = gr(x, 3),
+                  U = S[0],
+                  ce = S[1],
+                  de = S[2],
+                  I = n[U];
+                I == null && (I = "");
+                var ne = ce && this.typeHandlers[ce];
+                m.push(ne ? ne(I, de, this.locale, n, this.process.bind(this)) : I);
+                var Xe = a.substring(v + 1);
+                return Xe && m.push(this.process(Xe, n)), m;
+              }
+            }
+            return [a];
+          },
+        },
+      ]),
+      s && mr(t.prototype, s),
+      r
+    );
+  })(),
+  _r = 0;
+function br(r, t) {
+  for (var s = 0, a = "", n = 0, l = {}; s < r.length; ) {
+    if (r[s] !== "#" || n) a += r[s];
+    else {
+      var v = "__hashToken".concat(_r++);
+      (a += "{".concat(v, ", number}")), (l[v] = t);
+    }
+    r[s] === "{" ? n++ : r[s] === "}" && n--, s++;
+  }
+  return { caseBody: a, numberValues: l };
+}
+function yr(r) {
+  var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "",
+    s = arguments.length > 2 ? arguments[2] : void 0,
+    a = arguments.length > 3 ? arguments[3] : void 0,
+    n = arguments.length > 4 ? arguments[4] : void 0,
+    l = vr(t),
+    v = l.args,
+    d = l.cases,
+    m = parseInt(r);
+  v.forEach(function (ne) {
+    ne.startsWith("offset:") && (m -= parseInt(ne.slice(7)));
+  });
+  var f = [];
+  if ("PluralRules" in Intl) {
+    ($t !== void 0 && $t.resolvedOptions().locale === s) || ($t = new Intl.PluralRules(s));
+    var x = $t.select(m);
+    x !== "other" && f.push(x);
+  }
+  m === 1 && f.push("one"), f.push("=".concat(m), "other");
+  for (var S = 0; S < f.length; S++) {
+    var U = f[S];
+    if (U in d) {
+      var ce = br(d[U], m),
+        de = ce.caseBody,
+        I = ce.numberValues;
+      return n(de, ds(ds({}, a), I));
+    }
+  }
+  return r;
+}
+class wr extends EventTarget {
+  constructor() {
+    super(), (this.messages = {}), this._reconfigure();
+  }
+  _reconfigure() {
+    const t = this.locale;
+    (this._date = new Intl.DateTimeFormat(t)),
+      (this._datetime = new Intl.DateTimeFormat(t, { timeStyle: "short", dateStyle: "short" })),
+      (this.formatter = new pr(t, { plural: yr }));
+  }
+  _get(t, s, a, n) {
+    if (((a = a || ((l) => l)), Object.prototype.hasOwnProperty.call(this.messages, t))) {
+      const l = this.messages[t],
+        v = a(l.string || l);
+      return this.formatter.format(v, s);
+    }
+    return n || (globalThis.scratchAddons?.console || console).warn("Key missing:", t), n || t;
+  }
+  get(t, s = {}, a = "") {
+    return this._get(t, s, null, a);
+  }
+  escaped(t, s = {}, a = "") {
+    return this._get(t, s, (n) => ft(n), a);
+  }
+  get locale() {
+    return this.messages._locale || "en";
+  }
+  get localeName() {
+    return this.messages._locale_name || "English";
+  }
+  date(t) {
+    return this._date.format(t);
+  }
+  datetime(t) {
+    return this._datetime.format(t);
+  }
+}
+class xr extends wr {
+  async loadByAddonId(t) {
+    const s = await new Promise((a) => chrome.runtime.sendMessage({ l10nAddonId: t }, a));
+    (this.messages = Object.assign(s, this.messages)), this._reconfigure();
+  }
+}
+const kr = (...r) => new Promise((t) => chrome.runtime.sendMessage(...r, t));
+let Nt = null;
+function Mr() {
+  return (
+    Nt ||
+    ((Nt = (async () => {
+      const r = (window.scratchAddons = window.scratchAddons || {});
+      (r.eventTargets = r.eventTargets || { auth: [], settings: [], self: [] }),
+        (r.localEvents = r.localEvents || new EventTarget()),
+        (r.globalState = r.globalState || {}),
+        (r.methods = r.methods || {}),
+        (r.l10n = r.l10n || new xr()),
+        (r.isLightMode = r.isLightMode || !1),
+        (r.cookieFetchingFailed = r.cookieFetchingFailed || !1),
+        (r.cookies = r.cookies || new Map()),
+        (r.methods.getEnabledAddons = (t) => kr({ getEnabledAddons: { tag: t } })),
+        await Ms();
+    })()),
+    Nt)
+  );
+}
+async function ms(r, t, s) {
+  return new Promise((a) => {
+    chrome.cookies.get({ url: "https://scratch.mit.edu/", name: r, storeId: s }, (n) => {
+      n && n.value ? a(t ? n : n.value) : a(null);
+    });
+  });
+}
+async function Cr() {
+  return (await chrome.tabs.getCurrent())?.cookieStoreId || void 0;
+}
+async function Ms(r = !1) {
+  if (r)
+    try {
+      await fetch("https://scratch.mit.edu/csrf_token/");
+    } catch (n) {
+      console.error(n), (window.scratchAddons.cookieFetchingFailed = !0);
+      return;
+    }
+  const t = await Cr(),
+    s = (await ms("scratchlanguage", !1, t)) || navigator.language,
+    a = await ms("scratchcsrftoken", !0, t);
+  (window.scratchAddons.cookieStoreId = t || a?.storeId),
+    window.scratchAddons.cookies.set("scratchlanguage", s),
+    window.scratchAddons.cookies.set("scratchcsrftoken", a?.value);
+}
+async function Jt(r) {
+  let t, s;
+  if (!window.scratchAddons.isFetchingSession) {
+    (window.scratchAddons.isFetchingSession = !0), r.auth._refresh();
+    try {
+      (t = await fetch("https://scratch.mit.edu/session/", { headers: { "X-Requested-With": "XMLHttpRequest" } })),
+        (s = await t.json());
+    } catch (a) {
+      (s = {}), console.warn("Session fetch failed: ", a), ((t && !t.ok) || !t) && setTimeout(() => Jt(r), 6e4);
+    }
+    (window.scratchAddons.session = s), r.auth._update(s), (window.scratchAddons.isFetchingSession = !1);
+  }
+}
+const Dt = new Map();
+async function Cs(r, t) {
+  if ((await Mr(), Dt.has(r))) return Dt.get(r);
+  const s = window.scratchAddons,
+    a = chrome.runtime.connect(void 0, { name: r });
+  await new Promise((m) => {
+    const f = (x) => {
+      x === "ping" && (a.onMessage.removeListener(f), m());
+    };
+    a.onMessage.addListener(f);
+  });
+  const n = new dr({ id: r });
+  a.onMessage.addListener((m) => {
+    if (m.newGlobalState) {
+      s.globalState = m.newGlobalState;
+      return;
+    }
+    if (m.fireEvent && m.fireEvent.addonId === r) {
+      s.eventTargets[m.fireEvent.target]?.forEach((f) => f.dispatchEvent(new CustomEvent(m.fireEvent.name)));
+      return;
+    }
+    if (m.refetchSession) {
+      Ms(!1).then(() => Jt(n));
+      return;
+    }
+  }),
+    await s.l10n.loadByAddonId(r),
+    Jt(n);
+  const l = (m, f) => s.l10n.get(m.startsWith("/") ? m.slice(1) : `${r}/${m}`, f);
+  l.locale = s.l10n.locale;
+  const d = {
+    addon: n,
+    msg: l,
+    safeMsg: (m, f) => s.l10n.escaped(m.startsWith("/") ? m.slice(1) : `${r}/${m}`, f),
+    dispose() {
+      try {
+        a.disconnect();
+      } catch {}
+      Dt.delete(r);
+    },
+  };
+  return Dt.set(r, d), d;
+}
+class Ee extends Error {
+  constructor(t, s) {
+    super(t), (this.code = s);
+  }
+  static fromResponse(t, s) {
+    return new Ee(`${t}: status ${s.status}`, s.status);
+  }
+}
+class Sr {
+  constructor(t, s) {
+    (this.db = t), (this.stores = s);
+  }
+  objectStore(t) {
+    return { put: (s) => this.db.put(t, s) };
+  }
+  get done() {
+    return null;
+  }
+}
+class Et {
+  constructor() {
+    (this.messages = []), (this.msgCount = 0);
+  }
+  get(t) {
+    switch (t) {
+      case "cache":
+        return this.messages.slice();
+      case "count":
+        return this.msgCount;
+    }
+  }
+  put(t, s) {
+    switch (t) {
+      case "cache": {
+        this.messages = s;
+        return;
+      }
+      case "count": {
+        this.msgCount = s;
+        return;
+      }
+    }
+  }
+  close() {}
+  transaction(t) {
+    return new Sr(this, t);
+  }
+  static isIncognito() {
+    return chrome.extension.inIncognitoContext;
+  }
+}
+const Ar = new Et();
+async function Ss(r, t) {
+  const s = t ? !!t.bypassCache : !1,
+    a = `https://api.scratch.mit.edu/users/${r}/messages/count${s ? "?addons_bypass_cache_after_marking_read=1" : ""}`,
+    l = await fetch(a, { credentials: "omit", cache: s ? "reload" : "default" }),
+    v = await l.json(),
+    d = s ? null : l.headers.get("X-Amz-Cf-Id");
+  return { count: v.count || 0, resId: d };
+}
+async function jr(r, t, s) {
+  const a = await fetch(`https://api.scratch.mit.edu/users/${r}/messages?limit=40&offset=${s}`, {
+    headers: { "x-token": t },
+  });
+  if (!a.ok) {
+    if (a.status === 404) return [];
+    throw Ee.fromResponse(`Fetching message offset ${s} for ${r} failed`, a);
+  }
+  return a.json();
+}
+async function Ut() {
+  return Et.isIncognito()
+    ? Ar
+    : idb.openDB("messaging", 1, {
+        upgrade(t) {
+          t.createObjectStore("cache"), t.createObjectStore("lastUpdated"), t.createObjectStore("count");
+        },
+      });
+}
+async function Tr(r, t) {
+  const s = await Ut();
+  if (!(s instanceof Et))
+    try {
+      const a = await s.transaction(["cache", "lastUpdated", "count"], "readwrite"),
+        n = await a.objectStore("lastUpdated").get(r);
+      (n === void 0 || t || n + 720 * 60 * 1e3 < Date.now()) &&
+        (await a.objectStore("cache").put([], r),
+        await a.objectStore("count").put(0, r),
+        await a.objectStore("count").put(null, `${r}_resId`)),
+        await a.done;
+    } finally {
+      await s.close();
+    }
+}
+async function Er(r, t, s, a) {
+  if ((await Tr(r, t), s === null)) return [];
+  const n = await Ss(s),
+    l = await As(r, n),
+    v = Math.min(Math.ceil(l / 40) + 1, 25),
+    d = await Ut();
+  try {
+    const m = await d.get("cache", r),
+      f = m[0] ? new Date(m[0].datetime_created).getTime() : 0,
+      x = [],
+      S = new Set();
+    e: for (let ce = 0; ce < v; ce++) {
+      const de = await jr(s, a, ce * 40);
+      for (const I of de) {
+        if (new Date(I.datetime_created).getTime() <= f) break e;
+        S.has(I.id) || (x.push(I), S.add(I.id));
+      }
+    }
+    m.unshift(...x), (m.length = Math.min(m.length, v * 40)), (x.length = Math.min(x.length, l));
+    const U = await d.transaction(["cache", "lastUpdated", "count"], "readwrite");
+    return (
+      await U.objectStore("cache").put(m, r),
+      await U.objectStore("lastUpdated").put(Date.now(), r),
+      await U.objectStore("count").put(l, r),
+      n.resId && !(d instanceof Et) && (await U.objectStore("count").put(n.resId, `${r}_resId`)),
+      await U.done,
+      x
+    );
+  } finally {
+    await d.close();
+  }
+}
+async function As(r, { count: t, resId: s }) {
+  const a = await Ut();
+  if (a instanceof Et) return t;
+  try {
+    const n = await a.get("count", `${r}_resId`);
+    return n && n === s
+      ? (console.log("Ignored network-cached response for message count endpoint."), await a.get("count", r))
+      : t;
+  } catch (n) {
+    return console.error(n), t;
+  } finally {
+    await a.close();
+  }
+}
+function Lr(r) {
+  return fetch("https://scratch.mit.edu/site-api/messages/messages-clear/?sareferer", {
+    method: "POST",
+    headers: { "x-csrftoken": r, "x-requested-with": "XMLHttpRequest" },
+  }).then((t) => {
+    if (!t.ok) throw Ee.fromResponse("Marking messages as read failed: ", t);
+  });
+}
+var Ir = g('<link rel="stylesheet"/>'),
+  Pr = g('<div class="loading svelte-1ch8etj"> <div class="loading-progress svelte-1ch8etj"></div></div>'),
+  Or = g("<span></span>"),
+  Rr = g("<p> </p>"),
+  Ur = g("<p> </p>"),
+  $r = g("<div><!></div>"),
+  Nr = g('<div class="error svelte-1ch8etj"> <!> <!></div>'),
+  Dr = g('<span><img class="small-icon svelte-1ch8etj" draggable="false" alt=""/> <span> </span></span>'),
+  Fr = g('<span><img class="small-icon svelte-1ch8etj" draggable="false" alt=""/> <span> </span></span>'),
+  Hr = g('<div class="add-button svelte-1ch8etj"><button type="button" class="large-button"><!></button></div>'),
+  Br = g('<div class="username-list svelte-1ch8etj"> <code> </code></div>'),
+  qr = g('<div class="username-list svelte-1ch8etj"> </div>'),
+  zr = g('<a target="_blank" class="nolink"> </a>'),
+  Xr = g('<div class="username-list svelte-1ch8etj"></div>'),
+  Jr = g(
+    '<div><div class="title svelte-1ch8etj"><a class="project-name nolink svelte-1ch8etj" target="_blank"> </a> <span class="float-right svelte-1ch8etj"><img class="small-icon svelte-1ch8etj" draggable="false" alt=""/> </span></div> <div class="project-details svelte-1ch8etj"><!></div></div>'
+  ),
+  Kr = g("<div></div>"),
+  Vr = g(
+    '<div class="game svelte-1ch8etj"><div class="title svelte-1ch8etj"><span class="title-placeholder svelte-1ch8etj"></span><br/></div> <div class="project-details svelte-1ch8etj"></div></div>'
+  ),
+  Wr = g("<div></div>"),
+  Gr = g("<!> <!> <!> <!>", 1);
+function In(r, t) {
+  Ht(t, !0);
+  let s = O(null),
+    a = O(qe([])),
+    n = O(qe([])),
+    l = O(!1),
+    v = O(0),
+    d = O(null),
+    m = O(null),
+    f = O(null),
+    x = O(!1);
+  const S = () => /^(?:(?:https?:\/\/scratch\.mit\.edu\/)?(project|studio)s\/)?(\d+)/,
+    U = (h) => {
+      if (!h) return {};
+      const _ = h.match(S());
+      if (!_) return {};
+      const L = _[1] || "project",
+        X = _[2];
+      return isNaN(X) ? {} : { id: +X, type: L };
+    };
+  async function ce(h) {
+    let _;
+    try {
+      _ = await fetch(`https://api.scratch.mit.edu/studios/${h}/projects/?limit=40`);
+    } catch (L) {
+      throw (console.warn("Error when fetching studio: ", L), new Ee(`Error when fetching studio: ${L}`, 500));
+    }
+    if (_.status >= 400)
+      throw (console.warn("Error when fetching studio: ", _.status), Ee.fromResponse("Error when fetching studio", _));
+    return _.json().catch((L) => {
+      throw (console.warn("Error when fetching studio JSON: ", L), L);
+    });
+  }
+  async function de(h, _) {
+    const X = (
+        await Promise.all(
+          _.map(async ({ id: ie, type: J }) => {
+            if (!ie) return;
+            if (J === "studio") return await ce(ie);
+            let q;
+            try {
+              q = await fetch(`https://api.scratch.mit.edu/projects/${ie}`);
+            } catch (He) {
+              return console.warn("Error when fetching project: ", He), null;
+            }
+            return q.status >= 400
+              ? (console.warn("Error when fetching project: ", q.status), null)
+              : q.json().catch((He) => (console.warn("Error when fetching project JSON: ", He), null));
+          })
+        )
+      ).flat(),
+      ge = [],
+      Ie = new Set();
+    for (const ie of X) !ie || Ie.has(ie.id) || (Ie.add(ie.id), ge.push(ie));
+    return ge;
+  }
+  const I = $e(() => {
+      if (!e(s)) return {};
+      const { msg: h } = e(s);
+      return {
+        loadingMsg: h("loading"),
+        noUsersMsg: h("no-users"),
+        addProject: h("add-project"),
+        addProjectDescription: h("add-project-desc"),
+        addStudio: h("add-studio"),
+        addStudioDescription: h("add-studio-desc"),
+        added: h("added"),
+        changeDisplay2: h("change-display-2"),
+      };
+    }),
+    ne = $e(() =>
+      e(n)
+        .slice()
+        .sort((h, _) =>
+          h.id === _.id
+            ? 0
+            : h.id === e(f)
+              ? -1
+              : _.id === e(f)
+                ? 1
+                : h.online && !_.online
+                  ? -1
+                  : _.online && !h.online
+                    ? 1
+                    : h.amt !== _.amt
+                      ? _.amt - h.amt
+                      : _.timestamp - h.timestamp
+        )
+    ),
+    Xe = $e(() => (e(s) && e(d) ? e(s).msg(e(d)) : "")),
+    Ne = $e(() => {
+      if ((e(n).length === 0 && e(d) !== "no-projects") || e(v) !== e(n).length) return null;
+      const { id: h, type: _ } = U(e(m));
+      return !h || e(n).some((L) => L.id === h) ? null : _;
+    }),
+    oe = $e(() => (!e(s) || !e(Ne) ? "" : e(s).msg("change-display-open", { buttonName: e(s).msg(`add-${e(Ne)}`) })));
+  function fe() {
+    if (!e(s)) return "";
+    const h = document.createElement("a");
+    return (
+      (h.target = "_blank"),
+      (h.href = chrome.runtime.getURL("/webpages/settings/index.html#addon-cloud-games")),
+      (h.textContent = e(s).msg("addon-settings")),
+      e(s).safeMsg("change-display", { settings: h.outerHTML })
+    );
+  }
+  function Ge() {
+    if (!e(s)) return;
+    M(x, !0);
+    const { id: h, type: _ } = U(e(m)),
+      L = `https://scratch.mit.edu/${_}s/${h}`;
+    e(s).addon.popup.changeSettings({ displayedGames: [...e(s).addon.settings.get("displayedGames"), { url: L }] }),
+      setTimeout(() => location.reload(), 1500);
+  }
+  function at(h, _) {
+    return new Promise((L) => {
+      setTimeout(async () => {
+        const X = () => {
+          hs(v), e(v) / e(n).length > 0.5 && M(l, !0), L();
+        };
+        let ge = await e(s).addon.auth.fetchUsername(),
+          Ie;
+        try {
+          const q = await fetch(`https://clouddata.scratch.mit.edu/logs?projectid=${h.id}&limit=40&offset=0`);
+          if (q.status >= 400)
+            throw (
+              (q.status >= 500 && (h.errorMessage = e(s).msg("server-error")),
+              Ee.fromResponse(`Error when fetching cloud data for ${h.id}`, q))
+            );
+          Ie = await q.json();
+        } catch (q) {
+          console.warn("Error when fetching cloud data", q),
+            (h.error = e(s).msg("fetch-error")),
+            h.errorMessage || (h.errorMessage = String(q)),
+            X();
+          return;
+        }
+        const ie = Date.now(),
+          J = new Set();
+        h.online = !1;
+        for (const q of Ie) {
+          if (ie - q.timestamp > 6e4) break;
+          q.user === ge && (h.online = !0), J.add(q.user);
+        }
+        (h.timestamp = Ie[0]?.timestamp || 0), (h.amt = J.size), (h.users = Array.from(J)), X();
+      }, _ * 125);
+    });
+  }
+  vs(async () => {
+    M(s, await Cs(t.addonId), !0),
+      typeof document < "u" && (document.title = e(s).msg("popup-title")),
+      M(
+        a,
+        e(s)
+          .addon.settings.get("displayedGames")
+          .map(({ url: _ }) => _)
+          .map(U),
+        !0
+      ),
+      e(s)
+        .addon.popup.getSelectedTabUrl()
+        .then((_) => {
+          M(m, _, !0);
+          const { id: L } = U(_);
+          M(f, L, !0);
+        });
+    let h;
+    try {
+      h = await de(e(s).addon, e(a));
+    } catch (_) {
+      if (_ instanceof Ee) {
+        const L = _.code;
+        L >= 500 ? M(d, "server-error") : L >= 400 && M(d, "general-error");
+        return;
+      }
+      throw _;
+    }
+    if (h.length === 0) {
+      M(d, "no-projects");
+      return;
+    }
+    M(
+      n,
+      h
+        .map((_) => ({
+          title: _.title,
+          id: _.id,
+          amt: 0,
+          users: [],
+          online: _.online,
+          extended: !0,
+          error: null,
+          errorMessage: "",
+          timestamp: 0,
+        }))
+        .reverse(),
+      !0
+    ),
+      await Promise.all(e(n).map((_, L) => at(_, L)));
+  });
+  const gt = $e(() => !e(d) && (e(n).length === 0 || e(n).length !== e(v)));
+  var ue = Gr();
+  _s("1ch8etj", (h) => {
+    var _ = Ir();
+    E(_, "href", chrome.runtime.getURL("webpages/styles/components/buttons.css")), u(h, _);
+  });
+  var De = rt(ue);
+  {
+    var Oe = (h) => {
+      var _ = Pr(),
+        L = o(_),
+        X = c(L);
+      let ge;
+      C(
+        (Ie) => {
+          b(L, `${e(I).loadingMsg ?? "" ?? ""} `), (ge = Ft(X, "", ge, Ie));
+        },
+        [() => ({ width: `${(100 * e(v)) / Math.max(e(n).length, 1) || 0}%` })]
+      ),
+        u(h, _);
+    };
+    k(De, (h) => {
+      e(gt) && h(Oe);
+    });
+  }
+  var Le = c(De, 2);
+  {
+    var _e = (h) => {
+      var _ = Nr(),
+        L = o(_),
+        X = c(L);
+      {
+        var ge = (J) => {
+          var q = Or();
+          Ct(q, fe, !0), u(J, q);
+        };
+        k(X, (J) => {
+          e(d) !== "server-error" && J(ge);
+        });
+      }
+      var Ie = c(X, 2);
+      {
+        var ie = (J) => {
+          var q = $r(),
+            He = o(q);
+          {
+            var Ze = (Ye) => {
+                var ot = Rr(),
+                  D = o(ot);
+                C(() => b(D, e(oe))), u(Ye, ot);
+              },
+              pt = (Ye) => {
+                var ot = Ur(),
+                  D = o(ot);
+                C(() => b(D, e(I).changeDisplay2)), u(Ye, ot);
+              };
+            k(He, (Ye) => {
+              e(Ne) ? Ye(Ze) : Ye(pt, -1);
+            });
+          }
+          u(J, q);
+        };
+        k(Ie, (J) => {
+          e(d) !== "server-error" && J(ie);
+        });
+      }
+      C(() => b(L, `${e(Xe) ?? ""} `)), u(h, _);
+    };
+    k(Le, (h) => {
+      e(d) && h(_e);
+    });
+  }
+  var be = c(Le, 2);
+  {
+    var Je = (h) => {
+      var _ = Hr(),
+        L = o(_),
+        X = o(L);
+      {
+        var ge = (ie) => {
+            var J = Dr(),
+              q = o(J);
+            E(q, "src", chrome.runtime.getURL("images/icons/plus.svg"));
+            var He = c(q, 2),
+              Ze = o(He);
+            C(() => b(Ze, e(Ne) === "project" ? e(I).addProject : e(I).addStudio)), u(ie, J);
+          },
+          Ie = (ie) => {
+            var J = Fr(),
+              q = o(J);
+            E(q, "src", chrome.runtime.getURL("images/icons/check.svg"));
+            var He = c(q, 2),
+              Ze = o(He);
+            C(() => b(Ze, e(I).added)), u(ie, J);
+          };
+        k(X, (ie) => {
+          e(x) ? ie(Ie, -1) : ie(ge);
+        });
+      }
+      C(() => {
+        (L.disabled = e(x)),
+          E(L, "title", e(x) ? "" : e(Ne) === "project" ? e(I).addProjectDescription : e(I).addStudioDescription);
+      }),
+        xe("click", L, Ge),
+        u(h, _);
+    };
+    k(be, (h) => {
+      e(Ne) && h(Je);
+    });
+  }
+  var nt = c(be, 2);
+  {
+    var $ = (h) => {
+        var _ = Kr();
+        Te(
+          _,
+          21,
+          () => e(ne),
+          (L) => L.id,
+          (L, X) => {
+            var ge = Jr();
+            let Ie;
+            var ie = o(ge),
+              J = o(ie),
+              q = o(J),
+              He = c(J, 2),
+              Ze = o(He);
+            E(Ze, "src", chrome.runtime.getURL("images/icons/users.svg"));
+            var pt = c(Ze),
+              Ye = c(ie, 2),
+              ot = o(Ye);
+            {
+              var D = (Se) => {
+                  var ke = Br(),
+                    Ve = o(ke),
+                    dt = c(Ve);
+                  let ut;
+                  var yt = o(dt);
+                  C(() => {
+                    b(Ve, e(X).error),
+                      (ut = Ft(dt, "", ut, { display: e(X).errorMessage ? "" : "none" })),
+                      b(yt, e(X).errorMessage);
+                  }),
+                    u(Se, ke);
+                },
+                te = (Se) => {
+                  var ke = qr(),
+                    Ve = o(ke);
+                  C(() => b(Ve, e(I).noUsersMsg)), u(Se, ke);
+                },
+                Ce = (Se) => {
+                  var ke = Xr();
+                  Te(
+                    ke,
+                    20,
+                    () => e(X).users,
+                    (Ve) => Ve,
+                    (Ve, dt) => {
+                      var ut = zr(),
+                        yt = o(ut);
+                      C(() => {
+                        E(ut, "href", `https://scratch.mit.edu/users/${dt}`), b(yt, dt);
+                      }),
+                        u(Ve, ut);
+                    }
+                  ),
+                    u(Se, ke);
+                };
+              k(ot, (Se) => {
+                e(X).error ? Se(D) : e(X).amt === 0 ? Se(te, 1) : Se(Ce, -1);
+              });
+            }
+            C(() => {
+              (Ie = ze(ge, 1, "game svelte-1ch8etj", null, Ie, { opened: e(X).id === e(f) })),
+                E(J, "href", `https://scratch.mit.edu/projects/${e(X).id}`),
+                b(q, e(X).title),
+                b(pt, ` ${(e(X).error ? "?" : e(X).amt) ?? ""}`);
+            }),
+              u(L, ge);
+          }
+        ),
+          u(h, _);
+      },
+      B = (h) => {
+        var _ = Wr();
+        Te(
+          _,
+          21,
+          () => new Array(Math.max(Math.floor(e(n).length / 2), 1)),
+          Mt,
+          (L, X) => {
+            var ge = Vr();
+            u(L, ge);
+          }
+        ),
+          u(h, _);
+      };
+    k(nt, (h) => {
+      e(l) ? h($) : h(B, -1);
+    });
+  }
+  u(r, ue), Bt();
+}
+Kt(["click"]);
+var Zr = g('<div class="dom-element-renderer svelte-kumhzk"></div>');
+function Qr(r, t) {
+  Ht(t, !0);
+  let s = O(null);
+  fs(() => {
+    if (e(s) && t.element)
+      return (
+        e(s).replaceChildren(t.element),
+        () => {
+          try {
+            e(s).removeChild(t.element);
+          } catch {}
+        }
+      );
+  });
+  var a = Zr();
+  ps(
+    a,
+    (n) => M(s, n),
+    () => e(s)
+  ),
+    u(r, a),
+    Bt();
+}
+const js = new DOMParser();
+class Wt extends Error {
+  constructor(t, s) {
+    super(t), (this.details = s);
+  }
+}
+async function Yr(r, { resourceType: t, resourceId: s, commentId: a }) {
+  if (t === "user") return ea(r, { resourceType: t, resourceId: s, commentId: a });
+  const n = t === "project" ? "project" : "studio",
+    l = await r.auth.fetchXToken();
+  return fetch(`https://api.scratch.mit.edu/proxy/comments/${n}/${s}/comment/${a}?sareferer`, {
+    headers: { "content-type": "application/json", "x-csrftoken": r.auth.csrfToken, "x-token": l },
+    method: "DELETE",
+  }).then((v) => {
+    if (!v.ok) throw Ee.fromResponse(`Deleting ${n} comment ${a} of ${s} failed`, v);
+  });
+}
+const ea = async (r, { resourceType: t, resourceId: s, commentId: a }) =>
+  fetch(`https://scratch.mit.edu/site-api/comments/${t}/${s}/del/?sareferer`, {
+    headers: {
+      "content-type": "application/json",
+      "x-csrftoken": r.auth.csrfToken,
+      "x-requested-with": "XMLHttpRequest",
+    },
+    body: JSON.stringify({ id: String(a) }),
+    method: "POST",
+  }).then((n) => {
+    if (!n.ok) throw Ee.fromResponse(`Deleting ${t} comment ${a} of ${s} failed`, n);
+  });
+async function ta(r, t) {
+  return fetch("https://scratch.mit.edu/site-api/messages/messages-delete/?sareferer", {
+    headers: {
+      "content-type": "application/json",
+      "x-csrftoken": r.auth.csrfToken,
+      "x-requested-with": "XMLHttpRequest",
+    },
+    body: JSON.stringify({ alertType: "notification", alertId: t }),
+    method: "POST",
+  }).then((s) => {
+    if (!s.ok) throw Ee.fromResponse(`Dismissing alert ${t} failed`, s);
+  });
+}
+async function sa(r, { resourceType: t, resourceId: s, content: a, parentId: n, commenteeId: l }) {
+  return t === "user"
+    ? aa(r, { resourceType: t, resourceId: s, content: a, parentId: n, commenteeId: l })
+    : ra(r, { resourceType: t, resourceId: s, content: a, parentId: n, commenteeId: l });
+}
+async function ra(r, { resourceType: t, resourceId: s, content: a, parentId: n, commenteeId: l }) {
+  const v = t === "project" ? "project" : "studio",
+    d = await r.auth.fetchXToken();
+  return fetch(`https://api.scratch.mit.edu/proxy/comments/${v}/${s}?sareferer`, {
+    headers: { "content-type": "application/json", "x-csrftoken": r.auth.csrfToken, "x-token": d },
+    body: JSON.stringify({ content: a, parent_id: n, commentee_id: l }),
+    method: "POST",
+  })
+    .then((m) => {
+      if (!m.ok) throw Ee.fromResponse(`Sending ${v} comment on ${s} failed`, m);
+      return m.json();
+    })
+    .then((m) => {
+      if (m.rejected)
+        throw new Wt(`Server rejected sending ${v} comment`, {
+          error: m.rejected,
+          muteStatus: m.status?.mute_status || null,
+        });
+      return { id: m.id, content: m.content };
+    });
+}
+async function aa(r, { resourceType: t, resourceId: s, content: a, parentId: n, commenteeId: l }) {
+  return fetch(`https://scratch.mit.edu/site-api/comments/${t}/${s}/add/?sareferer`, {
+    headers: {
+      "content-type": "application/json",
+      "x-csrftoken": r.auth.csrfToken,
+      "x-requested-with": "XMLHttpRequest",
+    },
+    method: "POST",
+    body: JSON.stringify({ content: a, parent_id: n, commentee_id: l }),
+  })
+    .then((v) => {
+      if (!v.ok) throw Ee.fromResponse(`Sending ${t} comment on ${s} failed`, v);
+      return v.text();
+    })
+    .then((v) => {
+      const d = js.parseFromString(v, "text/html"),
+        m = d.querySelector(".comment"),
+        f = d.querySelector("script#error-data");
+      if (m) {
+        const x = Number(m.getAttribute("data-comment-id")),
+          S = d.querySelector(".content");
+        return { id: x, content: S };
+      } else if (f) {
+        const x = JSON.parse(f.textContent);
+        throw new Wt(`Server rejected sending ${t} comment`, {
+          error: x.error,
+          muteStatus: x.status?.mute_status || null,
+        });
+      } else
+        throw (
+          (console.warn("Unexpected state while sending legacy comment: ", v),
+          new Error("Unexpected state while sending legacy comment, see logs"))
+        );
+    });
+}
+async function na(r, { resourceType: t, resourceId: s, commentMessages: a, page: n = 1, commentsObj: l = {} }) {
+  const v = a.map((m) => m.comment_id);
+  let d;
+  t === "user"
+    ? (d = await Ts(r, { resourceType: t, resourceId: s, commentIds: v, page: n, commentsObj: l }))
+    : (d = await oa(r, { resourceType: t, resourceId: s, commentIds: v, page: n, commentsObj: l }));
+  for (let m of a)
+    d[`${t[0]}_${m.comment_id}`] ||
+      (d[`${t[0]}_${m.comment_id}`] = {
+        author: m.actor_username,
+        authorId: m.actor_id,
+        content: m.comment_fragment,
+        date: m.datetime_created,
+        children: [],
+        childOf: null,
+        replyingTo: m.commentee_username,
+      });
+  return d;
+}
+async function oa(r, { resourceType: t, resourceId: s, commentIds: a, page: n = 1, commentsObj: l = {} }) {
+  let v;
+  if (t === "project") {
+    const f = await fetch(`https://api.scratch.mit.edu/projects/${s}`);
+    if (!f.ok) return l;
+    v = (await f.json()).author.username;
+  }
+  const d = (f) =>
+      t === "project"
+        ? `https://api.scratch.mit.edu/users/${v}/projects/${s}/comments/${f}`
+        : `https://api.scratch.mit.edu/studios/${s}/comments/${f}`,
+    m = (f, x) =>
+      t === "project"
+        ? `https://api.scratch.mit.edu/users/${v}/projects/${s}/comments/${f}/replies?offset=${x}&limit=40`
+        : `https://api.scratch.mit.edu/studios/${s}/comments/${f}/replies?offset=${x}&limit=40`;
+  for (const f of a) {
+    if (l[`${t[0]}_${f}`]) continue;
+    const x = await fetch(d(f));
+    if (!x.ok) {
+      if (x.status === 404 || x.status === 403) continue;
+      throw Ee.fromResponse(`Error when fetching comment ${t}/${f}`, x);
+    }
+    const S = await x.json();
+    if (S === null) continue;
+    const U = S.parent_id || f,
+      ce = {};
+    let de;
+    if (S.parent_id) {
+      const oe = await fetch(d(U));
+      if (!oe.ok) throw Ee.fromResponse(`Error when fetching parent ${U} for comment ${t}/${f}`, oe);
+      const fe = await oe.json();
+      if (fe === null) continue;
+      de = fe;
+    } else de = S;
+    const I = async (oe) => {
+        const fe = await fetch(m(U, oe));
+        if (!fe.ok) {
+          if (fe.status === 404 || fe.status === 403) return null;
+          throw Ee.fromResponse(`Ignoring comment ${t}/${f}`, fe);
+        }
+        return await fe.json();
+      },
+      ne = [];
+    let Xe = 40,
+      Ne = 0;
+    if (de.reply_count > 0)
+      for (; Xe === 40; ) {
+        const oe = await I(Ne);
+        if (!Array.isArray(oe)) break;
+        oe.forEach((fe) => ne.push(fe)), (Xe = oe.length), (Ne += 40);
+      }
+    S.parent_id &&
+      ne.length === 0 &&
+      (console.error(`No replies found on comment ${t}/${s}/${f} with parents ${S.parent_id}`), ne.push(S));
+    for (const oe of ne) {
+      const fe = ne.find((at) => at.author.id === oe.commentee_id),
+        Ge = fe ? fe.author.username : de.author.username;
+      ce[`${t[0]}_${oe.id}`] = {
+        author: oe.author.username,
+        authorId: oe.author.id,
+        content: oe.content,
+        date: oe.datetime_created,
+        children: null,
+        childOf: `${t[0]}_${U}`,
+        replyingTo: Ge,
+        scratchTeam: oe.author.scratchteam,
+        projectAuthor: v,
+      };
+    }
+    for (const oe of Object.keys(ce)) l[oe] = ce[oe];
+    l[`${t[0]}_${U}`] = {
+      author: de.author.username,
+      authorId: de.author.id,
+      content: de.content,
+      date: de.datetime_created,
+      children: Object.keys(ce),
+      childOf: null,
+      replyingTo: "",
+      scratchTeam: de.author.scratchteam,
+      projectAuthor: v,
+    };
+  }
+  return l;
+}
+async function Ts(r, { resourceType: t, resourceId: s, commentIds: a, page: n = 1, commentsObj: l = {} }) {
+  const v = await fetch(`https://scratch.mit.edu/site-api/comments/${t}/${s}/?page=${n}`, { credentials: "omit" });
+  if (!v.ok) return console.warn(`Ignoring comments ${t}/${s} page ${n}, status ${v.status}`), l;
+  const d = await v.text(),
+    m = js.parseFromString(d, "text/html");
+  for (const f of m.querySelectorAll(".top-level-reply:not(.removed)")) {
+    if (a.length === 0) return l;
+    let x = !1;
+    const S = f.querySelector("div"),
+      U = Number(S.getAttribute("data-comment-id")),
+      ce = {},
+      de = f.querySelectorAll("li.reply:not(.removed)");
+    for (const I of de) {
+      const ne = Number(I.querySelector("div").getAttribute("data-comment-id"));
+      a.includes(ne) &&
+        ((x = !0),
+        a.splice(
+          a.findIndex((Ne) => Ne === ne),
+          1
+        ));
+      const Xe = I.querySelector(".name").textContent.trim();
+      ce[`${t[0]}_${ne}`] = {
+        author: Xe.replace(/\*/g, ""),
+        authorId: Number(I.querySelector(".reply").getAttribute("data-commentee-id")),
+        content: I.querySelector(".content"),
+        date: I.querySelector(".time").getAttribute("title"),
+        children: null,
+        childOf: `${t[0]}_${U}`,
+        scratchTeam: Xe.includes("*"),
+      };
+    }
+    if (
+      (a.includes(U) &&
+        ((x = !0),
+        a.splice(
+          a.findIndex((I) => I === U),
+          1
+        )),
+      x)
+    ) {
+      const I = S.querySelector(".name").textContent.trim();
+      l[`${t[0]}_${U}`] = {
+        author: I.replace(/\*/g, ""),
+        authorId: Number(S.querySelector(".reply").getAttribute("data-commentee-id")),
+        content: S.querySelector(".content"),
+        date: S.querySelector(".time").getAttribute("title"),
+        children: Object.keys(ce),
+        childOf: null,
+        scratchTeam: I.includes("*"),
+      };
+      for (const ne of Object.keys(ce)) l[ne] = ce[ne];
+    }
+  }
+  return n < 3
+    ? await Ts(r, { resourceType: t, resourceId: s, commentIds: a, page: n + 1, commentsObj: l })
+    : (console.log("Could not find all comments for ", t, " ", s, ", remaining ids: ", JSON.parse(JSON.stringify(a))),
+      l);
+}
+async function ia(r) {
+  const t = await r.auth.fetchUsername(),
+    s = await r.auth.fetchXToken();
+  return fetch(`https://api.scratch.mit.edu/users/${t}/messages/admin`, { headers: { "x-token": s } }).then((a) => {
+    if (!a.ok) throw Ee.fromResponse("Fetching alerts failed", a);
+    return a.json();
+  });
+}
+const gs = Object.assign(Object.create(null), {
+    "meow.png": "[meow emoji]",
+    "gobo.png": "[gobo emoji]",
+    "waffle.png": "[waffle emoji]",
+    "taco.png": "🌮",
+    "sushi.png": "🍣",
+    "apple.png": "🍎",
+    "broccoli.png": "🥦",
+    "pizza.png": "🍕",
+    "candycorn.png": "[candycorn emoji]",
+    "10mil.png": "🎉",
+    "map.png": "🗺️",
+    "camera.png": "📷",
+    "suitcase.png": "💼",
+    "compass.png": "🧭",
+    "binoculars.png": "[binoculars emoji]",
+    "cupcake.png": "🧁",
+    "cat.png": "🐱",
+    "aww-cat.png": "😀",
+    "cool-cat.png": "😎",
+    "tongue-out-cat.png": "😛",
+    "wink-cat.png": "😜",
+    "lol-cat.png": "😹",
+    "upside-down-cat.png": "🙃",
+    "huh-cat.png": "🤨",
+    "love-it-cat.png": "😻",
+    "fav-it-cat.png": "🤩",
+    "rainbow-cat.png": "[rainbow cat emoji]",
+    "pizza-cat.png": "[cat eating pizza emoji]",
+    "blm.png": "✊🏿",
+    "pride.png": "🏳️‍🌈",
+  }),
+  ca = () => /((?:https?:\/\/)?(?:[\w-]+\.)+(?:xn--[a-zA-Z\d]+|[a-zA-Z]{2,})(?:\/[^\s"<>\\^`{|}]*)?)/g,
+  la = (r) => {
+    r instanceof Text &&
+      (r.nodeValue.split(ca()).forEach((t, s) => {
+        if (s % 2) {
+          const n = document.createElement("a");
+          (n.textContent = t),
+            /^https?:\/\//g.test(t) || (t = `http://${t}`),
+            (n.href = t),
+            (n.rel = "noreferrer"),
+            r.parentNode.insertBefore(n, r);
+        } else r.parentNode.insertBefore(document.createTextNode(t), r);
+      }),
+      r.remove());
+  },
+  da = () => /^@[\w-]{3,20}$/g,
+  ua = (r) => {
+    r instanceof Text &&
+      (r.nodeValue.split(/(\s)/g).forEach((t) => {
+        if (da().test(t)) {
+          const s = document.createElement("a");
+          (s.textContent = t),
+            t.toLowerCase() === "@welcomingcommittee"
+              ? (s.href = "https://scratch.mit.edu/studios/146521/")
+              : (s.href = `https://scratch.mit.edu/users/${t.slice(1)}/`),
+            (s.rel = "noreferrer"),
+            r.parentNode.insertBefore(s, r);
+        } else t && r.parentNode.insertBefore(document.createTextNode(t), r);
+      }),
+      r.remove());
+  },
+  ma = (r) => {
+    for (const t of r.childNodes) la(t);
+  },
+  ga = (r) => {
+    for (const t of r.childNodes) ua(t);
+  },
+  va = (r) => {
+    let t = r.childNodes;
+    for (let s of t)
+      if (s instanceof Text)
+        if (s === t[0])
+          (s.textContent = s.textContent.trimStart()), s.nextSibling || (s.textContent = s.textContent.trim());
+        else {
+          s === t[t.length - 1] && (s.textContent = s.textContent.trimEnd());
+          const a = Array.prototype.find.call(
+            t,
+            (n) => n instanceof HTMLAnchorElement && (!n.previousSibling || !n.previousSibling.textContent)
+          );
+          a &&
+            s.previousSibling === a &&
+            (s.textContent.startsWith("*")
+              ? (s.textContent = "* " + s.textContent.replace(/^\*\s*/, ""))
+              : (s.textContent = " " + s.textContent.trimStart()));
+        }
+  },
+  ha = new DOMParser(),
+  Es = (r, t) => {
+    const s = t.includes("more-links"),
+      a = t.includes("comments-linebreaks");
+    let n;
+    r instanceof Node ? ((n = r.cloneNode(!0)), a && va(n)) : (n = ha.parseFromString(r.trim(), "text/html").body),
+      n.normalize();
+    for (let l = n.childNodes.length; l--; ) {
+      const v = n.childNodes[l];
+      let d = v.textContent;
+      if (
+        (a || (d = d.replace(/\s+/g, " ")),
+        l === 0 && (d = d.trimStart()),
+        l === n.childNodes.length - 1 && (d = d.trimEnd()),
+        (v.textContent = d),
+        v instanceof Text && v.textContent === "")
+      )
+        v.remove();
+      else if (v instanceof HTMLAnchorElement && v.getAttribute("href").startsWith("/"))
+        v.href = "https://scratch.mit.edu" + v.getAttribute("href");
+      else if (v instanceof HTMLImageElement) {
+        const m = v.src.split("/"),
+          f = m[m.length - 1];
+        gs[f] && v.replaceWith(gs[f]);
+      }
+    }
+    return s && ma(n), ga(n), n;
+  };
+var fa = g(
+    '<span class="comment-time"> <a rel="noopener noreferrer" target="_blank"><img class="popout-comment" draggable="false" alt=""/></a></span>'
+  ),
+  pa = g('<a tabindex="0" role="button"> </a>'),
+  _a = g("<span> </span>"),
+  ba = g("<span> </span>"),
+  ya = g('<a tabindex="0" role="button"> </a>'),
+  wa = g('<button type="button" class="large-button"> </button>'),
+  xa = g(
+    '<div class="reply-box-comment"><textarea class="reply-textarea" maxlength="500"></textarea> <div class="reply-box-buttons"><button type="button" class="large-button post-button"> </button> <!> <span class="comment-chars"> </span></div></div>'
+  ),
+  ka = g(
+    '<div><a class="comment-author" rel="noopener noreferrer" target="_blank"> </a> <!> <!> <bdo dir="ltr"><div><div class="comment-content-text"><!> <!> <!></div> <!></div></bdo> <!></div>'
+  );
+function Tt(r, t) {
+  Ht(t, !0);
+  let s = tr(t, "commentsObj", 7),
+    a = O(!1),
+    n = O(""),
+    l = O(!1),
+    v = O(!1),
+    d = O(0),
+    m = O(!1),
+    f = O(null);
+  const x = {
+      openNewTabMsg: t.msg("open-new-tab"),
+      deleteMsg: t.msg("delete"),
+      deleteConfirmMsg: t.msg("delete-confirm"),
+      replyMsg: t.msg("reply"),
+      postingMsg: t.msg("posting"),
+      postMsg: t.msg("post"),
+      cancelMsg: t.msg("cancel"),
+      deletedMsg: t.msg("deleted"),
+      deletingMsg: t.msg("deleting"),
+    },
+    S = $e(() => s()[t.commentId]),
+    U = $e(() => t.msg("chars-left", { num: 500 - e(n).length })),
+    ce = $e(() => {
+      switch (t.resourceType) {
+        case "user":
+          return t.resourceId === t.username;
+        case "project":
+          return e(S)?.projectAuthor === t.username;
+        default:
+          return !0;
+      }
+    }),
+    de = $e(() => {
+      if (!e(S)) return "";
+      const ue = new Intl.RelativeTimeFormat(t.msg.locale, {
+          localeMatcher: "best fit",
+          numeric: "auto",
+          style: "short",
+        }),
+        De = new Date(e(S).date).getTime(),
+        Oe = (t.dateNow - De) / 1e3;
+      let Le;
+      return Oe < 60
+        ? ue.format(0, "second")
+        : (Oe < 3600
+            ? (Le = { unit: "minute", divideBy: 60 })
+            : Oe < 86400
+              ? (Le = { unit: "hour", divideBy: 3600 })
+              : (Le = { unit: "day", divideBy: 3600 * 24 }),
+          ue.format(-Math.round(Oe / Le.divideBy), Le.unit));
+    }),
+    I = $e(() => {
+      const ue = t.resourceType === "user" ? "users" : t.resourceType === "gallery" ? "studios" : "projects",
+        De = t.resourceType === "gallery" ? "comments/" : "";
+      return `https://scratch.mit.edu/${ue}/${t.resourceId}/${De}#comments-${t.commentId.substring(2)}`;
+    });
+  fs(() => {
+    e(a) && e(f) && e(f).focus();
+  });
+  function ne() {
+    M(a, !0);
+  }
+  function Xe() {
+    M(a, !1);
+  }
+  function Ne(ue) {
+    ue.key === "Enter" && (ue.ctrlKey || ue.metaKey) && oe();
+  }
+  function oe() {
+    const ue = (_e) =>
+      _e
+        .split("")
+        .filter((be, Je, nt) => (Je === 0 ? !0 : nt[Je - 1] !== be))
+        .join("");
+    if (
+      ((_e) =>
+        ue(
+          _e
+            .toLowerCase()
+            .match(/[a-z]+/g)
+            ?.join("") || ""
+        ).includes("scratchadon"))(e(n))
+    ) {
+      alert(chrome.i18n.getMessage("captureCommentError", [chrome.i18n.getMessage("captureCommentPolicy")]));
+      return;
+    }
+    M(m, !0);
+    const Oe = t.isParent ? t.commentId : e(S).childOf,
+      Le = Number(Oe.substring(2));
+    Promise.all([
+      t.addon.auth.fetchUsername(),
+      t.addon.auth.fetchUserId(),
+      sa(t.addon, {
+        resourceType: t.resourceType,
+        resourceId: t.resourceId,
+        content: e(n),
+        parentId: Le,
+        commenteeId: e(S).authorId,
+      }),
+      t.addon.self.getEnabledAddons(),
+    ])
+      .then(([_e, be, { id: Je, content: nt }, $]) => {
+        M(a, !1);
+        let B = Es(nt, $);
+        if (t.resourceType !== "user") {
+          const _ = document.createElement("div");
+          _.append(
+            Object.assign(document.createElement("a"), {
+              href: `https://scratch.mit.edu/users/${e(S).author}`,
+              textContent: "@" + e(S).author,
+            })
+          ),
+            _.append(" "),
+            _.append(...B.childNodes),
+            (B = _);
+        }
+        const h = `${t.resourceType[0]}_${Je}`;
+        (s()[h] = {
+          author: _e,
+          authorId: be,
+          content: B,
+          date: new Date().toISOString(),
+          children: null,
+          childOf: Oe,
+          projectAuthor: e(S).projectAuthor,
+        }),
+          s()[Oe].children ? s()[Oe].children.push(h) : (s()[Oe].children = [h]),
+          M(n, "");
+      })
+      .catch((_e) => {
+        let be;
+        _e instanceof Wt
+          ? _e.details.muteStatus
+            ? ((be = t.msg("comment-mute") + " "),
+              (be += t.msg("comment-cannot-post-for", {
+                mins: Math.max(Math.ceil((_e.details.muteStatus.muteExpiresAt - Date.now() / 1e3) / 60), 1),
+              })))
+            : (be = t.msg(t.errorCodes[_e.details?.error] || "send-error"))
+          : _e instanceof Ee
+            ? (be = t.msg(t.errorCodes[_e.code] || "send-error"))
+            : (be = _e.toString()),
+          alert(be);
+      })
+      .finally(() => {
+        M(m, !1);
+      });
+  }
+  function fe() {
+    if (e(d) === 0) {
+      setTimeout(() => M(d, 1), 250),
+        setTimeout(() => {
+          e(d) === 1 && M(d, 0);
+        }, 5e3);
+      return;
+    }
+    M(l, !0),
+      M(v, !0),
+      Yr(t.addon, {
+        resourceType: t.resourceType,
+        resourceId: t.resourceId,
+        commentId: Number(t.commentId.substring(2)),
+      })
+        .then(() => {
+          t.isParent && (e(S).children = []);
+        })
+        .catch((ue) => {
+          console.error("Error while deleting a comment: ", ue), alert(t.msg("delete-error")), M(d, 0), M(l, !1);
+        })
+        .finally(() => {
+          M(v, !1);
+        });
+  }
+  var Ge = bt(),
+    at = rt(Ge);
+  {
+    var gt = (ue) => {
+      var De = ka();
+      let Oe;
+      var Le = o(De),
+        _e = o(Le),
+        be = c(Le),
+        Je = c(be);
+      {
+        var nt = (D) => {
+          var te = fa(),
+            Ce = o(te),
+            Se = c(Ce),
+            ke = o(Se);
+          E(ke, "src", chrome.runtime.getURL("images/icons/popout.svg")),
+            C(() => {
+              b(Ce, `· ${e(de) ?? ""} `), E(Se, "href", e(I)), E(ke, "title", x.openNewTabMsg);
+            }),
+            u(D, te);
+        };
+        k(Je, (D) => {
+          e(d) !== 1 && !e(l) && D(nt);
+        });
+      }
+      var $ = c(Je, 2);
+      {
+        var B = (D) => {
+          var te = pa();
+          let Ce;
+          var Se = o(te);
+          C(() => {
+            (Ce = ze(te, 1, "delete-btn", null, Ce, { "delete-confirm": e(d) === 1 })),
+              b(Se, e(d) === 0 ? x.deleteMsg : x.deleteConfirmMsg);
+          }),
+            xe("click", te, fe),
+            xe("keydown", te, (ke) => ke.key === "Enter" && fe()),
+            u(D, te);
+        };
+        k($, (D) => {
+          !e(l) && e(ce) && D(B);
+        });
+      }
+      var h = c($, 2),
+        _ = o(h);
+      let L;
+      var X = o(_),
+        ge = o(X);
+      {
+        var Ie = (D) => {
+          var te = _a(),
+            Ce = o(te);
+          C(() => b(Ce, x.deletingMsg)), u(D, te);
+        };
+        k(ge, (D) => {
+          e(v) && D(Ie);
+        });
+      }
+      var ie = c(ge, 2);
+      {
+        var J = (D) => {
+          var te = ba(),
+            Ce = o(te);
+          C(() => b(Ce, x.deletedMsg)), u(D, te);
+        };
+        k(ie, (D) => {
+          e(l) && !e(v) && D(J);
+        });
+      }
+      var q = c(ie, 2);
+      {
+        var He = (D) => {
+          Qr(D, {
+            get element() {
+              return e(S).content;
+            },
+          });
+        };
+        k(q, (D) => {
+          e(l) || D(He);
+        });
+      }
+      var Ze = c(X, 2);
+      {
+        var pt = (D) => {
+          var te = ya();
+          let Ce, Se;
+          var ke = o(te);
+          C(() => {
+            (Ce = ze(te, 1, "reply-button-comment", null, Ce, { replying: e(a) })),
+              (Se = Ft(te, "", Se, { visibility: e(a) ? "hidden" : "visible" })),
+              b(ke, x.replyMsg);
+          }),
+            xe("click", te, ne),
+            xe("keydown", te, (Ve) => Ve.key === "Enter" && ne()),
+            u(D, te);
+        };
+        k(Ze, (D) => {
+          e(l) || D(pt);
+        });
+      }
+      var Ye = c(h, 2);
+      {
+        var ot = (D) => {
+          var te = xa(),
+            Ce = o(te);
+          ps(
+            Ce,
+            (vt) => M(f, vt),
+            () => e(f)
+          );
+          var Se = c(Ce, 2),
+            ke = o(Se),
+            Ve = o(ke),
+            dt = c(ke, 2);
+          {
+            var ut = (vt) => {
+              var Lt = wa(),
+                zt = o(Lt);
+              C(() => b(zt, x.cancelMsg)), xe("click", Lt, Xe), u(vt, Lt);
+            };
+            k(dt, (vt) => {
+              e(m) || vt(ut);
+            });
+          }
+          var yt = c(dt, 2),
+            qt = o(yt);
+          C(() => {
+            (ke.disabled = e(m)), b(Ve, e(m) ? x.postingMsg : x.postMsg), b(qt, e(U));
+          }),
+            xe("keyup", Ce, Ne),
+            sr(
+              Ce,
+              () => e(n),
+              (vt) => M(n, vt)
+            ),
+            xe("click", ke, oe),
+            u(D, te);
+        };
+        k(Ye, (D) => {
+          e(a) && D(ot);
+        });
+      }
+      C(() => {
+        (Oe = ze(De, 1, "comment", null, Oe, {
+          "child-comment": !t.isParent,
+          unread: t.unread,
+          "comment-me": e(S).author === t.username,
+        })),
+          E(Le, "href", `https://scratch.mit.edu/users/${e(S).author}/`),
+          b(_e, e(S).author),
+          b(be, `${e(S).scratchTeam ? "*" : ""} `),
+          (L = ze(_, 1, "comment-content", null, L, { "comment-self": e(S).author === t.username })),
+          (h.dir = h.dir);
+      }),
+        u(ue, De);
+    };
+    k(at, (ue) => {
+      e(S) && ue(gt);
+    });
+  }
+  u(r, Ge), Bt();
+}
+Kt(["click", "keydown", "keyup"]);
+var Ma = g('<base target="_blank"/> <link rel="stylesheet"/> <link rel="stylesheet"/>', 1),
+  Ca = g(
+    '<div class="comment"><span class="comment-time"> </span> <a class="delete-btn" tabindex="0" role="button"> </a> <div class="dom-element-renderer svelte-1b1hi6l"></div></div>'
+  ),
+  Sa = g('<div class="message-type-details"></div>'),
+  Aa = g(
+    '<div class="message-type message-type-admin svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'
+  ),
+  ja = g("<a> </a>"),
+  Ta = g('<div class="message-type-details"><div class="username-list svelte-1b1hi6l"></div></div>'),
+  Ea = g(
+    '<div class="message-type svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'
+  ),
+  La = g('<div class="thread-list svelte-1b1hi6l"></div>'),
+  Ia = g('<div class="message-type-details"></div>'),
+  Pa = g(
+    '<div class="message-type svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'
+  ),
+  Oa = g('<div class="thread-list svelte-1b1hi6l"></div>'),
+  Ra = g('<div class="message-type-details"></div>'),
+  Ua = g(
+    '<div class="message-type svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'
+  ),
+  $a = g('<div class="thread-list svelte-1b1hi6l"></div>'),
+  Na = g('<div class="message-type-details"></div>'),
+  Da = g(
+    '<div class="message-type svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'
+  ),
+  Fa = g('<div class="thread-list svelte-1b1hi6l"></div>'),
+  Ha = g('<div class="message-type-details"></div>'),
+  Ba = g(
+    '<div class="message-type svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'
+  ),
+  qa = g("<span> </span>"),
+  za = g('<div class="thread-list svelte-1b1hi6l"><!> <!></div>'),
+  Xa = g('<div class="message-type-details"></div>'),
+  Ja = g(
+    '<div class="message-type svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'
+  ),
+  Ka = g('<div class="thread-list svelte-1b1hi6l"></div>'),
+  Va = g('<div class="message-type-details"></div>'),
+  Wa = g(
+    '<div class="message-type svelte-1b1hi6l"><div class="message-type-title hover-reverse svelte-1b1hi6l"><button class="btn-dropdown svelte-1b1hi6l" type="button"><img alt="v" draggable="false"/></button> <span class="message-type-title-text svelte-1b1hi6l"> </span> <span class="float-right svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span></div> <!></div>'
+  ),
+  Ga = g('<span><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span>'),
+  Za = g("<div><!> <!></div>"),
+  Qa = g('<div class="message-type-details"></div>'),
+  Ya = g(
+    '<div class="message-type svelte-1b1hi6l"><div class="message-type-title svelte-1b1hi6l"><a class="message-type-title-text nolink svelte-1b1hi6l" rel="noreferrer noopener" target="_blank"><!></a> <span class="float-right svelte-1b1hi6l"><!></span></div> <!></div>'
+  ),
+  en = g('<span><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span>'),
+  tn = g("<div><!> <!></div>"),
+  sn = g('<div class="message-type-details"></div>'),
+  rn = g(
+    '<div class="message-type svelte-1b1hi6l"><div class="message-type-title svelte-1b1hi6l"><a class="message-type-title-text nolink svelte-1b1hi6l" rel="noopener noreferrer" target="_blank"> </a> <span class="float-right svelte-1b1hi6l"><!></span></div> <!></div>'
+  ),
+  an = g('<span><img class="small-icon colored svelte-1b1hi6l" draggable="false" alt=""/> </span>'),
+  nn = g('<span><img class="small-icon colored svelte-1b1hi6l" draggable="false" alt=""/> </span>'),
+  on = g('<img class="small-icon colored svelte-1b1hi6l" draggable="false" alt=""/>'),
+  cn = g('<img class="small-icon colored svelte-1b1hi6l" draggable="false" alt=""/>'),
+  ln = g("<div><!> <!> <a> </a></div>"),
+  dn = g(
+    '<div class="tooltip svelte-1b1hi6l" tabindex="0"><span class="tooltip-indicator"><!> <!></span> <div class="tooltiptext tooltiptextleft"></div></div>'
+  ),
+  un = g('<span><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span>'),
+  mn = g("<div><!> <!></div>"),
+  gn = g('<div class="message-type-details"></div>'),
+  vn = g(
+    '<div class="message-type svelte-1b1hi6l"><div class="message-type-title svelte-1b1hi6l"><a class="message-type-title-text nolink svelte-1b1hi6l" target="_blank" rel="noopener noreferrer"> </a> <span class="float-right svelte-1b1hi6l"><!> <!></span></div> <!></div>'
+  ),
+  hn = g(
+    '<div class="message-type svelte-1b1hi6l"><div class="message-type-details welcome-message svelte-1b1hi6l"> </div></div>'
+  ),
+  fn = g("<!> <!> <!> <!> <!> <!> <!> <!> <!> <!> <!> <!>", 1),
+  pn = g("<p> </p>"),
+  _n = g('<p> <a href="https://scratch.mit.edu/login"> </a></p>'),
+  bn = g("<p> </p>"),
+  yn = g("<p> </p>"),
+  wn = g("<p> </p>"),
+  xn = g(
+    '<p> <a target="_blank" rel="noopener noreferrer"> </a> <br/> <code class="error-message"> </code> (<a role="button" tabindex="0"> </a>)</p>'
+  ),
+  kn = g('<span class="status-empty svelte-1b1hi6l"> </span>'),
+  Mn = g(
+    '<button type="button" class="large-button svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/><span> </span></button>'
+  ),
+  Cn = g(
+    '<button type="button" class="large-button svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/><span> </span></button>'
+  ),
+  Sn = g('<div class="buttons-container svelte-1b1hi6l"><!> <!></div>'),
+  An = g('<a tabindex="0" role="button"> </a>'),
+  jn = g(
+    '<span class="marked-as-read svelte-1b1hi6l"><img class="small-icon svelte-1b1hi6l" draggable="false" alt=""/> </span>'
+  ),
+  Tn = g(
+    '<div class="contents svelte-1b1hi6l"><!> <div class="status-container svelte-1b1hi6l"><!> <!> <!> <!> <!> <!> <!> <!></div></div> <div id="bottom-bar" class="svelte-1b1hi6l"><!> <span class="separator svelte-1b1hi6l"></span> <a href="https://scratch.mit.edu/messages" class="nolink open-messages svelte-1b1hi6l"> <img class="popout svelte-1b1hi6l" draggable="false" alt=""/></a></div>',
+    1
+  );
+function Pn(r, t) {
+  Ht(t, !0);
+  let s = O(null);
+  function a(i, p) {
+    return (
+      p && i.appendChild(p),
+      {
+        update(A) {
+          if (p)
+            try {
+              i.removeChild(p);
+            } catch {}
+          (p = A), p && i.appendChild(p);
+        },
+        destroy() {
+          if (p)
+            try {
+              i.removeChild(p);
+            } catch {}
+        },
+      }
+    );
+  }
+  const n = {
+    isEmpty: "comment-error-empty",
+    isFlood: "comment-error-ratelimit",
+    429: "comment-error-ratelimit",
+    isBad: "comment-error-filterbot-generic",
+    hasChatSite: "comment-error-filterbot-chat",
+    isSpam: "comment-error-filterbot-spam",
+    replyLimitReached: "comment-error-reply-limit",
+    500: "comment-error-down",
+    503: "comment-error-down",
+  };
+  let l = Date.now();
+  const v = new DOMParser();
+  let d = O(qe([])),
+    m = O(qe([])),
+    f = qe({}),
+    x = O("notReady"),
+    S = O(!1),
+    U = O(null),
+    ce = O(null),
+    de = O(!1),
+    I = O(!1),
+    ne = O(0),
+    Xe = O(!1),
+    Ne = O(null),
+    oe = O(!1),
+    fe = O(qe([])),
+    Ge = O(qe([])),
+    at = O(qe([])),
+    gt = O(qe([])),
+    ue = O(qe([])),
+    De = O(qe([])),
+    Oe = O(0),
+    Le = O(qe([])),
+    _e = O(qe([])),
+    be = O(qe([])),
+    Je = O(qe([])),
+    nt = O(!1),
+    $ = qe({
+      stMessages: !1,
+      follows: !1,
+      studioInvites: !1,
+      studioPromotions: !1,
+      studioHostTransfers: !1,
+      forumActivity: !1,
+      studioActivity: !1,
+      remixes: !1,
+    });
+  const B = $e(() => {
+      if (!e(s)) return {};
+      const { msg: i } = e(s);
+      return {
+        stMessagesMsg: i("stMessages"),
+        followsMsg: i("follows"),
+        studioInvitesMsg: i("studio-invites"),
+        forumMsg: i("forum"),
+        studioActivityMsg: i("studio-activity"),
+        remixesMsg: i("remixes"),
+        yourProfileMsg: i("your-profile"),
+        loadingMsg: i("loading"),
+        loggedOutMsg: i("logged-out"),
+        loggedOutLinkMsg: i("logged-out-link"),
+        serverErrorMsg: i("server-error"),
+        networkErrorMsg: i("network-error"),
+        unknownFatalErrorMsg: i("unknown-fatal-error"),
+        reportBugMsg: i("report-bug"),
+        copyMsg: i("copy"),
+        loadingCommentsMsg: i("loading-comments"),
+        reloadMsg: i("reload"),
+        dismissMsg: i("dismiss"),
+        noUnreadMsg: i("no-unread"),
+        showMoreMsg: i("show-more"),
+        markAsReadMsg: i("mark-as-read"),
+        markedAsReadMsg: i("marked-as-read"),
+        openMessagesMsg: i("open-messages"),
+        studioPromotionsMsg: i("studio-promotions"),
+        studioHostTransfersMsg: i("studio-host-transfers"),
+        welcomeToScratchMsg: i("welcome-to-scratch"),
+      };
+    }),
+    h = $e(() => {
+      const i = chrome.runtime.getManifest();
+      return `https://scratchaddons.com/feedback/?ext_version=${i.version_name}&utm_source=extension&utm_medium=messagingcrash&utm_campaign=v${i.version}`;
+    }),
+    _ = $e(() => [...e(_e).filter((i) => i.username === e(U)), ...e(_e).filter((i) => i.username !== e(U))]),
+    L = $e(() => [...e(Je).filter((i) => i.unreadComments !== 0), ...e(Je).filter((i) => i.unreadComments === 0)]),
+    X = $e(() => e(de) && e(I) && !e(x) && e(Xe) === !1 && e(m).length > e(Ne));
+  function ge(i, p) {
+    const A = e(Je).find((Re) => Re.id === i);
+    if (A) return A;
+    const F = {
+      id: i,
+      title: p,
+      unreadComments: 0,
+      commentChains: [],
+      loveCount: 0,
+      favoriteCount: 0,
+      loversAndFavers: [],
+      loadedComments: !1,
+    };
+    return e(Je).push(F), F;
+  }
+  function Ie(i) {
+    const p = e(_e).find((F) => F.username === i);
+    if (p) return p;
+    const A = { username: i, unreadComments: 0, commentChains: [], loadedComments: !1 };
+    return e(_e).push(A), A;
+  }
+  function ie(i, p) {
+    const A = e(be).find((Re) => Re.id === i);
+    if (A) return A;
+    const F = { id: i, title: p, unreadComments: 0, commentChains: [], loadedComments: !1 };
+    return e(be).push(F), F;
+  }
+  function J(i) {
+    const p = Number(i.substring(2)),
+      A = e(m).findIndex((F) => F.comment_id === p);
+    return A === -1 ? !1 : A < e(ce) ? (f[i].childOf ? !J(f[i].childOf) : !0) : !1;
+  }
+  async function q() {
+    const { addon: i } = e(s);
+    try {
+      const [p, A] = await Promise.all([i.auth.fetchUsername(), i.auth.fetchXToken()]);
+      if (window.scratchAddons?.cookieFetchingFailed) throw new TypeError("NetworkError");
+      if (!p) throw new Ee("Not logged in", 401);
+      M(U, p, !0);
+      const [F, Re] = await Promise.all([Er(window.scratchAddons.cookieStoreId, !1, p, A), ia(i)]);
+      chrome.runtime.sendMessage({
+        forceBadgeUpdate: { store: window.scratchAddons.cookieStoreId },
+        notifyNewMessages: { store: window.scratchAddons.cookieStoreId, messages: F },
+      });
+      const se = await Ut();
+      try {
+        M(m, await se.get("cache", window.scratchAddons.cookieStoreId), !0),
+          M(ce, await se.get("count", window.scratchAddons.cookieStoreId), !0);
+      } finally {
+        await se.close();
+      }
+      return (
+        M(
+          d,
+          (Array.isArray(Re) ? Re : []).map((y) => {
+            const H = v.parseFromString(y.message, "text/html");
+            for (const Ke of H.getElementsByTagName("a"))
+              Ke.href = new URL(Ke.getAttribute("href"), "https://scratch.mit.edu/").toString();
+            const ve = document.createElement("div");
+            return (
+              ve.append(...H.body.childNodes),
+              { ...y, element: ve, datetime_created: new Date(y.datetime_created).toDateString() }
+            );
+          }),
+          !0
+        ),
+        M(x, void 0),
+        !0
+      );
+    } catch (p) {
+      if (p instanceof Ee) {
+        if (p.code === 401 || p.code === 403) return M(x, "loggedOut"), !1;
+        if (p.code >= 500) return M(x, "serverError"), !1;
+      } else if (p instanceof TypeError && String(p).includes("NetworkError")) return M(x, "networkError"), !1;
+      return console.error("Error while initial getData", p), M(S, !0), M(x, String(p), !0), !1;
+    }
+  }
+  async function He(i = !1) {
+    const { addon: p } = e(s),
+      A = await p.auth.fetchUsername(),
+      F = await Ss(A, { bypassCache: i }),
+      Re = await As(window.scratchAddons.cookieStoreId, F),
+      se = await Ut();
+    try {
+      await se.put("count", Re, window.scratchAddons.cookieStoreId),
+        !i &&
+          F.resId &&
+          !(se instanceof Et) &&
+          (await se.put("count", F.resId, `${window.scratchAddons.cookieStoreId}_resId`));
+    } finally {
+      await se.close();
+    }
+    chrome.runtime.sendMessage({ forceBadgeUpdate: { store: window.scratchAddons.cookieStoreId } });
+  }
+  function Ze() {
+    const { addon: i } = e(s);
+    Lr(i.auth.csrfToken)
+      .then(() => He(!0))
+      .then(() => {
+        M(oe, !0);
+      })
+      .catch((p) => console.error("Marking messages as read failed:", p));
+  }
+  function pt(i) {
+    confirm(e(s).msg("stMessagesConfirm")) &&
+      ta(e(s).addon, i)
+        .then(() => {
+          const p = e(d).findIndex((A) => A.id === i);
+          p !== -1 && e(d).splice(p, 1), He(!0);
+        })
+        .catch((p) => console.error("Dismissing alert failed:", p));
+  }
+  function Ye() {
+    location.reload();
+  }
+  function ot(i) {
+    navigator.clipboard.writeText(i);
+  }
+  async function D(i, p, A, F) {
+    const { addon: Re } = e(s);
+    try {
+      const [se, y] = await Promise.all([
+        na(Re, { resourceType: i, resourceId: p, commentMessages: A }),
+        Re.self.getEnabledAddons(),
+      ]);
+      Object.keys(se).length === 0 && (F.unreadComments = 0);
+      for (const et of Object.keys(se)) {
+        const it = se[et];
+        let It = Es(it.content, y);
+        if (i !== "user") {
+          const wt = document.createElement("div");
+          it.replyingTo &&
+            (wt.append(
+              Object.assign(document.createElement("a"), {
+                href: `https://scratch.mit.edu/users/${it.replyingTo}`,
+                textContent: "@" + it.replyingTo,
+              })
+            ),
+            wt.append(" ")),
+            wt.append(...It.childNodes),
+            (It = wt);
+        }
+        (it.content = It), (f[et] = it);
+      }
+      const Ke = Object.entries(se)
+          .filter((et) => et[1].childOf === null)
+          .sort((et, it) => new Date(it[1].date) - new Date(et[1].date))
+          .map((et) => et[0]),
+        St = i === "project" ? ge(p) : i === "user" ? Ie(p) : ie(p);
+      for (const et of Ke) St.commentChains.push(et);
+      F.loadedComments = !0;
+    } catch (se) {
+      if (se instanceof Ee && se.code > 400) {
+        M(x, se.code < 500 ? "loggedOut" : "serverError", !0);
+        return;
+      } else if (String(se).includes("NetworkError")) {
+        M(x, "networkError");
+        return;
+      }
+      console.error(se), M(x, String(se), !0), M(S, !0);
+    }
+  }
+  async function te(i = !1) {
+    const p = { 0: [], 1: [], 2: [] };
+    let A = e(ce) - e(d).length;
+    const F = i ? e(m).length : A;
+    M(Ne, F, !0);
+    for (const y of e(m).slice(0, F))
+      if (y.type === "followuser") e(fe).push(y.actor_username);
+      else if (y.type === "curatorinvite")
+        e(Ge).push({ actor: y.actor_username, studioId: y.gallery_id, studioTitle: y.title });
+      else if (y.type === "becomeownerstudio")
+        e(at).push({ actor: y.actor_username, studioId: y.gallery_id, studioTitle: y.gallery_title });
+      else if (y.type === "becomehoststudio")
+        e(gt).push({
+          actorAdmin: y.admin_actor,
+          actor: y.actor_username,
+          studioId: y.gallery_id,
+          studioTitle: y.gallery_title,
+        });
+      else if (y.type === "forumpost")
+        e(ue).find((H) => H.topicId === y.topic_id) || e(ue).push({ topicId: y.topic_id, topicTitle: y.topic_title });
+      else if (y.type === "remixproject")
+        e(Le).push({ parentTitle: y.parent_title, actor: y.actor_username, projectId: y.project_id });
+      else if (y.type === "studioactivity") {
+        const H = e(De).find((ve) => ve.studioId === y.gallery_id);
+        H ? H.amount++ : e(De).push({ studioId: y.gallery_id, studioTitle: y.title, amount: 1 }), hs(Oe);
+      } else if (y.type === "loveproject") {
+        const H = ge(y.project_id, y.title);
+        H.loveCount++;
+        const ve = H.loversAndFavers.find((Ke) => Ke.username === y.actor_username);
+        ve ? (ve.loved = !0) : H.loversAndFavers.push({ username: y.actor_username, loved: !0, faved: !1 });
+      } else if (y.type === "favoriteproject") {
+        const H = ge(y.project_id, y.project_title);
+        H.favoriteCount++;
+        const ve = H.loversAndFavers.find((Ke) => Ke.username === y.actor_username);
+        ve ? (ve.faved = !0) : H.loversAndFavers.push({ username: y.actor_username, loved: !1, faved: !0 });
+      } else if (y.type === "addcomment") {
+        const H = y.comment_type === 1 ? y.comment_obj_title : y.comment_obj_id;
+        let ve = p[y.comment_type].find((St) => St.resourceId === H);
+        ve || ((ve = { resourceId: H, commentMessages: [] }), p[y.comment_type].push(ve)), ve.commentMessages.push(y);
+        let Ke;
+        y.comment_type === 0
+          ? (Ke = ge(H, y.comment_obj_title))
+          : y.comment_type === 1
+            ? (Ke = Ie(H))
+            : y.comment_type === 2 && (Ke = ie(H, y.comment_obj_title)),
+          Ke.unreadComments++;
+      } else y.type === "userjoin" && M(nt, !0);
+    M(de, !0);
+    const Re = p[0].length + p[1].length + p[2].length;
+    let se = 0;
+    for (const y of e(_)) {
+      const H = p[1].find((ve) => ve.resourceId === y.username);
+      H && (await D("user", H.resourceId, H.commentMessages, y), se++, M(ne, Math.round((se / Re) * 100), !0));
+    }
+    for (const y of e(be)) {
+      const H = p[2].find((ve) => ve.resourceId === y.id);
+      H && (await D("gallery", H.resourceId, H.commentMessages, y), se++, M(ne, Math.round((se / Re) * 100), !0));
+    }
+    for (const y of e(L)) {
+      const H = p[0].find((ve) => ve.resourceId === y.id);
+      H && (await D("project", H.resourceId, H.commentMessages, y), se++, M(ne, Math.round((se / Re) * 100), !0));
+    }
+    M(I, !0);
+  }
+  function Ce() {
+    M(I, !1),
+      M(ne, 0),
+      M(fe, [], !0),
+      M(Ge, [], !0),
+      M(at, [], !0),
+      M(gt, [], !0),
+      M(ue, [], !0),
+      M(De, [], !0),
+      M(Oe, 0),
+      M(Le, [], !0),
+      M(_e, [], !0),
+      M(be, [], !0),
+      M(Je, [], !0),
+      M(nt, !1);
+  }
+  function Se() {
+    M(Xe, !0), Ce(), te(!0);
+  }
+  function ke(i) {
+    const { safeMsg: p } = e(s),
+      A = `<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/users/${i.actor}/">${i.actor}</a>`,
+      F = `<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/studios/${i.studioId}/curators/" style="text-decoration: underline">${ft(i.studioTitle)}</a>`;
+    return p("curate-invite", { actor: A, title: F });
+  }
+  function Ve(i) {
+    const { safeMsg: p } = e(s),
+      A = `<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/users/${i.actor}/">${i.actor}</a>`,
+      F = `<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/studios/${i.studioId}/curators/" style="text-decoration: underline">${ft(i.studioTitle)}</a>`;
+    return p("studio-promotion", { actor: A, title: F });
+  }
+  function dt(i) {
+    const { safeMsg: p } = e(s),
+      A = i.actorAdmin
+        ? p("st")
+        : `<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/users/${ft(i.actor)}/">${ft(i.actor)}</a>`,
+      F = `<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/studios/${i.studioId}/" style="text-decoration: underline">${ft(i.studioTitle)}</a>`;
+    return p("studio-host-transfer", { actor: A, title: F });
+  }
+  function ut(i) {
+    const { safeMsg: p } = e(s),
+      A = `<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/discuss/topic/${i.topicId}/unread/" style="text-decoration: underline">${ft(i.topicTitle)}</a>`;
+    return p("forum-new-post", { title: A });
+  }
+  function yt(i) {
+    const { safeMsg: p } = e(s),
+      A = `<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/studios/${i.studioId}/activity/" style="text-decoration: underline">${ft(i.studioTitle)}</a>`;
+    return p("new-activity", { title: A });
+  }
+  function qt(i) {
+    const { msg: p, safeMsg: A } = e(s),
+      F = `<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/users/${i.actor}/">${i.actor}</a>`,
+      Re = `<a target="_blank" rel="noopener noreferrer" href="https://scratch.mit.edu/projects/${i.projectId}/" style="text-decoration: underline">${p("remix-link")}</a>`;
+    return A("remix-as", { actor: F, link: Re, parentTitle: ft(i.parentTitle) });
+  }
+  function vt(i) {
+    return e(s).msg("others-profile", { username: i });
+  }
+  function Lt(i) {
+    return e(s).msg("studio", { title: i });
+  }
+  function zt(i) {
+    const p = (A) => (A.loved && A.faved ? 0 : A.faved ? 1 : 2);
+    return i.loversAndFavers.slice(0, 20).sort((A, F) => p(A) - p(F));
+  }
+  vs(async () => {
+    M(s, await Cs(t.addonId), !0), (document.title = e(s).msg("popup-title")), (await q()) && (await te());
+  });
+  var Gt = bt();
+  _s("1b1hi6l", (i) => {
+    var p = Ma(),
+      A = c(rt(p), 2);
+    E(A, "href", chrome.runtime.getURL("webpages/styles/components/buttons.css"));
+    var F = c(A, 2);
+    E(F, "href", chrome.runtime.getURL("webpages/styles/components/tooltips.css")), u(i, p);
+  });
+  var Ls = rt(Gt);
+  {
+    var Is = (i) => {
+      var p = Tn(),
+        A = rt(p),
+        F = o(A);
+      {
+        var Re = (P) => {
+          var z = fn(),
+            me = rt(z);
+          {
+            var Qe = (j) => {
+              var w = Aa(),
+                R = o(w),
+                W = o(R),
+                re = o(W);
+              E(re, "src", chrome.runtime.getURL("images/icons/expand.svg"));
+              let K;
+              var V = c(W, 2),
+                pe = o(V),
+                le = c(V, 2),
+                Q = o(le);
+              E(Q, "src", chrome.runtime.getURL("images/icons/notice.svg"));
+              var ye = c(Q),
+                Ae = c(R, 2);
+              {
+                var je = (N) => {
+                  var ae = Sa();
+                  Te(
+                    ae,
+                    21,
+                    () => e(d),
+                    (Z) => Z.id,
+                    (Z, G) => {
+                      var T = Ca(),
+                        Y = o(T),
+                        ee = o(Y),
+                        he = c(Y, 2),
+                        Me = o(he),
+                        Ue = c(he, 2);
+                      rr(
+                        Ue,
+                        (Be, We) => a?.(Be, We),
+                        () => e(G).element
+                      ),
+                        C(() => {
+                          b(ee, e(G).datetime_created), b(Me, e(B).dismissMsg);
+                        }),
+                        xe("click", he, () => pt(e(G).id)),
+                        xe("keydown", he, (Be) => Be.key === "Enter" && pt(e(G).id)),
+                        u(Z, T);
+                    }
+                  ),
+                    u(N, ae);
+                };
+                k(Ae, (N) => {
+                  $.stMessages && N(je);
+                });
+              }
+              C(() => {
+                (K = ze(re, 1, "", null, K, { reverted: $.stMessages })),
+                  b(pe, e(B).stMessagesMsg),
+                  b(ye, ` ${e(d).length ?? ""}`);
+              }),
+                xe("click", R, () => ($.stMessages = !$.stMessages)),
+                u(j, w);
+            };
+            k(me, (j) => {
+              e(d).length && j(Qe);
+            });
+          }
+          var _t = c(me, 2);
+          {
+            var At = (j) => {
+              var w = Ea(),
+                R = o(w),
+                W = o(R),
+                re = o(W);
+              E(re, "src", chrome.runtime.getURL("images/icons/expand.svg"));
+              let K;
+              var V = c(W, 2),
+                pe = o(V),
+                le = c(V, 2),
+                Q = o(le);
+              E(Q, "src", chrome.runtime.getURL("images/icons/follow.svg"));
+              var ye = c(Q),
+                Ae = c(R, 2);
+              {
+                var je = (N) => {
+                  var ae = Ta(),
+                    Z = o(ae);
+                  Te(
+                    Z,
+                    20,
+                    () => e(fe),
+                    (G) => G,
+                    (G, T) => {
+                      var Y = ja(),
+                        ee = o(Y);
+                      C(() => {
+                        E(Y, "href", `https://scratch.mit.edu/users/${T}/`), b(ee, T);
+                      }),
+                        u(G, Y);
+                    }
+                  ),
+                    u(N, ae);
+                };
+                k(Ae, (N) => {
+                  $.follows && N(je);
+                });
+              }
+              C(() => {
+                (K = ze(re, 1, "", null, K, { reverted: $.follows })),
+                  b(pe, e(B).followsMsg),
+                  b(ye, ` ${e(fe).length ?? ""}`);
+              }),
+                xe("click", R, () => ($.follows = !$.follows)),
+                u(j, w);
+            };
+            k(_t, (j) => {
+              e(fe).length && j(At);
+            });
+          }
+          var tt = c(_t, 2);
+          {
+            var st = (j) => {
+              var w = Pa(),
+                R = o(w),
+                W = o(R),
+                re = o(W);
+              E(re, "src", chrome.runtime.getURL("images/icons/expand.svg"));
+              let K;
+              var V = c(W, 2),
+                pe = o(V),
+                le = c(V, 2),
+                Q = o(le);
+              E(Q, "src", chrome.runtime.getURL("images/icons/studio-add.svg"));
+              var ye = c(Q),
+                Ae = c(R, 2);
+              {
+                var je = (N) => {
+                  var ae = Ia();
+                  Te(
+                    ae,
+                    21,
+                    () => e(Ge),
+                    Mt,
+                    (Z, G) => {
+                      var T = La();
+                      Ct(T, () => ke(e(G)), !0), u(Z, T);
+                    }
+                  ),
+                    u(N, ae);
+                };
+                k(Ae, (N) => {
+                  $.studioInvites && N(je);
+                });
+              }
+              C(() => {
+                (K = ze(re, 1, "", null, K, { reverted: $.studioInvites })),
+                  b(pe, e(B).studioInvitesMsg),
+                  b(ye, ` ${e(Ge).length ?? ""}`);
+              }),
+                xe("click", R, () => ($.studioInvites = !$.studioInvites)),
+                u(j, w);
+            };
+            k(tt, (j) => {
+              e(Ge).length && j(st);
+            });
+          }
+          var mt = c(tt, 2);
+          {
+            var Pt = (j) => {
+              var w = Ua(),
+                R = o(w),
+                W = o(R),
+                re = o(W);
+              E(re, "src", chrome.runtime.getURL("images/icons/expand.svg"));
+              let K;
+              var V = c(W, 2),
+                pe = o(V),
+                le = c(V, 2),
+                Q = o(le);
+              E(Q, "src", chrome.runtime.getURL("images/icons/adminusers.svg"));
+              var ye = c(Q),
+                Ae = c(R, 2);
+              {
+                var je = (N) => {
+                  var ae = Ra();
+                  Te(
+                    ae,
+                    21,
+                    () => e(at),
+                    Mt,
+                    (Z, G) => {
+                      var T = Oa();
+                      Ct(T, () => Ve(e(G)), !0), u(Z, T);
+                    }
+                  ),
+                    u(N, ae);
+                };
+                k(Ae, (N) => {
+                  $.studioPromotions && N(je);
+                });
+              }
+              C(() => {
+                (K = ze(re, 1, "", null, K, { reverted: $.studioPromotions })),
+                  b(pe, e(B).studioPromotionsMsg),
+                  b(ye, ` ${e(at).length ?? ""}`);
+              }),
+                xe("click", R, () => ($.studioPromotions = !$.studioPromotions)),
+                u(j, w);
+            };
+            k(mt, (j) => {
+              e(at).length && j(Pt);
+            });
+          }
+          var jt = c(mt, 2);
+          {
+            var qs = (j) => {
+              var w = Da(),
+                R = o(w),
+                W = o(R),
+                re = o(W);
+              E(re, "src", chrome.runtime.getURL("images/icons/expand.svg"));
+              let K;
+              var V = c(W, 2),
+                pe = o(V),
+                le = c(V, 2),
+                Q = o(le);
+              E(Q, "src", chrome.runtime.getURL("images/icons/users.svg"));
+              var ye = c(Q),
+                Ae = c(R, 2);
+              {
+                var je = (N) => {
+                  var ae = Na();
+                  Te(
+                    ae,
+                    21,
+                    () => e(gt),
+                    Mt,
+                    (Z, G) => {
+                      var T = $a();
+                      Ct(T, () => dt(e(G)), !0), u(Z, T);
+                    }
+                  ),
+                    u(N, ae);
+                };
+                k(Ae, (N) => {
+                  $.studioHostTransfers && N(je);
+                });
+              }
+              C(() => {
+                (K = ze(re, 1, "", null, K, { reverted: $.studioHostTransfers })),
+                  b(pe, e(B).studioHostTransfersMsg),
+                  b(ye, ` ${e(gt).length ?? ""}`);
+              }),
+                xe("click", R, () => ($.studioHostTransfers = !$.studioHostTransfers)),
+                u(j, w);
+            };
+            k(jt, (j) => {
+              e(gt).length && j(qs);
+            });
+          }
+          var ts = c(jt, 2);
+          {
+            var zs = (j) => {
+              var w = Ba(),
+                R = o(w),
+                W = o(R),
+                re = o(W);
+              E(re, "src", chrome.runtime.getURL("images/icons/expand.svg"));
+              let K;
+              var V = c(W, 2),
+                pe = o(V),
+                le = c(V, 2),
+                Q = o(le);
+              E(Q, "src", chrome.runtime.getURL("images/icons/forum.svg"));
+              var ye = c(Q),
+                Ae = c(R, 2);
+              {
+                var je = (N) => {
+                  var ae = Ha();
+                  Te(
+                    ae,
+                    21,
+                    () => e(ue),
+                    Mt,
+                    (Z, G) => {
+                      var T = Fa();
+                      Ct(T, () => ut(e(G)), !0), u(Z, T);
+                    }
+                  ),
+                    u(N, ae);
+                };
+                k(Ae, (N) => {
+                  $.forumActivity && N(je);
+                });
+              }
+              C(() => {
+                (K = ze(re, 1, "", null, K, { reverted: $.forumActivity })),
+                  b(pe, e(B).forumMsg),
+                  b(ye, ` ${e(ue).length ?? ""}`);
+              }),
+                xe("click", R, () => ($.forumActivity = !$.forumActivity)),
+                u(j, w);
+            };
+            k(ts, (j) => {
+              e(ue).length && j(zs);
+            });
+          }
+          var ss = c(ts, 2);
+          {
+            var Xs = (j) => {
+              var w = Ja(),
+                R = o(w),
+                W = o(R),
+                re = o(W);
+              E(re, "src", chrome.runtime.getURL("images/icons/expand.svg"));
+              let K;
+              var V = c(W, 2),
+                pe = o(V),
+                le = c(V, 2),
+                Q = o(le);
+              E(Q, "src", chrome.runtime.getURL("images/icons/studio.svg"));
+              var ye = c(Q),
+                Ae = c(R, 2);
+              {
+                var je = (N) => {
+                  var ae = Xa();
+                  Te(
+                    ae,
+                    21,
+                    () => e(De),
+                    Mt,
+                    (Z, G) => {
+                      var T = za(),
+                        Y = o(T);
+                      Ct(Y, () => yt(e(G)));
+                      var ee = c(Y, 2);
+                      {
+                        var he = (Me) => {
+                          var Ue = qa(),
+                            Be = o(Ue);
+                          C(() => b(Be, `(${e(G).amount ?? ""})`)), u(Me, Ue);
+                        };
+                        k(ee, (Me) => {
+                          e(G).amount > 1 && Me(he);
+                        });
+                      }
+                      u(Z, T);
+                    }
+                  ),
+                    u(N, ae);
+                };
+                k(Ae, (N) => {
+                  $.studioActivity && N(je);
+                });
+              }
+              C(() => {
+                (K = ze(re, 1, "", null, K, { reverted: $.studioActivity })),
+                  b(pe, e(B).studioActivityMsg),
+                  b(ye, ` ${e(Oe) ?? ""}`);
+              }),
+                xe("click", R, () => ($.studioActivity = !$.studioActivity)),
+                u(j, w);
+            };
+            k(ss, (j) => {
+              e(De).length && j(Xs);
+            });
+          }
+          var rs = c(ss, 2);
+          {
+            var Js = (j) => {
+              var w = Wa(),
+                R = o(w),
+                W = o(R),
+                re = o(W);
+              E(re, "src", chrome.runtime.getURL("images/icons/expand.svg"));
+              let K;
+              var V = c(W, 2),
+                pe = o(V),
+                le = c(V, 2),
+                Q = o(le);
+              E(Q, "src", chrome.runtime.getURL("images/icons/remix.svg"));
+              var ye = c(Q),
+                Ae = c(R, 2);
+              {
+                var je = (N) => {
+                  var ae = Va();
+                  Te(
+                    ae,
+                    21,
+                    () => e(Le),
+                    Mt,
+                    (Z, G) => {
+                      var T = Ka();
+                      Ct(T, () => qt(e(G)), !0), u(Z, T);
+                    }
+                  ),
+                    u(N, ae);
+                };
+                k(Ae, (N) => {
+                  $.remixes && N(je);
+                });
+              }
+              C(() => {
+                (K = ze(re, 1, "", null, K, { reverted: $.remixes })),
+                  b(pe, e(B).remixesMsg),
+                  b(ye, ` ${e(Le).length ?? ""}`);
+              }),
+                xe("click", R, () => ($.remixes = !$.remixes)),
+                u(j, w);
+            };
+            k(rs, (j) => {
+              e(Le).length && j(Js);
+            });
+          }
+          var as = c(rs, 2);
+          Te(
+            as,
+            17,
+            () => e(_),
+            (j) => j.username,
+            (j, w) => {
+              var R = bt(),
+                W = rt(R);
+              {
+                var re = (K) => {
+                  var V = Ya(),
+                    pe = o(V),
+                    le = o(pe),
+                    Q = o(le);
+                  {
+                    var ye = (T) => {
+                        var Y = cs();
+                        C(() => b(Y, e(B).yourProfileMsg)), u(T, Y);
+                      },
+                      Ae = (T) => {
+                        var Y = cs();
+                        C((ee) => b(Y, ee), [() => vt(e(w).username)]), u(T, Y);
+                      };
+                    k(Q, (T) => {
+                      e(w).username === e(U) ? T(ye) : T(Ae, -1);
+                    });
+                  }
+                  var je = c(le, 2),
+                    N = o(je);
+                  {
+                    var ae = (T) => {
+                      var Y = Ga(),
+                        ee = o(Y);
+                      E(ee, "src", chrome.runtime.getURL("images/icons/comment.svg"));
+                      var he = c(ee);
+                      C(() => b(he, ` ${e(w).unreadComments ?? ""}`)), u(T, Y);
+                    };
+                    k(N, (T) => {
+                      e(w).unreadComments && T(ae);
+                    });
+                  }
+                  var Z = c(pe, 2);
+                  {
+                    var G = (T) => {
+                      var Y = Qa();
+                      Te(
+                        Y,
+                        20,
+                        () => e(w).commentChains,
+                        (ee) => ee,
+                        (ee, he) => {
+                          var Me = Za();
+                          let Ue;
+                          var Be = o(Me);
+                          Tt(Be, {
+                            get commentId() {
+                              return he;
+                            },
+                            get commentsObj() {
+                              return f;
+                            },
+                            isParent: !0,
+                            unread: !1,
+                            resourceType: "user",
+                            get resourceId() {
+                              return e(w).username;
+                            },
+                            get addon() {
+                              return e(s).addon;
+                            },
+                            get msg() {
+                              return e(s).msg;
+                            },
+                            get username() {
+                              return e(U);
+                            },
+                            get dateNow() {
+                              return l;
+                            },
+                            get errorCodes() {
+                              return n;
+                            },
+                          });
+                          var We = c(Be, 2);
+                          {
+                            var ht = (ct) => {
+                              var Pe = bt(),
+                                we = rt(Pe);
+                              Te(
+                                we,
+                                16,
+                                () => f[he].children,
+                                (Fe) => Fe,
+                                (Fe, lt) => {
+                                  {
+                                    let xt = $e(() => J(lt));
+                                    Tt(Fe, {
+                                      get commentId() {
+                                        return lt;
+                                      },
+                                      get commentsObj() {
+                                        return f;
+                                      },
+                                      isParent: !1,
+                                      get unread() {
+                                        return e(xt);
+                                      },
+                                      resourceType: "user",
+                                      get resourceId() {
+                                        return e(w).username;
+                                      },
+                                      get addon() {
+                                        return e(s).addon;
+                                      },
+                                      get msg() {
+                                        return e(s).msg;
+                                      },
+                                      get username() {
+                                        return e(U);
+                                      },
+                                      get dateNow() {
+                                        return l;
+                                      },
+                                      get errorCodes() {
+                                        return n;
+                                      },
+                                    });
+                                  }
+                                }
+                              ),
+                                u(ct, Pe);
+                            };
+                            k(We, (ct) => {
+                              f[he]?.children && ct(ht);
+                            });
+                          }
+                          C((ct) => (Ue = ze(Me, 1, "comment-chain", null, Ue, ct)), [() => ({ unread: J(he) })]),
+                            u(ee, Me);
+                        }
+                      ),
+                        u(T, Y);
+                    };
+                    k(Z, (T) => {
+                      e(w).commentChains.length && T(G);
+                    });
+                  }
+                  C(() => E(le, "href", `https://scratch.mit.edu/users/${e(w).username}/`)), u(K, V);
+                };
+                k(W, (K) => {
+                  e(w).unreadComments && e(w).loadedComments && K(re);
+                });
+              }
+              u(j, R);
+            }
+          );
+          var ns = c(as, 2);
+          Te(
+            ns,
+            17,
+            () => e(be),
+            (j) => j.id,
+            (j, w) => {
+              var R = bt(),
+                W = rt(R);
+              {
+                var re = (K) => {
+                  var V = rn(),
+                    pe = o(V),
+                    le = o(pe),
+                    Q = o(le),
+                    ye = c(le, 2),
+                    Ae = o(ye);
+                  {
+                    var je = (Z) => {
+                      var G = en(),
+                        T = o(G);
+                      E(T, "src", chrome.runtime.getURL("images/icons/comment.svg"));
+                      var Y = c(T);
+                      C(() => b(Y, ` ${e(w).unreadComments ?? ""}`)), u(Z, G);
+                    };
+                    k(Ae, (Z) => {
+                      e(w).unreadComments && Z(je);
+                    });
+                  }
+                  var N = c(pe, 2);
+                  {
+                    var ae = (Z) => {
+                      var G = sn();
+                      Te(
+                        G,
+                        20,
+                        () => e(w).commentChains,
+                        (T) => T,
+                        (T, Y) => {
+                          var ee = tn();
+                          let he;
+                          var Me = o(ee);
+                          Tt(Me, {
+                            get commentId() {
+                              return Y;
+                            },
+                            get commentsObj() {
+                              return f;
+                            },
+                            isParent: !0,
+                            unread: !1,
+                            resourceType: "gallery",
+                            get resourceId() {
+                              return e(w).id;
+                            },
+                            get addon() {
+                              return e(s).addon;
+                            },
+                            get msg() {
+                              return e(s).msg;
+                            },
+                            get username() {
+                              return e(U);
+                            },
+                            get dateNow() {
+                              return l;
+                            },
+                            get errorCodes() {
+                              return n;
+                            },
+                          });
+                          var Ue = c(Me, 2);
+                          {
+                            var Be = (We) => {
+                              var ht = bt(),
+                                ct = rt(ht);
+                              Te(
+                                ct,
+                                16,
+                                () => f[Y].children,
+                                (Pe) => Pe,
+                                (Pe, we) => {
+                                  {
+                                    let Fe = $e(() => J(we));
+                                    Tt(Pe, {
+                                      get commentId() {
+                                        return we;
+                                      },
+                                      get commentsObj() {
+                                        return f;
+                                      },
+                                      isParent: !1,
+                                      get unread() {
+                                        return e(Fe);
+                                      },
+                                      resourceType: "gallery",
+                                      get resourceId() {
+                                        return e(w).id;
+                                      },
+                                      get addon() {
+                                        return e(s).addon;
+                                      },
+                                      get msg() {
+                                        return e(s).msg;
+                                      },
+                                      get username() {
+                                        return e(U);
+                                      },
+                                      get dateNow() {
+                                        return l;
+                                      },
+                                      get errorCodes() {
+                                        return n;
+                                      },
+                                    });
+                                  }
+                                }
+                              ),
+                                u(We, ht);
+                            };
+                            k(Ue, (We) => {
+                              f[Y]?.children && We(Be);
+                            });
+                          }
+                          C((We) => (he = ze(ee, 1, "comment-chain", null, he, We)), [() => ({ unread: J(Y) })]),
+                            u(T, ee);
+                        }
+                      ),
+                        u(Z, G);
+                    };
+                    k(N, (Z) => {
+                      e(w).commentChains.length && Z(ae);
+                    });
+                  }
+                  C(
+                    (Z) => {
+                      E(le, "href", `https://scratch.mit.edu/studios/${e(w).id}/`), b(Q, Z);
+                    },
+                    [() => Lt(e(w).title)]
+                  ),
+                    u(K, V);
+                };
+                k(W, (K) => {
+                  e(w).unreadComments && e(w).loadedComments && K(re);
+                });
+              }
+              u(j, R);
+            }
+          );
+          var os = c(ns, 2);
+          Te(
+            os,
+            19,
+            () => e(L),
+            (j) => j.id,
+            (j, w, R) => {
+              var W = bt(),
+                re = rt(W);
+              {
+                var K = (V) => {
+                  var pe = vn(),
+                    le = o(pe);
+                  let Q;
+                  var ye = o(le),
+                    Ae = o(ye),
+                    je = c(ye, 2),
+                    N = o(je);
+                  {
+                    var ae = (ee) => {
+                      var he = dn(),
+                        Me = o(he),
+                        Ue = o(Me);
+                      {
+                        var Be = (Pe) => {
+                          var we = an(),
+                            Fe = o(we);
+                          E(Fe, "src", chrome.runtime.getURL("images/icons/heart.svg"));
+                          var lt = c(Fe);
+                          C(() => b(lt, ` ${e(w).loveCount ?? ""}`)), u(Pe, we);
+                        };
+                        k(Ue, (Pe) => {
+                          e(w).loveCount && Pe(Be);
+                        });
+                      }
+                      var We = c(Ue, 2);
+                      {
+                        var ht = (Pe) => {
+                          var we = nn(),
+                            Fe = o(we);
+                          E(Fe, "src", chrome.runtime.getURL("images/icons/star.svg"));
+                          var lt = c(Fe);
+                          C(() => b(lt, ` ${e(w).favoriteCount ?? ""}`)), u(Pe, we);
+                        };
+                        k(We, (Pe) => {
+                          e(w).favoriteCount && Pe(ht);
+                        });
+                      }
+                      var ct = c(Me, 2);
+                      Te(
+                        ct,
+                        23,
+                        () => zt(e(w)),
+                        (Pe, we) => Pe.username + we,
+                        (Pe, we) => {
+                          var Fe = ln(),
+                            lt = o(Fe);
+                          {
+                            var xt = (kt) => {
+                              var Rt = on();
+                              E(Rt, "src", chrome.runtime.getURL("images/icons/heart.svg")), u(kt, Rt);
+                            };
+                            k(lt, (kt) => {
+                              e(we).loved && kt(xt);
+                            });
+                          }
+                          var Ot = c(lt, 2);
+                          {
+                            var Xt = (kt) => {
+                              var Rt = cn();
+                              E(Rt, "src", chrome.runtime.getURL("images/icons/star.svg")), u(kt, Rt);
+                            };
+                            k(Ot, (kt) => {
+                              e(we).faved && kt(Xt);
+                            });
+                          }
+                          var is = c(Ot, 2),
+                            Ws = o(is);
+                          C(() => {
+                            E(is, "href", `https://scratch.mit.edu/users/${e(we).username}/`), b(Ws, e(we).username);
+                          }),
+                            u(Pe, Fe);
+                        }
+                      ),
+                        u(ee, he);
+                    };
+                    k(N, (ee) => {
+                      (e(w).loveCount || e(w).favoriteCount) && ee(ae);
+                    });
+                  }
+                  var Z = c(N, 2);
+                  {
+                    var G = (ee) => {
+                      var he = un(),
+                        Me = o(he);
+                      E(Me, "src", chrome.runtime.getURL("images/icons/comment.svg"));
+                      var Ue = c(Me);
+                      C(() => b(Ue, ` ${e(w).unreadComments ?? ""}`)), u(ee, he);
+                    };
+                    k(Z, (ee) => {
+                      e(w).unreadComments && ee(G);
+                    });
+                  }
+                  var T = c(le, 2);
+                  {
+                    var Y = (ee) => {
+                      var he = gn();
+                      Te(
+                        he,
+                        20,
+                        () => e(w).commentChains,
+                        (Me) => Me,
+                        (Me, Ue) => {
+                          var Be = mn();
+                          let We;
+                          var ht = o(Be);
+                          Tt(ht, {
+                            get commentId() {
+                              return Ue;
+                            },
+                            get commentsObj() {
+                              return f;
+                            },
+                            isParent: !0,
+                            unread: !1,
+                            resourceType: "project",
+                            get resourceId() {
+                              return e(w).id;
+                            },
+                            get addon() {
+                              return e(s).addon;
+                            },
+                            get msg() {
+                              return e(s).msg;
+                            },
+                            get username() {
+                              return e(U);
+                            },
+                            get dateNow() {
+                              return l;
+                            },
+                            get errorCodes() {
+                              return n;
+                            },
+                          });
+                          var ct = c(ht, 2);
+                          {
+                            var Pe = (we) => {
+                              var Fe = bt(),
+                                lt = rt(Fe);
+                              Te(
+                                lt,
+                                16,
+                                () => f[Ue].children,
+                                (xt) => xt,
+                                (xt, Ot) => {
+                                  {
+                                    let Xt = $e(() => J(Ot));
+                                    Tt(xt, {
+                                      get commentId() {
+                                        return Ot;
+                                      },
+                                      get commentsObj() {
+                                        return f;
+                                      },
+                                      isParent: !1,
+                                      get unread() {
+                                        return e(Xt);
+                                      },
+                                      resourceType: "project",
+                                      get resourceId() {
+                                        return e(w).id;
+                                      },
+                                      get addon() {
+                                        return e(s).addon;
+                                      },
+                                      get msg() {
+                                        return e(s).msg;
+                                      },
+                                      get username() {
+                                        return e(U);
+                                      },
+                                      get dateNow() {
+                                        return l;
+                                      },
+                                      get errorCodes() {
+                                        return n;
+                                      },
+                                    });
+                                  }
+                                }
+                              ),
+                                u(we, Fe);
+                            };
+                            k(ct, (we) => {
+                              f[Ue]?.children && we(Pe);
+                            });
+                          }
+                          C((we) => (We = ze(Be, 1, "comment-chain", null, We, we)), [() => ({ unread: J(Ue) })]),
+                            u(Me, Be);
+                        }
+                      ),
+                        u(ee, he);
+                    };
+                    k(T, (ee) => {
+                      e(w).commentChains.length && ee(Y);
+                    });
+                  }
+                  C(() => {
+                    (Q = Ft(le, "", Q, { zIndex: 9999 - e(R) })),
+                      E(ye, "href", `https://scratch.mit.edu/projects/${e(w).id}/`),
+                      b(Ae, e(w).title);
+                  }),
+                    u(V, pe);
+                };
+                k(re, (V) => {
+                  ((e(w).unreadComments && e(w).loadedComments) || (!e(w).unreadComments && e(I))) && V(K);
+                });
+              }
+              u(j, W);
+            }
+          );
+          var Ks = c(os, 2);
+          {
+            var Vs = (j) => {
+              var w = hn(),
+                R = o(w),
+                W = o(R);
+              C(() => b(W, e(B).welcomeToScratchMsg)), u(j, w);
+            };
+            k(Ks, (j) => {
+              e(nt) && j(Vs);
+            });
+          }
+          u(P, z);
+        };
+        k(F, (P) => {
+          e(x) || P(Re);
+        });
+      }
+      var se = c(F, 2),
+        y = o(se);
+      {
+        var H = (P) => {
+          var z = pn(),
+            me = o(z);
+          C(() => b(me, e(B).loadingMsg)), u(P, z);
+        };
+        k(y, (P) => {
+          e(x) === "notReady" && P(H);
+        });
+      }
+      var ve = c(y, 2);
+      {
+        var Ke = (P) => {
+          var z = _n(),
+            me = o(z),
+            Qe = c(me),
+            _t = o(Qe);
+          C(() => {
+            b(me, `${e(B).loggedOutMsg ?? ""} `), b(_t, e(B).loggedOutLinkMsg);
+          }),
+            u(P, z);
+        };
+        k(ve, (P) => {
+          e(x) === "loggedOut" && P(Ke);
+        });
+      }
+      var St = c(ve, 2);
+      {
+        var et = (P) => {
+          var z = bn(),
+            me = o(z);
+          C(() => b(me, e(B).serverErrorMsg)), u(P, z);
+        };
+        k(St, (P) => {
+          e(x) === "serverError" && P(et);
+        });
+      }
+      var it = c(St, 2);
+      {
+        var It = (P) => {
+          var z = yn(),
+            me = o(z);
+          C(() => b(me, e(B).networkErrorMsg)), u(P, z);
+        };
+        k(it, (P) => {
+          e(x) === "networkError" && P(It);
+        });
+      }
+      var wt = c(it, 2);
+      {
+        var Ps = (P) => {
+          var z = wn(),
+            me = o(z);
+          C(() => b(me, e(B).loadingCommentsMsg)), u(P, z);
+        };
+        k(wt, (P) => {
+          e(de) && !e(I) && P(Ps);
+        });
+      }
+      var Zt = c(wt, 2);
+      {
+        var Os = (P) => {
+          var z = xn(),
+            me = o(z),
+            Qe = c(me),
+            _t = o(Qe),
+            At = c(Qe, 4),
+            tt = o(At),
+            st = c(At, 2),
+            mt = o(st);
+          C(() => {
+            b(me, `${e(B).unknownFatalErrorMsg ?? ""} `),
+              E(Qe, "href", e(h)),
+              b(_t, e(B).reportBugMsg),
+              b(tt, e(x)),
+              b(mt, e(B).copyMsg);
+          }),
+            xe("click", st, () => ot(e(x))),
+            u(P, z);
+        };
+        k(Zt, (P) => {
+          e(S) && P(Os);
+        });
+      }
+      var Qt = c(Zt, 2);
+      {
+        var Rs = (P) => {
+          var z = kn(),
+            me = o(z);
+          C(() => b(me, e(B).noUnreadMsg)), u(P, z);
+        };
+        k(Qt, (P) => {
+          e(de) && e(Ne) === 0 && e(d).length === 0 && P(Rs);
+        });
+      }
+      var Us = c(Qt, 2);
+      {
+        var $s = (P) => {
+          var z = Sn(),
+            me = o(z);
+          {
+            var Qe = (tt) => {
+              var st = Mn(),
+                mt = o(st);
+              E(mt, "src", chrome.runtime.getURL("images/icons/reload.svg"));
+              var Pt = c(mt),
+                jt = o(Pt);
+              C(() => b(jt, e(B).reloadMsg)), xe("click", st, Ye), u(tt, st);
+            };
+            k(me, (tt) => {
+              e(I) && tt(Qe);
+            });
+          }
+          var _t = c(me, 2);
+          {
+            var At = (tt) => {
+              var st = Cn(),
+                mt = o(st);
+              E(mt, "src", chrome.runtime.getURL("images/icons/plus.svg"));
+              var Pt = c(mt),
+                jt = o(Pt);
+              C(() => b(jt, e(B).showMoreMsg)), xe("click", st, Se), u(tt, st);
+            };
+            k(_t, (tt) => {
+              e(X) && tt(At);
+            });
+          }
+          u(P, z);
+        };
+        k(Us, (P) => {
+          (e(I) || e(X)) && P($s);
+        });
+      }
+      var Ns = c(A, 2),
+        Yt = o(Ns);
+      {
+        var Ds = (P) => {
+            var z = An(),
+              me = o(z);
+            C(() => b(me, e(B).markAsReadMsg)),
+              xe("click", z, Ze),
+              xe("keydown", z, (Qe) => Qe.key === "Enter" && Ze()),
+              u(P, z);
+          },
+          Fs = (P) => {
+            var z = jn(),
+              me = o(z);
+            E(me, "src", chrome.runtime.getURL("images/icons/read.svg"));
+            var Qe = c(me);
+            C(() => b(Qe, ` ${e(B).markedAsReadMsg ?? ""}`)), u(P, z);
+          };
+        k(Yt, (P) => {
+          e(oe) ? P(Fs, -1) : P(Ds);
+        });
+      }
+      var Hs = c(Yt, 4),
+        es = o(Hs),
+        Bs = c(es);
+      E(Bs, "src", chrome.runtime.getURL("images/icons/popout.svg")), C(() => b(es, e(B).openMessagesMsg)), u(i, p);
+    };
+    k(Ls, (i) => {
+      e(s) && i(Is);
+    });
+  }
+  u(r, Gt), Bt();
+}
+Kt(["click", "keydown"]);
+export { In as C, Pn as S };

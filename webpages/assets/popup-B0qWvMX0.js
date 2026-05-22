@@ -1,1 +1,295 @@
-import{L as ee,G as te,I as ne,p as fe,V as D,K as J,t as N,O as c,r as X,W as y,q as C,b as g,l as m,u as L,M as h,w as t,U as _,y as E,Q as ve,T as W,m as Y,$ as M,n as he,S as Ie,c as be,k as we,A as Se,D as ye}from"./page-init-D8Z4tyJC.js";import{i as Le,a as Pe}from"./Settings-CRzwi5Ao.js";import{S as xe,C as Ee}from"./ScratchMessaging-X1AZcYfJ.js";function Me(I,b){ee(b,!0),Le({isIframe:!0}),te(()=>(document.body.classList.add("iframe"),()=>document.body.classList.remove("iframe"))),Pe(I,{}),ne()}function p(I,...b){return chrome.i18n.getMessage(I,...b)}function Z(){return chrome.runtime.getManifest()}var $e=L('<img class="popup-icon" draggable="false" alt=""/>'),ke=L('<span class="popout"><img class="popout-img" draggable="false"/></span>'),Oe=L('<button type="button"><!> <span class="popup-title"> </span> <!></button>'),Te=L('<div class="embedded-popup"><!></div>'),Ue=L('<div id="header"><div id="title"><img id="logo" alt="Logo" draggable="false"/> <span id="title-text"> <a id="version" target="_blank"> </a></span></div> <a href="#settings" class="header-button"><img id="settings-icon" draggable="false"/></a></div> <div id="popup-bar"></div> <!>',1);function Ae(I,b){ee(b,!0);const j=["__settings__","scratch-messaging","cloud-games"],ae={"cloud-games":Ee,"scratch-messaging":xe};let i=D(J([])),w=D(null),S=D(J(new Set)),$=null;const se=M(()=>{const e=Z();return e.version_name.includes("-prerelease")?e.version+"-pre":e.version}),oe=M(()=>{const e=chrome.i18n.getUILanguage(),a=e.startsWith("en")?"":`${e.split("-")[0]}/`,n=Z(),s=`utm_source=extension&utm_medium=popup&utm_campaign=v${n.version}`;return`https://scratchaddons.com/${a}changelog/?${s}#v${n.version}`});function k(){if(!window.innerWidth||!window.innerHeight){requestAnimationFrame(k);return}document.documentElement.style.setProperty("--width",`${window.innerWidth}px`),document.documentElement.style.setProperty("--height",`${window.innerHeight}px`),document.body.classList.remove("loading")}function B(){setTimeout(()=>window.close(),100)}function ie(){chrome.runtime.openOptionsPage(),B()}function O(e){t(w)!==e._addonId&&(h(w,e._addonId,!0),chrome.storage.local.set({lastSelectedPopup:e._addonId}),h(S,new Set([...t(S),e._addonId]),!0))}function re(e){e._addonId==="__settings__"?chrome.tabs.create({url:chrome.runtime.getURL("webpages/settings/index.html")}):chrome.tabs.create({url:chrome.runtime.getURL(`webpages/popups/index.html?id=${encodeURIComponent(e._addonId)}`)}),B()}function F(e){return e.slice().sort((a,n)=>j.indexOf(a._addonId)-j.indexOf(n._addonId))}function de(e){$=e.manifests;const a=Object.keys(e.addonsEnabled).filter(n=>e.addonsEnabled[n]===!0).map(n=>$.find(s=>s.addonId===n)).filter(n=>n!==void 0).filter(({manifest:n})=>n.popup).map(({addonId:n,manifest:s})=>({...s.popup,_addonId:n,fullscreen:s.popup.fullscreen}));return a.push({name:p("quickSettings"),icon:"../../images/icons/wrench.svg",_addonId:"__settings__"}),F(a)}te(()=>{window.addEventListener("load",()=>setTimeout(k,0)),document.readyState==="complete"&&setTimeout(k,0),chrome.runtime.sendMessage("getSettingsInfo",a=>{window.__SA_settingsInfo=a,window.scratchAddons=window.scratchAddons||{},window.scratchAddons.globalState=window.scratchAddons.globalState||{},window.scratchAddons.globalState.addonSettings=a.addonSettings,h(i,de(a),!0),chrome.storage.local.get("lastSelectedPopup",({lastSelectedPopup:n})=>{let s=t(i).find(r=>r._addonId===n);s||(s=t(i).find(r=>r._addonId==="__settings__")),s&&O(s)})});const e=a=>{if(a.changeEnabledState){const{addonId:n,newState:s}=a.changeEnabledState,r=$?.find(o=>o.addonId===n);if(!r?.manifest?.popup)return;if(s===!0){const o={...r.manifest.popup,_addonId:n,fullscreen:r.manifest.popup.fullscreen};h(i,F([...t(i),o]),!0)}else h(S,new Set([...t(S)].filter(o=>o!==n)),!0),h(i,t(i).filter(o=>o._addonId!==n),!0),t(i).find(o=>o._addonId===t(w))||t(i)[0]&&O(t(i)[0])}};return chrome.runtime.onMessage.addListener(e),chrome.runtime.sendMessage("checkPermissions"),()=>chrome.runtime.onMessage.removeListener(e)});function ce(e){return e==="__settings__"?Me:ae[e]||null}function le(e){return e.icon?e._addonId==="__settings__"?e.icon:chrome.runtime.getURL(`addons/${e._addonId}/${e.icon}`):null}var G=Ue(),q=N(G),H=m(q),z=m(H);c(z,"src",chrome.runtime.getURL("images/icon-transparent.svg"));var ue=_(z,2),K=m(ue),T=_(K),me=m(T),Q=_(H,2),U=m(Q);c(U,"src",chrome.runtime.getURL("images/icons/settings.svg"));var V=_(q,2);X(V,21,()=>t(i),e=>e._addonId,(e,a)=>{var n=Oe();let s;var r=m(n);{var o=l=>{var d=$e();y(u=>c(d,"src",u),[()=>le(t(a))]),g(l,d)};E(r,l=>{t(a).icon&&l(o)})}var f=_(r,2),P=m(f),x=_(f,2);{var A=l=>{var d=ke(),u=m(d);c(u,"src",chrome.runtime.getURL("images/icons/popout.svg")),y((v,R)=>{c(u,"title",v),c(u,"alt",R)},[()=>p("openInNewTab"),()=>p("openInNewTab")]),C("click",d,v=>{v.stopPropagation(),re(t(a))}),g(l,d)};E(x,l=>{t(a).fullscreen&&l(A)})}y(()=>{s=ve(n,1,"popup-name",null,s,{sel:t(w)===t(a)._addonId}),W(P,t(a).name)}),C("click",n,()=>O(t(a))),g(e,n)});var ge=_(V,2);X(ge,17,()=>t(i),e=>e._addonId,(e,a)=>{var n=Y(),s=N(n);{var r=f=>{const P=M(()=>ce(t(a)._addonId));var x=Y(),A=N(x);{var l=d=>{var u=Te();let v;var R=m(u);he(R,()=>t(P),(_e,pe)=>{pe(_e,{get addonId(){return t(a)._addonId},get popupMeta(){return t(a)}})}),y(()=>v=Ie(u,"",v,{display:t(w)===t(a)._addonId?"flex":"none"})),g(d,u)};E(A,d=>{t(P)&&d(l)})}g(f,x)},o=M(()=>t(S).has(t(a)._addonId));E(s,f=>{t(o)&&f(r)})}g(e,n)}),y((e,a,n,s)=>{W(K,`${e??""} `),c(T,"href",t(oe)),c(T,"title",a),W(me,`v${t(se)??""}`),c(U,"title",n),c(U,"alt",s)},[()=>p("extensionName"),()=>p("changelog"),()=>p("settings"),()=>p("settings")]),C("click",Q,e=>{e.preventDefault(),ie()}),g(I,G),ne()}fe(["click"]);be();we();Se();ye(Ae,{target:document.getElementById("app")});
+import {
+  L as ee,
+  G as te,
+  I as ne,
+  p as fe,
+  V as D,
+  K as J,
+  t as N,
+  O as c,
+  r as X,
+  W as y,
+  q as C,
+  b as g,
+  l as m,
+  u as L,
+  M as h,
+  w as t,
+  U as _,
+  y as E,
+  Q as ve,
+  T as W,
+  m as Y,
+  $ as M,
+  n as he,
+  S as Ie,
+  c as be,
+  k as we,
+  A as Se,
+  D as ye,
+} from "./page-init-D8Z4tyJC.js";
+import { i as Le, a as Pe } from "./Settings-CRzwi5Ao.js";
+import { S as xe, C as Ee } from "./ScratchMessaging-X1AZcYfJ.js";
+function Me(I, b) {
+  ee(b, !0),
+    Le({ isIframe: !0 }),
+    te(() => (document.body.classList.add("iframe"), () => document.body.classList.remove("iframe"))),
+    Pe(I, {}),
+    ne();
+}
+function p(I, ...b) {
+  return chrome.i18n.getMessage(I, ...b);
+}
+function Z() {
+  return chrome.runtime.getManifest();
+}
+var $e = L('<img class="popup-icon" draggable="false" alt=""/>'),
+  ke = L('<span class="popout"><img class="popout-img" draggable="false"/></span>'),
+  Oe = L('<button type="button"><!> <span class="popup-title"> </span> <!></button>'),
+  Te = L('<div class="embedded-popup"><!></div>'),
+  Ue = L(
+    '<div id="header"><div id="title"><img id="logo" alt="Logo" draggable="false"/> <span id="title-text"> <a id="version" target="_blank"> </a></span></div> <a href="#settings" class="header-button"><img id="settings-icon" draggable="false"/></a></div> <div id="popup-bar"></div> <!>',
+    1
+  );
+function Ae(I, b) {
+  ee(b, !0);
+  const j = ["__settings__", "scratch-messaging", "cloud-games"],
+    ae = { "cloud-games": Ee, "scratch-messaging": xe };
+  let i = D(J([])),
+    w = D(null),
+    S = D(J(new Set())),
+    $ = null;
+  const se = M(() => {
+      const e = Z();
+      return e.version_name.includes("-prerelease") ? e.version + "-pre" : e.version;
+    }),
+    oe = M(() => {
+      const e = chrome.i18n.getUILanguage(),
+        a = e.startsWith("en") ? "" : `${e.split("-")[0]}/`,
+        n = Z(),
+        s = `utm_source=extension&utm_medium=popup&utm_campaign=v${n.version}`;
+      return `https://scratchaddons.com/${a}changelog/?${s}#v${n.version}`;
+    });
+  function k() {
+    if (!window.innerWidth || !window.innerHeight) {
+      requestAnimationFrame(k);
+      return;
+    }
+    document.documentElement.style.setProperty("--width", `${window.innerWidth}px`),
+      document.documentElement.style.setProperty("--height", `${window.innerHeight}px`),
+      document.body.classList.remove("loading");
+  }
+  function B() {
+    setTimeout(() => window.close(), 100);
+  }
+  function ie() {
+    chrome.runtime.openOptionsPage(), B();
+  }
+  function O(e) {
+    t(w) !== e._addonId &&
+      (h(w, e._addonId, !0),
+      chrome.storage.local.set({ lastSelectedPopup: e._addonId }),
+      h(S, new Set([...t(S), e._addonId]), !0));
+  }
+  function re(e) {
+    e._addonId === "__settings__"
+      ? chrome.tabs.create({ url: chrome.runtime.getURL("webpages/settings/index.html") })
+      : chrome.tabs.create({
+          url: chrome.runtime.getURL(`webpages/popups/index.html?id=${encodeURIComponent(e._addonId)}`),
+        }),
+      B();
+  }
+  function F(e) {
+    return e.slice().sort((a, n) => j.indexOf(a._addonId) - j.indexOf(n._addonId));
+  }
+  function de(e) {
+    $ = e.manifests;
+    const a = Object.keys(e.addonsEnabled)
+      .filter((n) => e.addonsEnabled[n] === !0)
+      .map((n) => $.find((s) => s.addonId === n))
+      .filter((n) => n !== void 0)
+      .filter(({ manifest: n }) => n.popup)
+      .map(({ addonId: n, manifest: s }) => ({ ...s.popup, _addonId: n, fullscreen: s.popup.fullscreen }));
+    return a.push({ name: p("quickSettings"), icon: "../../images/icons/wrench.svg", _addonId: "__settings__" }), F(a);
+  }
+  te(() => {
+    window.addEventListener("load", () => setTimeout(k, 0)),
+      document.readyState === "complete" && setTimeout(k, 0),
+      chrome.runtime.sendMessage("getSettingsInfo", (a) => {
+        (window.__SA_settingsInfo = a),
+          (window.scratchAddons = window.scratchAddons || {}),
+          (window.scratchAddons.globalState = window.scratchAddons.globalState || {}),
+          (window.scratchAddons.globalState.addonSettings = a.addonSettings),
+          h(i, de(a), !0),
+          chrome.storage.local.get("lastSelectedPopup", ({ lastSelectedPopup: n }) => {
+            let s = t(i).find((r) => r._addonId === n);
+            s || (s = t(i).find((r) => r._addonId === "__settings__")), s && O(s);
+          });
+      });
+    const e = (a) => {
+      if (a.changeEnabledState) {
+        const { addonId: n, newState: s } = a.changeEnabledState,
+          r = $?.find((o) => o.addonId === n);
+        if (!r?.manifest?.popup) return;
+        if (s === !0) {
+          const o = { ...r.manifest.popup, _addonId: n, fullscreen: r.manifest.popup.fullscreen };
+          h(i, F([...t(i), o]), !0);
+        } else
+          h(S, new Set([...t(S)].filter((o) => o !== n)), !0),
+            h(
+              i,
+              t(i).filter((o) => o._addonId !== n),
+              !0
+            ),
+            t(i).find((o) => o._addonId === t(w)) || (t(i)[0] && O(t(i)[0]));
+      }
+    };
+    return (
+      chrome.runtime.onMessage.addListener(e),
+      chrome.runtime.sendMessage("checkPermissions"),
+      () => chrome.runtime.onMessage.removeListener(e)
+    );
+  });
+  function ce(e) {
+    return e === "__settings__" ? Me : ae[e] || null;
+  }
+  function le(e) {
+    return e.icon
+      ? e._addonId === "__settings__"
+        ? e.icon
+        : chrome.runtime.getURL(`addons/${e._addonId}/${e.icon}`)
+      : null;
+  }
+  var G = Ue(),
+    q = N(G),
+    H = m(q),
+    z = m(H);
+  c(z, "src", chrome.runtime.getURL("images/icon-transparent.svg"));
+  var ue = _(z, 2),
+    K = m(ue),
+    T = _(K),
+    me = m(T),
+    Q = _(H, 2),
+    U = m(Q);
+  c(U, "src", chrome.runtime.getURL("images/icons/settings.svg"));
+  var V = _(q, 2);
+  X(
+    V,
+    21,
+    () => t(i),
+    (e) => e._addonId,
+    (e, a) => {
+      var n = Oe();
+      let s;
+      var r = m(n);
+      {
+        var o = (l) => {
+          var d = $e();
+          y((u) => c(d, "src", u), [() => le(t(a))]), g(l, d);
+        };
+        E(r, (l) => {
+          t(a).icon && l(o);
+        });
+      }
+      var f = _(r, 2),
+        P = m(f),
+        x = _(f, 2);
+      {
+        var A = (l) => {
+          var d = ke(),
+            u = m(d);
+          c(u, "src", chrome.runtime.getURL("images/icons/popout.svg")),
+            y(
+              (v, R) => {
+                c(u, "title", v), c(u, "alt", R);
+              },
+              [() => p("openInNewTab"), () => p("openInNewTab")]
+            ),
+            C("click", d, (v) => {
+              v.stopPropagation(), re(t(a));
+            }),
+            g(l, d);
+        };
+        E(x, (l) => {
+          t(a).fullscreen && l(A);
+        });
+      }
+      y(() => {
+        (s = ve(n, 1, "popup-name", null, s, { sel: t(w) === t(a)._addonId })), W(P, t(a).name);
+      }),
+        C("click", n, () => O(t(a))),
+        g(e, n);
+    }
+  );
+  var ge = _(V, 2);
+  X(
+    ge,
+    17,
+    () => t(i),
+    (e) => e._addonId,
+    (e, a) => {
+      var n = Y(),
+        s = N(n);
+      {
+        var r = (f) => {
+            const P = M(() => ce(t(a)._addonId));
+            var x = Y(),
+              A = N(x);
+            {
+              var l = (d) => {
+                var u = Te();
+                let v;
+                var R = m(u);
+                he(
+                  R,
+                  () => t(P),
+                  (_e, pe) => {
+                    pe(_e, {
+                      get addonId() {
+                        return t(a)._addonId;
+                      },
+                      get popupMeta() {
+                        return t(a);
+                      },
+                    });
+                  }
+                ),
+                  y(() => (v = Ie(u, "", v, { display: t(w) === t(a)._addonId ? "flex" : "none" }))),
+                  g(d, u);
+              };
+              E(A, (d) => {
+                t(P) && d(l);
+              });
+            }
+            g(f, x);
+          },
+          o = M(() => t(S).has(t(a)._addonId));
+        E(s, (f) => {
+          t(o) && f(r);
+        });
+      }
+      g(e, n);
+    }
+  ),
+    y(
+      (e, a, n, s) => {
+        W(K, `${e ?? ""} `),
+          c(T, "href", t(oe)),
+          c(T, "title", a),
+          W(me, `v${t(se) ?? ""}`),
+          c(U, "title", n),
+          c(U, "alt", s);
+      },
+      [() => p("extensionName"), () => p("changelog"), () => p("settings"), () => p("settings")]
+    ),
+    C("click", Q, (e) => {
+      e.preventDefault(), ie();
+    }),
+    g(I, G),
+    ne();
+}
+fe(["click"]);
+be();
+we();
+Se();
+ye(Ae, { target: document.getElementById("app") });

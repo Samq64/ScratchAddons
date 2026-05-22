@@ -1,0 +1,1 @@
+import{c as a,k as e,A as i,Y as s,D as m}from"./page-init-D8Z4tyJC.js";import{i as n,S as o,a as d}from"./Settings-CRzwi5Ao.js";a();e();await i();const t=window.parent!==window;t&&document.body.classList.add("iframe");n({isIframe:t});o.theme=s.light;m(d,{target:document.getElementById("app")});

@@ -1,9 +1,14 @@
-const POPUP_PREFIX = chrome.runtime.getURL("popups");
+const POPUP_PREFIXES = [
+  chrome.runtime.getURL("popups"),
+  chrome.runtime.getURL("webpages/popup"),
+  chrome.runtime.getURL("webpages/popups"),
+];
+
+const isPopupSender = (url) => url && POPUP_PREFIXES.some((p) => url.startsWith(p));
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (!request?.requestPopupInfo) return;
-  // For some reason non-popups managed to request popup info?
-  if (!sender.url?.startsWith(POPUP_PREFIX)) return;
+  if (!isPopupSender(sender.url)) return;
   const handle = () => {
     const { addonId } = request.requestPopupInfo;
     const manifest = scratchAddons.manifests.find(
@@ -23,7 +28,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 chrome.runtime.onConnect.addListener((port) => {
-  if (!port.sender.url?.startsWith(POPUP_PREFIX)) return;
+  if (!isPopupSender(port.sender.url)) return;
   const addonId = port.name;
   if (!scratchAddons.popupPorts[addonId]) scratchAddons.popupPorts[addonId] = [];
   scratchAddons.popupPorts[addonId].push(port);
